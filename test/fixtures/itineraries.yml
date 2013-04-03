@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-04-01 22:06:13
+  price: 1
+  origin_airport_id: 1
+  destination_airport_id: 1
+  original_price: 1
+
+two:
+  date: 2013-04-01 22:06:13
+  price: 1
+  origin_airport_id: 1
+  destination_airport_id: 1
+  original_price: 1

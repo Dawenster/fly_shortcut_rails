@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  itinerary_id: 1
+  departure_airport_id: 1
+  arrival_airport_id: 1
+  departure_time: 2013-04-01 22:05:03
+  arrival_time: 2013-04-01 22:05:03
+  airline: MyString
+  flight_no: MyString
+
+two:
+  itinerary_id: 1
+  departure_airport_id: 1
+  arrival_airport_id: 1
+  departure_time: 2013-04-01 22:05:03
+  arrival_time: 2013-04-01 22:05:03
+  airline: MyString
+  flight_no: MyString

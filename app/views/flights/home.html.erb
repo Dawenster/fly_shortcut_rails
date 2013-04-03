@@ -1,0 +1,41 @@
+<div class="container">
+	<div class="row">
+		<div class="span3">
+			<%= render 'layouts/filter' %>
+		</div>
+
+		<div class="span8 offset1">
+			<% @flights.each do |flight| %>
+
+	  	<div class="hero-unit origin<%= Airport.find(flight.departure_airport_id).code %> destination<%= Airport.find(flight.arrival_airport_id).code %> <%= flight.departure_time.to_date %>">
+
+	  		<div class="top-half">
+	  			<div class="price">$<%= flight.itinerary.price / 100 + 1 %></div>
+	  			<div class="savings">Save <strong>$<%= (flight.itinerary.original_price - flight.itinerary.price) / 100 + 1 %></strong> off the original flight</div>
+	  		</div>
+
+	  		<div class="bottom-half">
+		  		<table>
+		  			<tr>
+		  				<td class="label label-info">Depart</td>
+		  				<td><%= Airport.find(flight.departure_airport_id).name %></td>
+		  				<td><%= flight.departure_time.strftime('%B %d, %Y') %></td>
+		  				<td><%= flight.departure_time.strftime("%I:%M%p") %></td>
+		  			</tr>
+		  			<tr>
+		  				<td class="label label-info">Arrive</td>
+		  				<td><%= Airport.find(flight.arrival_airport_id).name %></td>
+		  				<td><%= flight.arrival_time.strftime('%B %d, %Y') %></td>
+		  				<td><%= flight.arrival_time.strftime("%I:%M%p") %></td>
+		  			</tr>
+			  	</table>
+			  	<div class="below-table">
+			  		<button type="submit" class="btn btn-success btn-large">Book</button>
+			  		<div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %></div>
+			  	</div>
+		  	</div>
+	  	</div>
+	  	<% end %>
+		</div>
+	</div>
+</div>
