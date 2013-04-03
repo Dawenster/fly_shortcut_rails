@@ -14,5 +14,19 @@ class Flight < ActiveRecord::Base
 
   def self.similar_to(flight)
     where(flight_no: flight.flight_no, departure_time: flight.departure_time)
-  end            
+  end
+
+  def self.get_shortcuts
+    shortcuts = []
+    Itinerary.with_connections.each do |itinerary|
+      similar_flights = Flight.similar_to(itinerary.first_flight)
+      similar_flights.each do |flight|
+        if flight.itinerary.price > itinerary.price
+          itinerary.update_attributes(:original_price => flight.itinerary.price)
+          shortcuts << itinerary.first_flight
+        end
+      end
+    end
+    shortcuts
+  end
 end
