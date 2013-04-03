@@ -1,7 +1,7 @@
 FlyShortcutRails::Application.routes.draw do
-  get "flights/home"
-
-  get "flights/about_us"
+  match 'flights' => 'flights#index', as: :flights
+  match 'about_us' => 'pages#about_us', as: :about_us
+  root :to => 'flights#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -10,4 +10,12 @@ class Itinerary < ActiveRecord::Base
 	belongs_to 	:airport,
 							:class_name => Airport,
 							:foreign_key => 'destination_airport_id'
+
+  def first_flight
+    flights.order(:departure_time).first
+  end
+
+  def self.with_connections
+    where('flights_count > 1')
+  end
 end
