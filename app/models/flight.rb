@@ -13,18 +13,30 @@ class Flight < ActiveRecord::Base
 							:foreign_key => 'arrival_airport_id'
 
   def self.similar_to(flight)
-    where(flight_no: flight.flight_no, departure_time: flight.departure_time)
+    where(flight_no: flight.flight_no, departure_time: flight.departure_time,
+          departure_airport_id: flight.departure_airport_id, arrival_airport_id: flight.arrival_airport_id)
   end
 
   def self.get_shortcuts
     shortcuts = []
     Itinerary.with_connections.each do |itinerary|
-      similar_flights = Flight.similar_to(itinerary.first_flight)
-      similar_flights.each do |flight|
-        if flight.itinerary.price > itinerary.price
-          itinerary.update_attributes(:original_price => flight.itinerary.price)
-          shortcuts << itinerary.first_flight
+      begin
+        non_stop = []
+        one_stops = []
+        Flight.similar_to(itinerary.first_flight).each do |flight|
+          if flight.itinerary.flights_count == 2
+            one_stops << flight.itinerary
+          else
+            non_stop << flight.itinerary
+          end
         end
+        cheapest_one_stop = one_stops.map { |itinerary| itinerary.price }.sort.shift
+        cheapest_itinerary = one_stops.select { |itinerary| itinerary.price == cheapest_one_stop }.first
+        if non_stop[0].price > cheapest_one_stop
+          cheapest_itinerary.update_attributes(:original_price => non_stop[0].price)
+          shortcuts << cheapest_itinerary.first_flight
+        end
+      rescue
       end
     end
     shortcuts
