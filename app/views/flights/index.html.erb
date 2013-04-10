@@ -14,7 +14,7 @@
 
 	  		<div class="top-half">
 	  			<div class="price">$<%= flight.itinerary.price / 100 + 1 %></div>
-	  			<div class="savings">Save <strong>$<%= (flight.itinerary.original_price - flight.itinerary.price) / 100 + 1 %></strong> off the original flight | <%= link_to "view original (and more expensive) flight", original_link %>)</div>
+	  			<div class="savings">Save <strong>$<%= (flight.itinerary.original_price - flight.itinerary.price) / 100 + 1 %></strong> off the <%= link_to "original flight", original_link %></div>
 	  		</div>
 
 	  		<div class="bottom-half">

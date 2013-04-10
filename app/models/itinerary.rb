@@ -15,6 +15,10 @@ class Itinerary < ActiveRecord::Base
     flights.order(:departure_time).first
   end
 
+  def self.same
+    where('flights_count = 1')
+  end
+
   def self.with_connections
     where('flights_count > 1')
   end
