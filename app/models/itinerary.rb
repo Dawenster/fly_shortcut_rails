@@ -37,6 +37,12 @@ class Itinerary < ActiveRecord::Base
 
     similar_flights = self.first_flight.similar_flights
 
+    # this array is the first flight of its itinerary
+    # it may be on its own or with another flight
+    # find the cheapest one in the group
+    # if its non-stop then no shortcut (return)
+    # keep the shortcut flight and the nonstop in the group
+
     # level 3
     similar_flights.each do |flight|
       if flight.itinerary.flights_count == 2

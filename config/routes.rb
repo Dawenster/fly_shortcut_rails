@@ -1,6 +1,7 @@
 FlyShortcutRails::Application.routes.draw do
   match 'flights' => 'flights#index', as: :flights
   match 'about_us' => 'pages#about_us', as: :about_us
+  match 'offsite_flight/:id' => 'offsite_flights#redirect', as: :offsite_flight
   root :to => 'flights#index'
 
   # The priority is based upon order of creation:
