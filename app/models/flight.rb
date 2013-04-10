@@ -17,14 +17,23 @@ class Flight < ActiveRecord::Base
     Flight.where(flight_no: flight_no, departure_time: departure_time,
       departure_airport_id: departure_airport_id, arrival_airport_id: arrival_airport_id)
   end
-  
+
   def self.similar_flights
-    select('flights.id AS original_flight_id, similar_flights.*').
+    select('flights.id AS original_flight_id,
+      departure_airports.name AS departure_airport_name,
+      departure_airports.code AS departure_airport_code,
+      arrival_airports.name AS arrival_airport_name,
+      arrival_airports.code AS arrival_airport_code,
+      similar_flights.*').
     joins('INNER JOIN flights AS similar_flights ON
       flights.flight_no             = similar_flights.flight_no AND
       flights.departure_time        = similar_flights.departure_time AND
       flights.departure_airport_id  = similar_flights.departure_airport_id').
     where('flights.is_first_flight = \'t\' AND flights.number_of_stops > 0').
+    joins('INNER JOIN airports AS departure_airports ON
+      flights.departure_airport_id = departure_airports.id').
+    joins('INNER JOIN airports AS arrival_airports ON
+      flights.arrival_airport_id = arrival_airports.id').
     order('original_flight_id asc, similar_flights.price asc').all.group_by { |f| f.original_flight_id }
   end
 

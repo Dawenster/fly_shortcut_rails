@@ -9,12 +9,10 @@
 			<% @flights.each do |flights_array| %>
 			<% flight = flights_array[0] %>
 			<% non_stop = flights_array[1] %>
-			<% departure_airport = flight.departure_airport %>
-			<% arrival_airport = flight.arrival_airport %>
 			<% non_stop.rounded_price %>
 			<% flight.rounded_price %>
 
-	  	<div class="hero-unit origin<%= departure_airport.code %> destination<%= arrival_airport.code %> <%= flight.departure_time.to_date %>">
+	  	<div class="hero-unit origin<%= flight.departure_airport_code %> destination<%= flight.arrival_airport_code %> <%= flight.departure_time.to_date %>">
 
 	  		<div class="top-half">
 	  			<div class="price">$<%= flight.rounded_price %></div>
@@ -25,13 +23,13 @@
 		  		<table>
 		  			<tr>
 		  				<td class="label label-info">Depart</td>
-		  				<td><%= departure_airport.name %></td>
+		  				<td><%= flight.departure_airport_name %></td>
 		  				<td><%= flight.departure_time.strftime('%B %d, %Y') %></td>
 		  				<td><%= flight.departure_time.strftime("%I:%M%p") %></td>
 		  			</tr>
 		  			<tr>
 		  				<td class="label label-info">Arrive</td>
-		  				<td><%= arrival_airport.name %></td>
+		  				<td><%= flight.arrival_airport_name %></td>
 		  				<td><%= flight.arrival_time.strftime('%B %d, %Y') %></td>
 		  				<td><%= flight.arrival_time.strftime("%I:%M%p") %></td>
 		  			</tr>
