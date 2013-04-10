@@ -15,7 +15,9 @@ Dir[Rails.root.join('db/csv/*.csv')].each do |file|
 
 	CSV.foreach(file) do |flight|
 
-		if origin == flight[0]
+		first_flight = (origin == flight[0])
+
+		if first_flight
 			@itinerary = Itinerary.create!
 		end
 
@@ -35,6 +37,7 @@ Dir[Rails.root.join('db/csv/*.csv')].each do |file|
 			fl.flight_no = flight[4]
 			fl.price = flight[6]
 			fl.number_of_stops = direct ? 0 : 1
+			fl.is_first_flight = first_flight
 		end
 
 		if origin == flight[0]
