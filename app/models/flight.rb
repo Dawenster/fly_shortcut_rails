@@ -13,6 +13,7 @@ class Flight < ActiveRecord::Base
 							:foreign_key => 'arrival_airport_id'
 
   def similar_flights
+    # level 2
     Flight.where(flight_no: flight_no, departure_time: departure_time,
       departure_airport_id: departure_airport_id, arrival_airport_id: arrival_airport_id)
   end
