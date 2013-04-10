@@ -9,6 +9,7 @@ class CreateFlights < ActiveRecord::Migration
       t.string :airline
       t.string :flight_no
       t.integer :price
+      t.integer :number_of_stops
 
       t.timestamps
     end

@@ -18,4 +18,16 @@ class Flight < ActiveRecord::Base
       departure_airport_id: departure_airport_id, arrival_airport_id: arrival_airport_id)
   end
 
+  def self.non_stops
+    where(number_of_stops: 0)
+  end
+
+  def non_stop?
+    number_of_stops == 0
+  end
+
+  def rounded_price
+    price / 100 + 1
+  end
+
 end

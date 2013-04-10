@@ -6,16 +6,19 @@
 		</div>
 
 		<div class="span8 offset1">
-			<% @flights[0..10].each do |flight| %>
+			<% @flights.each do |flights_array| %>
+			<% flight = flights_array[0] %>
+			<% non_stop = flights_array[1] %>
 			<% departure_airport = flight.departure_airport %>
 			<% arrival_airport = flight.arrival_airport %>
-			<% itinerary_destination = flight.itinerary.destination_airport %>
+			<% non_stop.rounded_price %>
+			<% flight.rounded_price %>
 
 	  	<div class="hero-unit origin<%= departure_airport.code %> destination<%= arrival_airport.code %> <%= flight.departure_time.to_date %>">
 
 	  		<div class="top-half">
-	  			<div class="price">$<%= flight.itinerary.price / 100 + 1 %></div>
-	  			<div class="savings">Save <strong>$<%= (flight.itinerary.original_price - flight.itinerary.price) / 100 + 1 %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true) %></div>
+	  			<div class="price">$<%= flight.rounded_price %></div>
+	  			<div class="savings">Save <strong>$<%= non_stop.rounded_price - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true) %></div>
 	  		</div>
 
 	  		<div class="bottom-half">

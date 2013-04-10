@@ -32,9 +32,6 @@ class Itinerary < ActiveRecord::Base
   end
 
   def add_shortcuts(shortcuts)
-    non_stop = []
-    one_stops = []
-
     similar_flights = self.first_flight.similar_flights
 
     # this array is the first flight of its itinerary
@@ -44,21 +41,12 @@ class Itinerary < ActiveRecord::Base
     # keep the shortcut flight and the nonstop in the group
 
     # level 3
-    similar_flights.each do |flight|
-      if flight.itinerary.flights_count == 2
-        one_stops << flight.itinerary
-      else
-        non_stop << flight.itinerary
-      end
-    end
+    cheapest_flight = similar_flights.order('price asc').first
+    return if cheapest_flight.non_stop?
+    non_stop_flight = similar_flights.non_stops.first
 
-    cheapest_one_stop = one_stops.map { |itinerary| itinerary.price }.sort.shift
-    cheapest_itinerary = one_stops.select { |itinerary| itinerary.price == cheapest_one_stop }.first
-    if non_stop.first && non_stop.first.price > cheapest_one_stop
-      cheapest_itinerary.update_attribute(:original_price, non_stop.first.price)
-
-      # level 4
-      shortcuts << cheapest_itinerary.first_flight
+    if non_stop_flight
+      shortcuts << [cheapest_flight, non_stop_flight]    
     end
   end
 end

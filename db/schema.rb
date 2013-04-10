@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(:version => 20130409230702) do
     t.datetime "arrival_time"
     t.string   "airline"
     t.string   "flight_no"
+    t.integer  "price"
+    t.integer  "number_of_stops"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
@@ -41,7 +43,6 @@ ActiveRecord::Schema.define(:version => 20130409230702) do
 
   create_table "itineraries", :force => true do |t|
     t.datetime "date"
-    t.integer  "price"
     t.integer  "origin_airport_id"
     t.integer  "destination_airport_id"
     t.integer  "original_price"
