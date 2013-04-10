@@ -32,24 +32,21 @@ class Itinerary < ActiveRecord::Base
   end
 
   def add_shortcuts(shortcuts)
-    begin
-      non_stop = []
-      one_stops = []
+    non_stop = []
+    one_stops = []
 
-      Flight.similar_to(self.first_flight).each do |flight|
-        if flight.itinerary.flights_count == 2
-          one_stops << flight.itinerary
-        else
-          non_stop << flight.itinerary
-        end
+    Flight.similar_to(self.first_flight).each do |flight|
+      if flight.itinerary.flights_count == 2
+        one_stops << flight.itinerary
+      else
+        non_stop << flight.itinerary
       end
-      cheapest_one_stop = one_stops.map { |itinerary| itinerary.price }.sort.shift
-      cheapest_itinerary = one_stops.select { |itinerary| itinerary.price == cheapest_one_stop }.first
-      if non_stop[0].price > cheapest_one_stop
-        cheapest_itinerary.update_attribute(:original_price, non_stop[0].price)
-        shortcuts << cheapest_itinerary.first_flight
-      end
-    rescue
+    end
+    cheapest_one_stop = one_stops.map { |itinerary| itinerary.price }.sort.shift
+    cheapest_itinerary = one_stops.select { |itinerary| itinerary.price == cheapest_one_stop }.first
+    if non_stop.first && non_stop.first.price > cheapest_one_stop
+      cheapest_itinerary.update_attribute(:original_price, non_stop[0].price)
+      shortcuts << cheapest_itinerary.first_flight
     end
   end
 end
