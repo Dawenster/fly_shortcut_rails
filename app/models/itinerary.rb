@@ -35,7 +35,7 @@ class Itinerary < ActiveRecord::Base
     non_stop = []
     one_stops = []
 
-    Flight.similar_to(self.first_flight).each do |flight|
+    self.first_flight.similar_flights.each do |flight|
       if flight.itinerary.flights_count == 2
         one_stops << flight.itinerary
       else
@@ -45,7 +45,7 @@ class Itinerary < ActiveRecord::Base
     cheapest_one_stop = one_stops.map { |itinerary| itinerary.price }.sort.shift
     cheapest_itinerary = one_stops.select { |itinerary| itinerary.price == cheapest_one_stop }.first
     if non_stop.first && non_stop.first.price > cheapest_one_stop
-      cheapest_itinerary.update_attribute(:original_price, non_stop[0].price)
+      cheapest_itinerary.update_attribute(:original_price, non_stop.first.price)
       shortcuts << cheapest_itinerary.first_flight
     end
   end

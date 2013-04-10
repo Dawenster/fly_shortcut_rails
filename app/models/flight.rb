@@ -12,10 +12,9 @@ class Flight < ActiveRecord::Base
 							:class_name => Airport,
 							:foreign_key => 'arrival_airport_id'
 
-  class << self
-    def similar_to(flight)
-      where(flight_no: flight.flight_no, departure_time: flight.departure_time,
-            departure_airport_id: flight.departure_airport_id, arrival_airport_id: flight.arrival_airport_id)
-    end
+  def similar_flights
+    Flight.where(flight_no: flight_no, departure_time: departure_time,
+      departure_airport_id: departure_airport_id, arrival_airport_id: arrival_airport_id)
   end
+
 end
