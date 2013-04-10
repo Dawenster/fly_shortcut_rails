@@ -16,10 +16,10 @@ CSV.foreach('db/csv/filenames.csv') do |file|
 	CSV.foreach('db/csv/' + file[0]) do |flight|
 
 		if origin == flight[0]
-			Itinerary.create(:price => flight[6])
+			Itinerary.create
 		end
 
-		puts file,
+		puts file
 
 		created_flight = Flight.create(
 			:itinerary_id => Itinerary.last.id,
@@ -28,7 +28,8 @@ CSV.foreach('db/csv/filenames.csv') do |file|
 			:departure_time => DateTime.strptime(date + '-' + flight[2], '%Y-%m-%d-%I:%M %p'),
 			:arrival_time => DateTime.strptime(date + '-' + flight[3], '%Y-%m-%d-%I:%M %p'),
 			:airline => flight[5],
-			:flight_no => flight[4])
+			:flight_no => flight[4],
+			:price => flight[6])
 
 		if origin == flight[0]
 			Itinerary.last.update_attributes(

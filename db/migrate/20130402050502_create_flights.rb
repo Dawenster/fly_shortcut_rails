@@ -8,6 +8,7 @@ class CreateFlights < ActiveRecord::Migration
       t.datetime :arrival_time
       t.string :airline
       t.string :flight_no
+      t.integer :price
 
       t.timestamps
     end
