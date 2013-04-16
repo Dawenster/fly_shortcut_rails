@@ -212,9 +212,10 @@ class Scraper
     arrival_times.select { |time| time[0] != '[' }
   end
 
-  def get_rid
-    page.all('#rid')
-    binding.pry
+  def get_uids
+    uids = []
+    page.all('h3').each { |h| uids << h['id'].gsub('airline-', '') if h['id'] && h['id'][/\d/] }
+    uids
   end
 end
 
@@ -235,7 +236,10 @@ CSV.foreach('db/routes.csv') do |route|
 
   scraper.visit_link(link)
 
-  scraper.get_rid
+  uids = scraper.get_uids
+
+  binding.pry
+
   if scraper.non_stop
     puts origin + '-' + destination + date
     scraper.open
