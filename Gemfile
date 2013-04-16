@@ -16,6 +16,7 @@ gem 'capybara-webkit'
 gem 'capybara'
 gem 'launchy'
 gem 'twitter-bootstrap-rails'
+gem 'mechanize'
 
 # Gems used only for assets and not required
 # in production environments by default.
