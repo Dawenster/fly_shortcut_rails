@@ -211,15 +211,12 @@ class Scraper
     end
     arrival_times.select { |time| time[0] != '[' }
   end
+
+  def get_rid
+    page.all('#rid')
+    binding.pry
+  end
 end
-
-# origins =      ['SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO',
-#                 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO', 'SFO']
-
-# destinations = ['IAH', 'ATL', 'PHX', 'DEN', 'YYC', 'DSM', 'FLL', 'AUS', 'CLT', 'CUN', 'ELP', 'DFW', 'MIA', 'ORD', 'BMI', 'CID', 'GRR', 
-#                 'JFK', 'BTV', 'DTW', 'YYZ', 'GCM', 'PHL', 'BOS', 'BWI', 'IAD', 'NRT', 'ICN', 'TPE', 'MNL']
-
-# dates =        ['04/12/2013', '04/13/2013', '04/14/2013', '04/15/2013']
 
 CSV.foreach('db/routes.csv') do |route|
   origin = route[0]
@@ -237,49 +234,12 @@ CSV.foreach('db/routes.csv') do |route|
   scraper = Scraper.new(origin, destination, date)
 
   scraper.visit_link(link)
-  # begin
-    if scraper.non_stop
-      puts origin + '-' + destination + date
-      scraper.open
-      sleep 2
 
-      departures = scraper.departures
-      arrivals = scraper.arrivals
-      departure_times = scraper.departure_times
-      arrival_times = scraper.arrival_times
-      flight_nums = scraper.flight_nums
-      carriers = scraper.carriers
-      amounts = scraper.amounts
-
-      flight_count = departures.count
-
-      CSV.open(origin + '-' + destination + '-' + write_date + '-non-stop.csv', "wb") do |csv|
-        count = 0
-        while count < flight_count
-          csv << [departures[count],
-                  arrivals[count],
-                  departure_times[count],
-                  arrival_times[count],
-                  flight_nums[count],
-                  carriers[count],
-                  amounts[count]]
-          count += 1
-        end
-      end
-    end
-    
-    scraper.one_stop
+  scraper.get_rid
+  if scraper.non_stop
+    puts origin + '-' + destination + date
     scraper.open
     sleep 2
-
-    flight_changes = scraper.no_change_of_planes
-    num_flights = scraper.num_flights
-
-    flight_changes.each_with_index do |change, i|
-      num_flights[i / 2 - 2] -= 1 if change == "Stop"
-    end
-
-    num_flights
 
     departures = scraper.departures
     arrivals = scraper.arrivals
@@ -289,50 +249,86 @@ CSV.foreach('db/routes.csv') do |route|
     carriers = scraper.carriers
     amounts = scraper.amounts
 
-    CSV.open(origin + '-' + destination + '-' + write_date + '-one-stop.csv', "wb") do |csv|
-      num_flights.each do |num|
-        count = 0
-        if num == 2
-          while count < num
-            csv << [departures[count + 1],
-                    arrivals[count + 1],
-                    departure_times[count + 1],
-                    arrival_times[count + 1],
-                    flight_nums[count],
-                    carriers[0],
-                    amounts[0]]
-            count += 1
-          end
-          if amounts.count != 0
-            departures.shift(count + 1)
-            arrivals.shift(count + 1)
-            departure_times.shift(count + 1)
-            arrival_times.shift(count + 1)
-            flight_nums.shift(count)
-            carriers.shift(1)
-            amounts.shift(1)
-          end
-        else
-          csv << [departures[count],
-                  arrivals[count],
-                  departure_times[count],
-                  arrival_times[count],
+    flight_count = departures.count
+
+    CSV.open(origin + '-' + destination + '-' + write_date + '-non-stop.csv', "wb") do |csv|
+      count = 0
+      while count < flight_count
+        csv << [departures[count],
+                arrivals[count],
+                departure_times[count],
+                arrival_times[count],
+                flight_nums[count],
+                carriers[count],
+                amounts[count]]
+        count += 1
+      end
+    end
+  end
+  
+  scraper.one_stop
+  scraper.open
+  sleep 2
+
+  flight_changes = scraper.no_change_of_planes
+  num_flights = scraper.num_flights
+
+  flight_changes.each_with_index do |change, i|
+    num_flights[i / 2 - 2] -= 1 if change == "Stop"
+  end
+
+  num_flights
+
+  departures = scraper.departures
+  arrivals = scraper.arrivals
+  departure_times = scraper.departure_times
+  arrival_times = scraper.arrival_times
+  flight_nums = scraper.flight_nums
+  carriers = scraper.carriers
+  amounts = scraper.amounts
+
+  CSV.open(origin + '-' + destination + '-' + write_date + '-one-stop.csv', "wb") do |csv|
+    num_flights.each do |num|
+      count = 0
+      if num == 2
+        while count < num
+          csv << [departures[count + 1],
+                  arrivals[count + 1],
+                  departure_times[count + 1],
+                  arrival_times[count + 1],
                   flight_nums[count],
-                  carriers[count],
-                  amounts[count]]
-          
-          departures.shift(1)
-          arrivals.shift(1)
-          departure_times.shift(1)
-          arrival_times.shift(1)
-          flight_nums.shift(1)
+                  carriers[0],
+                  amounts[0]]
+          count += 1
+        end
+        if amounts.count != 0
+          departures.shift(count + 1)
+          arrivals.shift(count + 1)
+          departure_times.shift(count + 1)
+          arrival_times.shift(count + 1)
+          flight_nums.shift(count)
           carriers.shift(1)
           amounts.shift(1)
         end
+      else
+        csv << [departures[count],
+                arrivals[count],
+                departure_times[count],
+                arrival_times[count],
+                flight_nums[count],
+                carriers[count],
+                amounts[count]]
+        
+        departures.shift(1)
+        arrivals.shift(1)
+        departure_times.shift(1)
+        arrival_times.shift(1)
+        flight_nums.shift(1)
+        carriers.shift(1)
+        amounts.shift(1)
       end
     end
-  # rescue
-  # end
+  end
 end
 
 
