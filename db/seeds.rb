@@ -237,8 +237,8 @@ CSV.foreach('db/routes.csv') do |route|
   scraper.visit_link(link)
 
   uids = scraper.get_uids
-
   binding.pry
+  
 
   if scraper.non_stop
     puts origin + '-' + destination + date
