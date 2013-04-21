@@ -143,10 +143,10 @@ CSV.foreach('db/routes.csv') do |route|
   scraper.non_stop
   uids = scraper.get_uids(true)
 
+  # direct flights
   uids.each_with_index do |uid, i|
     itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
 
-    # direct flights
     if itinerary['details'].length == 1
       departures = scraper.departure_times
       arrivals = scraper.arrival_times
@@ -167,6 +167,8 @@ CSV.foreach('db/routes.csv') do |route|
         fl.price = itinerary['details'][0]['details-totalFare']
         fl.number_of_stops = 0
         fl.is_first_flight = true
+        fl.uid = uid
+        fl.rid = rid
       end
       new_itin.update_attributes!(
         :date => created_flight.departure_time,
@@ -179,10 +181,10 @@ CSV.foreach('db/routes.csv') do |route|
   scraper.one_stop
   uids = scraper.get_uids(false)
 
+  # one-stop flights
   uids.each_with_index do |uid, i|
     itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
 
-    # one-stop flights
     if itinerary['details'].length == 2
       new_itin = Itinerary.create!(
         :origin_airport_id => Airport.find_by_code(origin).id,
@@ -202,6 +204,8 @@ CSV.foreach('db/routes.csv') do |route|
         fl.price = first_flight['details-totalFare']
         fl.number_of_stops = 1
         fl.is_first_flight = true
+        fl.uid = uid
+        fl.rid = rid
       end
 
       flight2 = Flight.create! do |fl|
@@ -215,6 +219,8 @@ CSV.foreach('db/routes.csv') do |route|
         fl.price = second_flight['details-totalFare']
         fl.number_of_stops = 1
         fl.is_first_flight = false
+        fl.uid = uid
+        fl.rid = rid
       end
       binding.pry
     end
