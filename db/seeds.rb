@@ -4,6 +4,8 @@ require 'capybara/dsl'
 require 'launchy'
 require 'pry'
 require 'csv'
+require 'httparty'
+require 'rest_client'
 
 Capybara.default_driver = :webkit
 
@@ -212,12 +214,32 @@ class Scraper
     arrival_times.select { |time| time[0] != '[' }
   end
 
-  def get_uids
+  def create_search_link(origin, destination, date)
+    search_link =  "http://travel.travelocity.com/flights/InitialSearch.do?Service=TRAVELOCITY&last_pgd_page=ushpnbff.pgd&entryPoint=FD&pkg_type=fh_pkg&flightType=oneway&dateFormat=mm%2Fdd%2Fyyyy&subnav=form-fow&"
+    search_link += "leavingFrom=" + origin
+    search_link += "&goingTo=" + destination
+    search_link += "&dateTypeSelect=exactDates&leavingDate="
+    search_link += date.gsub('/', '%2F')  # "04%2F12%2F2013"
+    search_link += "&dateLeavingTime=Anytime&departDateFlexibility=3&returningDate=mm%2Fdd%2Fyyyy&dateReturningTime=Anytime&returnDateFlexibility=3&adults=1&children=0&seniors=0&minorsAge0=%3F&minorsAge1=%3F&minorsAge2=%3F&minorsAge3=%3F&minorsAge4=%3F"  
+  end
+
+  def get_uids(non)
     uids = []
     page.all('h3').each { |h| uids << h['id'].gsub('airline-', '') if h['id'] && h['id'][/\d/] }
+    if non
+      uids = uids.map { |uid| uid.gsub(/-.+/, '') }
+    else
+      uids = uids.map { |uid| uid.gsub(/-0/, '') }
+    end
     uids
   end
+
+  def get_rid
+    page.find('#rid').value
+  end
 end
+
+# driver code
 
 CSV.foreach('db/routes.csv') do |route|
   origin = route[0]
@@ -225,112 +247,89 @@ CSV.foreach('db/routes.csv') do |route|
   date = route[2]
   write_date = date.split("/").rotate(2).join("-")
 
-  link =  "http://travel.travelocity.com/flights/InitialSearch.do?Service=TRAVELOCITY&last_pgd_page=ushpnbff.pgd&entryPoint=FD&pkg_type=fh_pkg&flightType=oneway&dateFormat=mm%2Fdd%2Fyyyy&subnav=form-fow&"
-  link += "leavingFrom=" + origin
-  link += "&goingTo=" + destination
-  link += "&dateTypeSelect=exactDates&leavingDate="
-  link += date.gsub('/', '%2F')  # "04%2F12%2F2013"
-  link += "&dateLeavingTime=Anytime&departDateFlexibility=3&returningDate=mm%2Fdd%2Fyyyy&dateReturningTime=Anytime&returnDateFlexibility=3&adults=1&children=0&seniors=0&minorsAge0=%3F&minorsAge1=%3F&minorsAge2=%3F&minorsAge3=%3F&minorsAge4=%3F"
-
   scraper = Scraper.new(origin, destination, date)
 
-  scraper.visit_link(link)
+  search_link = scraper.create_search_link(origin, destination, date)
+  scraper.visit_link(search_link)
 
-  uids = scraper.get_uids
-  binding.pry
-  
+  rid = scraper.get_rid
+  scraper.non_stop
+  uids = scraper.get_uids(true)
 
-  if scraper.non_stop
-    puts origin + '-' + destination + date
-    scraper.open
-    sleep 2
+  uids.each_with_index do |uid, i|
+    itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
 
-    departures = scraper.departures
-    arrivals = scraper.arrivals
-    departure_times = scraper.departure_times
-    arrival_times = scraper.arrival_times
-    flight_nums = scraper.flight_nums
-    carriers = scraper.carriers
-    amounts = scraper.amounts
+    # direct flights
+    if itinerary['details'].length == 1
+      departures = scraper.departure_times
+      arrivals = scraper.arrival_times
+      airlines = scraper.carriers
 
-    flight_count = departures.count
+      new_itin = Itinerary.create!(
+        :origin_airport_id => Airport.find_by_code(origin).id,
+        :destination_airport_id => Airport.find_by_code(destination).id)
 
-    CSV.open(origin + '-' + destination + '-' + write_date + '-non-stop.csv', "wb") do |csv|
-      count = 0
-      while count < flight_count
-        csv << [departures[count],
-                arrivals[count],
-                departure_times[count],
-                arrival_times[count],
-                flight_nums[count],
-                carriers[count],
-                amounts[count]]
-        count += 1
+      created_flight = Flight.create! do |fl|
+        fl.itinerary_id = new_itin.id
+        fl.departure_airport_id = new_itin.origin_airport_id
+        fl.arrival_airport_id = new_itin.destination_airport_id
+        fl.departure_time = DateTime.strptime(write_date + '-' + departures[i], '%Y-%m-%d-%I:%M %p')
+        fl.arrival_time = DateTime.strptime(write_date + '-' + arrivals[i], '%Y-%m-%d-%I:%M %p')
+        fl.airline = airlines[i]
+        fl.flight_no = itinerary['details'][0]['details-flightNumber']
+        fl.price = itinerary['details'][0]['details-totalFare']
+        fl.number_of_stops = 0
+        fl.is_first_flight = true
       end
+      new_itin.update_attributes!(
+        :date => created_flight.departure_time,
+        :origin_airport_id => created_flight.departure_airport_id,
+        :destination_airport_id => created_flight.arrival_airport_id)
+
     end
   end
-  
+
   scraper.one_stop
-  scraper.open
-  sleep 2
+  uids = scraper.get_uids(false)
 
-  flight_changes = scraper.no_change_of_planes
-  num_flights = scraper.num_flights
+  uids.each_with_index do |uid, i|
+    itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
 
-  flight_changes.each_with_index do |change, i|
-    num_flights[i / 2 - 2] -= 1 if change == "Stop"
-  end
+    # one-stop flights
+    if itinerary['details'].length == 2
+      new_itin = Itinerary.create!(
+        :origin_airport_id => Airport.find_by_code(origin).id,
+        :destination_airport_id => Airport.find_by_code(destination).id)
 
-  num_flights
+      first_flight = itinerary['details'][0]
+      second_flight = itinerary['details'][1]
 
-  departures = scraper.departures
-  arrivals = scraper.arrivals
-  departure_times = scraper.departure_times
-  arrival_times = scraper.arrival_times
-  flight_nums = scraper.flight_nums
-  carriers = scraper.carriers
-  amounts = scraper.amounts
-
-  CSV.open(origin + '-' + destination + '-' + write_date + '-one-stop.csv', "wb") do |csv|
-    num_flights.each do |num|
-      count = 0
-      if num == 2
-        while count < num
-          csv << [departures[count + 1],
-                  arrivals[count + 1],
-                  departure_times[count + 1],
-                  arrival_times[count + 1],
-                  flight_nums[count],
-                  carriers[0],
-                  amounts[0]]
-          count += 1
-        end
-        if amounts.count != 0
-          departures.shift(count + 1)
-          arrivals.shift(count + 1)
-          departure_times.shift(count + 1)
-          arrival_times.shift(count + 1)
-          flight_nums.shift(count)
-          carriers.shift(1)
-          amounts.shift(1)
-        end
-      else
-        csv << [departures[count],
-                arrivals[count],
-                departure_times[count],
-                arrival_times[count],
-                flight_nums[count],
-                carriers[count],
-                amounts[count]]
-        
-        departures.shift(1)
-        arrivals.shift(1)
-        departure_times.shift(1)
-        arrival_times.shift(1)
-        flight_nums.shift(1)
-        carriers.shift(1)
-        amounts.shift(1)
+      flight1 = Flight.create! do |fl|
+        fl.itinerary_id = new_itin.id
+        fl.departure_airport_id = new_itin.origin_airport_id
+        fl.arrival_airport_id = Airport.find_by_code(first_flight['details-arrivalLocation'][/\(...\)/].gsub(/\W/, '')).id
+        fl.departure_time = DateTime.strptime(write_date + '-' + first_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
+        fl.arrival_time = DateTime.strptime(write_date + '-' + first_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
+        fl.airline = first_flight['details-airline']
+        fl.flight_no = first_flight['details-flightNumber']
+        fl.price = first_flight['details-totalFare']
+        fl.number_of_stops = 1
+        fl.is_first_flight = true
       end
+
+      flight2 = Flight.create! do |fl|
+        fl.itinerary_id = new_itin.id
+        fl.departure_airport_id = Airport.find_by_code(second_flight['details-departureLocation'][/\(...\)/].gsub(/\W/, '')).id
+        fl.arrival_airport_id = new_itin.destination_airport_id
+        fl.departure_time = DateTime.strptime(write_date + '-' + second_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
+        fl.arrival_time = DateTime.strptime(write_date + '-' + second_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
+        fl.airline = second_flight['details-airline']
+        fl.flight_no = second_flight['details-flightNumber']
+        fl.price = second_flight['details-totalFare']
+        fl.number_of_stops = 1
+        fl.is_first_flight = false
+      end
+      binding.pry
     end
   end
 end
