@@ -10,6 +10,8 @@ class CreateFlights < ActiveRecord::Migration
       t.string :flight_no
       t.integer :price
       t.integer :number_of_stops
+      t.string :uid
+      t.string :rid
       t.boolean :is_first_flight
 
       t.timestamps
