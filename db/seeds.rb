@@ -26,17 +26,6 @@ class Scraper
     @date = date
   end
 
-  def fill_in_form
-    visit('http://travelocity.com/')
-    find('#sub-nav-fow').click
-    fill_in 'fo-from', with: @dep
-    find('li', :text => @dep).first.click
-    fill_in 'fo-to', with: @arr
-    find('li', :text => @arr).first.click
-    fill_in 'fo-fromdate', with: @date
-    page.all('input.btn_alt')[0].click
-  end
-
   def visit_link(link)
     visit(link)
   end
@@ -56,108 +45,6 @@ class Scraper
     else
       find('#stopsfilter-1-field').click
     end
-  end
-
-  def get_select
-    max = page.all('.action.select input').length
-    count = 0
-    select = []
-    while count < max
-      select << page.all('.action.select input')[count].id
-      count += 1
-    end
-    select
-  end
-
-  def open
-    max = page.all('.openDetails').length
-    count = 0
-    while count < max - 4
-      page.all('.openDetails')[count].click
-      count += 1
-    end
-  end
-
-  def num_flights
-    max = page.all('.stops').length
-    count = 0
-    num_flights = []
-    while count < max - 4
-      text = page.all('.stops')[count].text
-      text = text[/\d/]
-      if text == nil
-        num_flights << 1
-      elsif text == "1"
-        num_flights << 2
-      end
-      count += 1
-    end
-    num_flights
-  end
-
-  def no_change_of_planes
-    max = page.all('.connection').length
-    count = 0
-    flight_changes = []
-    while count < max
-      text = page.all('.connection')[count].text
-      if text[-1] != ']'
-        text = text[/Stop/]
-        if text == nil
-          flight_changes << "Connection"
-        elsif text == "Stop"
-          flight_changes << "Stop"
-        end
-      end
-      count += 1
-    end
-    flight_changes
-  end
-
-  def amounts
-    max = page.all('.amt').length
-    count = 0
-    nums = []
-    while count < max - 4
-      text = page.all('.amt')[count].text
-      text = text[/\d+\.\d+/]
-      num = (text.to_f * 100).to_i
-      nums << num
-      count += 1
-    end
-    nums
-  end
-
-  def departures
-    max = page.all('.dpt-location').length
-    count = 0
-    departures = []
-    while count < max
-      text = page.all('.dpt-location')[count].text
-      departure = text[/\(...\)/]
-      unless departure == nil
-        departure = departure.gsub(/\W/, '')
-        departures << departure
-      end
-      count += 1
-    end
-    departures
-  end
-
-  def arrivals
-    max = page.all('.arv-location').length
-    count = 0
-    arrivals = []
-    while count < max
-      text = page.all('.arv-location')[count].text
-      arrival = text[/\(...\)/]
-      unless arrival == nil
-        arrival = arrival.gsub(/\W/, '')
-        arrivals << arrival
-      end
-      count += 1
-    end
-    arrivals
   end
 
   def carriers
