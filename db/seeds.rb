@@ -116,7 +116,7 @@ class Scraper
     if non
       uids = uids.map { |uid| uid.gsub(/-.+/, '') }
     else
-      uids = uids.map { |uid| uid.gsub(/-0/, '') }
+      uids = uids.map { |uid| uid.gsub(/-\d+$/, '') }
     end
     uids
   end
@@ -143,9 +143,13 @@ CSV.foreach('db/routes.csv') do |route|
   scraper.non_stop
   uids = scraper.get_uids(true)
 
+  puts "Non-stop, #{origin}-#{destination}-#{date}"
+
   # direct flights
   uids.each_with_index do |uid, i|
     itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
+
+    puts "Fetching UID #{uid}"
 
     if itinerary['details'].length == 1
       departures = scraper.departure_times
@@ -164,7 +168,7 @@ CSV.foreach('db/routes.csv') do |route|
         fl.arrival_time = DateTime.strptime(write_date + '-' + arrivals[i], '%Y-%m-%d-%I:%M %p')
         fl.airline = airlines[i]
         fl.flight_no = itinerary['details'][0]['details-flightNumber']
-        fl.price = itinerary['details'][0]['details-totalFare']
+        fl.price = (itinerary['details'][0]['details-totalFare'].to_f * 100).to_i
         fl.number_of_stops = 0
         fl.is_first_flight = true
         fl.uid = uid
@@ -181,9 +185,13 @@ CSV.foreach('db/routes.csv') do |route|
   scraper.one_stop
   uids = scraper.get_uids(false)
 
+  puts "One-stop, #{origin}-#{destination}-#{date}"
+
   # one-stop flights
   uids.each_with_index do |uid, i|
     itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '35E5BC6477D6898D3272577E2AE157E6.pwbap103a', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
+
+    puts "Fetching UID #{uid}"
 
     if itinerary['details'].length == 2
       new_itin = Itinerary.create!(
@@ -201,7 +209,7 @@ CSV.foreach('db/routes.csv') do |route|
         fl.arrival_time = DateTime.strptime(write_date + '-' + first_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
         fl.airline = first_flight['details-airline']
         fl.flight_no = first_flight['details-flightNumber']
-        fl.price = first_flight['details-totalFare']
+        fl.price = (first_flight['details-totalFare'].to_f * 100).to_i
         fl.number_of_stops = 1
         fl.is_first_flight = true
         fl.uid = uid
@@ -216,13 +224,12 @@ CSV.foreach('db/routes.csv') do |route|
         fl.arrival_time = DateTime.strptime(write_date + '-' + second_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
         fl.airline = second_flight['details-airline']
         fl.flight_no = second_flight['details-flightNumber']
-        fl.price = second_flight['details-totalFare']
+        fl.price = (second_flight['details-totalFare'].to_f * 100).to_i
         fl.number_of_stops = 1
         fl.is_first_flight = false
         fl.uid = uid
         fl.rid = rid
       end
-      binding.pry
     end
   end
 end
