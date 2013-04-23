@@ -1,11 +1,11 @@
-require 'capybara-webkit'
-require 'capybara'
-require 'capybara/dsl'
-require 'launchy'
-require 'pry'
-require 'csv'
-require 'httparty'
-require 'rest_client'
+# require 'capybara-webkit'
+# require 'capybara'
+# require 'capybara/dsl'
+# require 'launchy'
+# require 'pry'
+# require 'csv'
+# require 'httparty'
+# require 'rest_client'
 
 Capybara.default_driver = :webkit
 
