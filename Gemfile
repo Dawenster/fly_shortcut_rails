@@ -7,18 +7,12 @@ gem 'rails', '3.2.12'
 
 gem 'pg'
 gem 'thin'
-gem 'pry'
-gem 'pry_debug'
 gem 'activesupport'
 gem 'activerecord'
 gem 'rake'
-gem 'capybara-webkit'
-gem 'capybara'
-gem 'launchy'
 gem 'twitter-bootstrap-rails'
-gem 'mechanize'
-gem 'httparty'
-gem 'rest-client'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -32,8 +26,17 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+group :development do
+  gem 'capybara-webkit'
+  gem 'capybara'
+  gem 'launchy'
+  gem 'pry'
+  gem 'pry_debug'
+  gem 'mechanize'
+  gem 'httparty'
+  gem 'rest-client'
+end
+
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
