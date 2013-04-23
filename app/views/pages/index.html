@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Fly Shortcut - Hidden City Ticketing Search Engine</title>
+
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  
+</head>
+<body>
+  <div id="ak" class="container">
+    <div class="panel1 clearfix">
+      <div class="panel1Container clearfix">
+        <div class="headline">
+          <h1>FlyShortcut</h1>
+          <h2 class="light">is a "hidden city ticketing" search engine -</h2>
+          <h2 class="sharp">when the lowest fare isn't low enough</h2>
+        </div>
+        <div class="highlight clearfix">
+          <div class="featured">
+            <div class="top">
+              <p>Technique featured in:</p>
+            </div>
+            <div class="bottom">
+              <img src="/assets/nytlogo.gif">
+              <img src="/assets/economistlogo.gif" class="extraSmall">
+              <img src="/assets/usatlogo.gif" class="extraSmall">
+            </div>
+          </div>
+          <div class="example">
+            <div class="top">
+              <p>San Francisco to New York (JBU648) departing Apr 15</p>
+            </div>
+            <div class="bottom">
+              <table>
+                <tr>
+                  <td class="r1 c1">Traditional Ticketing</td>
+                  <td class="r1 c2">$504.90</td>
+                </tr>
+                <tr>
+                  <td class="r2 c1">Hidden City Ticketing</td>
+                  <td class="r2 c2">$261.20</td>
+                </tr>
+                <tr>
+                  <td class="r3 c1">You Save</td>
+                  <td class="r3 c2">$243.70 (48%)</td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="nextPanel">
+          <a href="#panel2" class="smoothScroll"><button class="btn btn-success">Learn the secret</button></a>
+        </div>
+      </div> 
+    </div>
+
+    <div class="panel2" id="panel2">
+      <div class="scrollStopper">Stop auto-scroll here!</div>
+      <div class="panelCaption">
+        <h2>The Secret</h2>
+      </div>
+      <div class="headline">
+        <h1 class="smaller">You want to fly from A to B.  Guess what:</h1>
+        <h1 class="larger">Booking A:B:C can cost less than A:B</h1>
+        <img src="/assets/panel2image.png">
+      </div>
+      <div class="nextPanel">
+        <a href="#panel3" class="smoothScroll"><button class="btn">What does this mean?</button></a>
+      </div>
+    </div>
+
+    <div class="panel3 clearfix" id="panel3">
+      <div class="scrollStopper">Stop auto-scroll here!</div>
+      <div class="panelCaption">
+        <h2>What this means</h2>
+      </div>
+      <div class="headline clearfix">
+        <div class="headlineLeft">
+          <h1>"Hidden city ticketing" -</h1>
+          <h1>booking A:B:C, flying A:B, and</h1>
+          <h1>throwing away B:C, can yield</h1>
+        </div>
+        <div class="headlineRight"><h1>lower than lowest fares</h1></div>
+      </div>
+      <div class="diagram"><img src="/assets/panel3image.png"></div>
+      <div class="limitationsAndRisks">
+        <div class="limitations">
+          <p class="highlight">Limitations:</p>
+          <div class="specifics">
+            <img src="/assets/limit-oneway.png">
+            <p class="highlight">One-way at a time.</p>
+            <p>For a round trip flight, you must book two one way tickets</p>
+          </div>
+          <div class="specifics">
+            <img src="/assets/limit-carryon.png">
+            <p class="highlight">No checked bags.</p>
+            <p>You can only bring carry-on luggage</p>
+          </div>
+        </div>
+        <div class="risks">
+          <p class="highlight">Risks:</p>
+          <div class="specifics">
+            <img src="/assets/risk-routing.png">
+            <p class="highlight">Risk of routing changes.</p>
+            <p>Airlines only guarantee travel from A:C, not the routing to get there</p>
+          </div>
+          <div class="specifics">
+            <img src="/assets/risk-action.png">
+            <p class="highlight">Risk of hostile airline action</p>
+            <p>E.g. Removal from frequent flyer program</p>
+          </div>
+        </div>
+      </div>
+      <div class="nextPanel">
+        <a href="#panel4" class="smoothScroll"><button class="btn">Do people do this?</button></a>
+      </div>
+    </div>
+
+    <div class="panel4 clearfix" id="panel4">
+      <div class="scrollStopper">Stop auto-scroll here!</div>
+      <div class="panelCaption">
+        <h2>What the media is saying</h2>
+      </div>
+      <div class="contentWrapper clearfix">
+        <div class="mediaLeft clearfix">
+          <a href="http://www.nytimes.com/2011/05/08/magazine/mag-08subversion-t.html" target="_blank" class="mediaTop">
+            <h2>"How to Beat High Airfares"</h2>
+            <img src="/assets/nytlogo.gif">
+          </a>
+          <a href="http://www.economist.com/blogs/gulliver/2011/05/hidden_city_ticketing" target="_blank" class="mediaBottom">
+            <h2>"Airlines hate this move, but it's apparently totally legal."</h2>
+            <img src="/assets/economistlogo.gif">
+          </a>
+        </div>
+        <div class="mediaRight"><img src="/assets/mediaImage.jpg"></div>
+      </div>
+      <a href="http://travel.usatoday.com/alliance/flights/boardingarea/post/2012/01/View-From-The-Wing---How-to-Use-Hidden-City-and-Throwaway-Ticketing-to-Save-Money-on-Airfare/598252/1" target="_blank" class="mediaBottom2">
+        <h2>"Ninety percent of the time... this comes off without a hitch and you get real savings."</h2>
+        <img src="/assets/usatlogo.gif">
+      </a>
+      <div class="nextPanel">
+        <a href="#panel5" class="smoothScroll"><button class="btn">How do I find these opportunities?</button></a>
+      </div>
+    </div>
+
+    <div class="panel5 clearfix" id="panel5">
+      <div class="scrollStopper">Stop auto-scroll here!</div>
+      <div class="panelCaption">
+        <h2>Use FlyShortcut</h2>
+        <img src="/assets/64_search.png">
+      </div>
+      <div class="panel5headline">
+        <h1>We find and list hidden</h1>
+        <h1>city ticketing opportunities</h1>
+      </div>
+      <div class="disclaimer1">
+        <p>Allow us to play devil's advocate when the lowest fare isn't low enough.</p>
+        <p>We list all A:B:C < A:B, so you can book A:B:C and fly A:B for less.</p>
+      </div>
+      <div class="disclaimer2">
+        <p><span class="important">Important:</span> "Hidden city ticketing" is legal, but it is against airline rules and has limitations and risks involved.  By pressing the button below, you acknowledge that you understand the risks involved and accept our terms and conditions for use of this service.</p>
+      </div>
+      <div class="nextPanel">
+       <a href="/flights" class="smoothScroll"><button class="btn btn-success">I understand.  Let me proceed at my own risk!</button></a>
+     </div>
+    </div>
+
+    <div class="footer"><p>FlyShortcut is a project by <a href="http://justsaywen.com/">David Wen</a> and <a href="http://adriankhoo.com">Adrian Khoo</a> | Creative Commons Image Credits: <a href="http://www.flickr.com/photos/greymaster/">James Albright</a>, <a href="http://www.flickr.com/photos/37078205@N06/">Fechi Fajardo</a>and <a href="http://dribbble.com/humphreybc">Benjamin Humphrey</a>.</p></div>
+  </div>
+</body>
+</html>

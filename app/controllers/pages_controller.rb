@@ -1,4 +1,8 @@
 class PagesController < ApplicationController
-	def about_us
+	def index
+    render :layout => false
+  end
+
+  def about_us
 	end
 end
