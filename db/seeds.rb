@@ -1,11 +1,13 @@
-# require 'capybara-webkit'
-# require 'capybara'
-# require 'capybara/dsl'
-# require 'launchy'
-# require 'pry'
-# require 'csv'
-# require 'httparty'
-# require 'rest_client'
+# ['IAH', 'ATL', 'PHX', 'DEN', 'YYC', 'DSM', 'FLL', 'AUS', 'CLT', 'CUN', 'ELP', 'DFW', 'MIA', 'ORD', 'BMI', 'CID', 'GRR', 'JFK', 'BTV', 'DTW', 'YYZ', 'GCM', 'PHL', 'BOS', 'BWI', 'IAD', 'NRT', 'ICN', 'TPE', 'MNL']
+
+require 'capybara-webkit'
+require 'capybara'
+require 'capybara/dsl'
+require 'launchy'
+require 'pry'
+require 'csv'
+require 'httparty'
+require 'rest_client'
 
 Capybara.default_driver = :webkit
 
