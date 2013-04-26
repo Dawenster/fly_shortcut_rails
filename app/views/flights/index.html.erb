@@ -16,7 +16,7 @@
 
 	  		<div class="top-half">
 	  			<div class="price">$<%= flight.rounded_price %></div>
-	  			<div class="savings">Save <strong>$<%= non_stop.rounded_price - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true) %></div>
+	  			<div class="savings">Save <strong>$<%= non_stop.rounded_price - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %></div>
 	  		</div>
 
 	  		<div class="bottom-half">
@@ -35,7 +35,7 @@
 		  			</tr>
 			  	</table>
 			  	<div class="below-table">
-			  		<a href="<%= offsite_flight_path(flight, original: false) %>"><button type="submit" class="btn btn-success btn-large">Book</button></a>
+			  		<a href="<%= offsite_flight_path(flight, original: false) %>" target="_blank"><button type="submit" class="btn btn-success btn-large">Book</button></a>
 
 			  		<div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %></div>
 			  	</div>
