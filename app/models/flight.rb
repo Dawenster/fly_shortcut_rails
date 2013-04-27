@@ -1,5 +1,6 @@
 class Flight < ActiveRecord::Base
-  attr_accessible :airline, :arrival_airport_id, :arrival_time, :departure_airport_id, :departure_time, :flight_no, :itinerary_id
+  attr_accessible :airline, :arrival_airport_id, :arrival_time, :departure_airport_id, :departure_time, :flight_no, :itinerary_id,
+                  :price, :number_of_stops, :uid, :rid, :is_first_flight
 
   belongs_to 	:itinerary,
   						:counter_cache => true

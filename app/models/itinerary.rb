@@ -1,5 +1,5 @@
 class Itinerary < ActiveRecord::Base
-  attr_accessible :date, :destination_airport_id, :origin_airport_id, :original_price, :price
+  attr_accessible :date, :destination_airport_id, :origin_airport_id, :original_price, :price, :flights_count
 
   has_many 		:flights
 
