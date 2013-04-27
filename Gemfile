@@ -27,7 +27,7 @@ group :assets do
 end
 
 group :development do
-  gem 'capybara-webkit'
+#  gem 'capybara-webkit'
   gem 'capybara'
   gem 'launchy'
   gem 'pry'

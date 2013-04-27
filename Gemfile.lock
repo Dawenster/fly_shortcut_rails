@@ -38,9 +38,6 @@ GEM
       rack-test (>= 0.5.4)
       selenium-webdriver (~> 2.0)
       xpath (~> 1.0.0)
-    capybara-webkit (0.14.2)
-      capybara (~> 2.0, >= 2.0.2)
-      json
     childprocess (0.3.8)
       ffi (~> 1.0, >= 1.0.11)
     coderay (1.0.9)
@@ -56,9 +53,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     eventmachine (1.0.0)
+    eventmachine (1.0.0-x86-mingw32)
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffi (1.3.1)
+    ffi (1.3.1-x86-mingw32)
     hike (1.2.1)
     httparty (0.11.0)
       multi_json (~> 1.0)
@@ -93,13 +92,20 @@ GEM
     net-http-digest_auth (1.3)
     net-http-persistent (2.8)
     nokogiri (1.5.9)
+    nokogiri (1.5.9-x86-mingw32)
     ntlm-http (0.1.1)
     pg (0.14.1)
+    pg (0.14.1-x86-mingw32)
     polyglot (0.3.3)
     pry (0.9.12)
       coderay (~> 1.0.5)
       method_source (~> 0.8)
       slop (~> 3.4)
+    pry (0.9.12-x86-mingw32)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+      win32console (~> 1.3)
     pry_debug (0.1.0)
       pry (~> 0.9.0)
     rack (1.4.5)
@@ -166,19 +172,21 @@ GEM
     unf (0.1.1)
       unf_ext
     unf_ext (0.0.6)
+    unf_ext (0.0.6-x86-mingw32)
     webrobots (0.1.1)
     websocket (1.0.7)
+    win32console (1.3.2-x86-mingw32)
     xpath (1.0.0)
       nokogiri (~> 1.3)
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   activerecord
   activesupport
   capybara
-  capybara-webkit
   coffee-rails (~> 3.2.1)
   httparty
   jquery-rails
