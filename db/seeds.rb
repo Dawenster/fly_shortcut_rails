@@ -4,7 +4,6 @@ require 'rest_client'
 
 # ['IAH', 'ATL', 'PHX', 'DEN', 'YYC', 'DSM', 'FLL', 'AUS', 'CLT', 'CUN', 'ELP', 'DFW', 'MIA', 'ORD', 'BMI', 'CID', 'GRR', 'JFK', 'BTV', 'DTW', 'YYZ', 'GCM', 'PHL', 'BOS', 'BWI', 'IAD', 'NRT', 'ICN', 'TPE', 'MNL']
 start_time = Time.now
-itinerary_count = 0
 flight_count = 0
 
 Flight.destroy_all
@@ -63,7 +62,6 @@ CSV.foreach('db/routes.csv') do |route|
         new_itin.update_attributes!(:date => created_flight.departure_time)
 
         puts "Scraped Non-stop UID: #{itin["uniqueId"]}"
-        itinerary_count += 1
         flight_count += 1
       end
 
@@ -112,7 +110,6 @@ CSV.foreach('db/routes.csv') do |route|
             end
 
             puts "Scraped One-stop UID: #{itin["uniqueId"]}"
-            itinerary_count += 1
             flight_count += 2
           end
         rescue
@@ -126,6 +123,5 @@ end
 time = (Time.now - start_time).to_i
 puts "*" * 50
 puts "Total time: #{time / 60} minutes, #{time % 60} seconds"
-puts "Itineraries: #{itinerary_count}"
 puts "Flights: #{flight_count}"
-puts "Avg scrape time per flight: #{time / flight_count} seconds"
+puts "Flights scraped per second: #{flight_count / time}"

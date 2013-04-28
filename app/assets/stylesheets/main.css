@@ -1,9 +1,10 @@
 #dw {
 	background-color: #BDE3E1;
+  min-height: 100%;
 }
 
 #dw .container {
-	min-height: 600px;
+  min-height: 100%;
 	height: 100%;
 }
 
