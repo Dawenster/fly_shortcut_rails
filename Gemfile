@@ -13,6 +13,7 @@ gem 'rake'
 gem 'twitter-bootstrap-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'rest-client'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -27,14 +28,7 @@ group :assets do
 end
 
 group :development do
-#  gem 'capybara-webkit'
-  gem 'capybara'
-  gem 'launchy'
   gem 'pry'
-  gem 'pry_debug'
-  gem 'mechanize'
-  gem 'httparty'
-  gem 'rest-client'
 end
 
 
