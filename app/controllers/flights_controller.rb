@@ -13,8 +13,8 @@ class FlightsController < ApplicationController
       @to << flight[0].arrival_airport.name
       @dates << flight[0].departure_time.strftime('%Y-%m-%d')
     end
-    @from = @from.uniq.sort
-    @to = @to.uniq.sort
-    @dates = @dates.uniq.sort
+    @from = @from.uniq.sort.unshift("Any")
+    @to = @to.uniq.sort.unshift("Any")
+    @dates = @dates.uniq.sort.unshift("Any")
   end
 end

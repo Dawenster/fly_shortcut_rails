@@ -33,17 +33,17 @@ $(document).ready(function() {
   	var date = "";
   	var concat = "";
 
-  	if ($('#origin').val() != "") {
+  	if ($('#from-dropdown').val() != "Any") {
   		origin = '.origin' + regex.exec($('#from-dropdown').val())[1];
   		concat = origin;
   	}
 
-  	if ($('#destination').val() != "") {
+  	if ($('#to-dropdown').val() != "Any") {
   		destination = '.destination' + regex.exec($('#to-dropdown').val())[1];
   		concat = concat + destination
   	}
 
-  	if ($('#date').val() != "") {
+  	if ($('#dates-dropdown').val() != "Any") {
   		date = '.' + $('#dates-dropdown').val();
   		concat = concat + date
   	}
