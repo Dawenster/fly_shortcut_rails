@@ -106,7 +106,7 @@ CSV.foreach('db/routes.csv') do |route|
               fl.arrival_airport_id = destination_airport_id
               fl.departure_time = DateTime.strptime(formatted_date + '-' + second_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
               fl.arrival_time = DateTime.strptime(formatted_date + '-' + second_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
-              if next_day
+              if next_day || fl.departure_time < flight1.arrival_time
                 fl.departure_time += 1.day
                 fl.arrival_time += 1.day
               end
