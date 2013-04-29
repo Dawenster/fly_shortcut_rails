@@ -45,8 +45,9 @@ class OffsiteFlightsController < ApplicationController
   end
 
   def search_result(departure_date, departure_airport_code, arrival_airport_code)
-    JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsItineraryService.do', params: { jsessionid: 'ACEE3FCA20509BA3931D4E79C822E310.pwbap099a', flightType: 'oneway', dateTypeSelect: 'EXACT_DATES', leavingDate: departure_date, leavingFrom: departure_airport_code, goingTo: arrival_airport_code, dateLeavingTime: 1200, originalLeavingTime: 'Anytime', adults: 1, seniors: 0, children: 0, paxCount: 1, classOfService: 'ECONOMY', fareType: 'all', membershipLevel: 'NO_VALUE' })
+    result = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsItineraryService.do', params: { jsessionid: 'ACEE3FCA20509BA3931D4E79C822E310.pwbap099a', flightType: 'oneway', dateTypeSelect: 'EXACT_DATES', leavingDate: departure_date, leavingFrom: departure_airport_code, goingTo: arrival_airport_code, dateLeavingTime: 1200, originalLeavingTime: 'Anytime', adults: 1, seniors: 0, children: 0, paxCount: 1, classOfService: 'ECONOMY', fareType: 'all', membershipLevel: 'NO_VALUE' })
     sleep 2
+    result
   end
 
   def link(departure_airport_code, arrival_airport_code, flight, uid, itin_id, rid)
