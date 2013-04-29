@@ -51,6 +51,7 @@ CSV.foreach('db/routes.csv') do |route|
           fl.arrival_airport_id = destination_airport_id
           fl.departure_time = DateTime.strptime(formatted_date + '-' + itin["departureTimeDisplay"], '%Y-%m-%d-%I:%M %p')
           fl.arrival_time = DateTime.strptime(formatted_date + '-' + itin["arrivalTimeDisplay"], '%Y-%m-%d-%I:%M %p')
+          fl.arrival_time = fl.arrival_time + 1.day if fl.arrival_time < fl.departure_time
           fl.airline = itin["airline"]
           fl.flight_no = itin["header"][0]["flightNumber"]
           fl.price = (itin['totalFare'].to_f * 100).to_i
@@ -78,6 +79,7 @@ CSV.foreach('db/routes.csv') do |route|
 
             first_flight = itinerary['details'][0]
             second_flight = itinerary['details'][1]
+            next_day = false
 
             flight1 = Flight.create! do |fl|
               fl.itinerary_id = new_itin.id
@@ -85,6 +87,10 @@ CSV.foreach('db/routes.csv') do |route|
               fl.arrival_airport_id = Airport.find_by_code(first_flight['details-arrivalLocation'][/\(...\)/].gsub(/\W/, '')).id
               fl.departure_time = DateTime.strptime(formatted_date + '-' + first_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
               fl.arrival_time = DateTime.strptime(formatted_date + '-' + first_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
+              if fl.arrival_time < fl.departure_time
+                fl.arrival_time += 1.day
+                next_day = true
+              end
               fl.airline = first_flight['details-airline']
               fl.flight_no = first_flight['details-flightNumber']
               fl.price = (first_flight['details-totalFare'].to_f * 100).to_i
@@ -100,6 +106,11 @@ CSV.foreach('db/routes.csv') do |route|
               fl.arrival_airport_id = destination_airport_id
               fl.departure_time = DateTime.strptime(formatted_date + '-' + second_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
               fl.arrival_time = DateTime.strptime(formatted_date + '-' + second_flight['details-arrivalTime'], '%Y-%m-%d-%I:%M %p')
+              if next_day
+                fl.departure_time += 1.day
+                fl.arrival_time += 1.day
+              end
+              fl.arrival_time += 1.day if fl.arrival_time < fl.departure_time
               fl.airline = second_flight['details-airline']
               fl.flight_no = second_flight['details-flightNumber']
               fl.price = (second_flight['details-totalFare'].to_f * 100).to_i
