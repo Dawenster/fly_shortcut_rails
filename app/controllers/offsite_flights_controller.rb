@@ -8,32 +8,27 @@ class OffsiteFlightsController < ApplicationController
     itin_id = ""
 
     if original
-  
-      original_flight = Flight.where(:flight_no => shortcut_flight.flight_no, :airline => shortcut_flight.airline, :number_of_stops => 0).first
-      arrival_airport_code = original_flight.arrival_airport.code
+      arrival_airport_code = shortcut_flight.arrival_airport.code
       search_result = search_result(departure_date, departure_airport_code, arrival_airport_code)
       flights = search_result["results"]
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
-        if flight["numberOfStops"] == 0 && flight["airline"] == original_flight.airline && flight["header"][0]["flightNumber"] == original_flight.flight_no
-
+        if flight["numberOfStops"] == 0 && flight["airline"] == shortcut_flight.airline && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end
       end
-      link = link(departure_airport_code, arrival_airport_code, original_flight, uid, itin_id, rid)
-    else
+      link = link(departure_airport_code, arrival_airport_code, shortcut_flight, uid, itin_id, rid)
 
-      second_flight = shortcut_flight.itinerary.flights.order("departure_time DESC").first
-      arrival_airport_code = second_flight.arrival_airport.code
+    else
+      arrival_airport_code = Airport.find(shortcut_flight.second_flight_destination)
       search_result = search_result(departure_date, departure_airport_code, arrival_airport_code)
       flights = search_result["results"]
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
         if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"] == second_flight.flight_no
-
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end

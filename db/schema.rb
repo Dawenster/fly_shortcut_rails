@@ -33,9 +33,9 @@ ActiveRecord::Schema.define(:version => 20130409230702) do
     t.string   "flight_no"
     t.integer  "price"
     t.integer  "number_of_stops"
-    t.string   "uid"
-    t.string   "rid"
     t.boolean  "is_first_flight"
+    t.integer  "second_flight"
+    t.integer  "original_price"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end

@@ -8,13 +8,13 @@ flight_count = 0
 Flight.destroy_all
 Itinerary.destroy_all
 
-# CSV.foreach('db/airports.csv') do |row|
-#   Airport.create( :name => row[1].strip,
-#                   :code => row[2].strip,
-#                   :latitude => row[3].strip,
-#                   :longitude => row[4].strip,
-#                   :timezone => row[5].strip)
-# end
+CSV.foreach('db/airports.csv') do |row|
+  Airport.create( :name => row[1].strip,
+                  :code => row[2].strip,
+                  :latitude => row[3].strip,
+                  :longitude => row[4].strip,
+                  :timezone => row[5].strip)
+end
 
 CSV.foreach('db/routes.csv') do |route|
 
@@ -36,16 +36,10 @@ CSV.foreach('db/routes.csv') do |route|
 
     rid = search_result["metadata"]["responseId"]
     itins = search_result["results"]
-    
 
     itins.each do |itin|
       if itin["numberOfStops"] == 0
-        new_itin = Itinerary.create!(
-          :origin_airport_id => origin_airport_id,
-          :destination_airport_id => destination_airport_id)
-
         created_flight = Flight.create! do |fl|
-          fl.itinerary_id = new_itin.id
           fl.departure_airport_id = origin_airport_id
           fl.arrival_airport_id = destination_airport_id
           fl.departure_time = DateTime.strptime(formatted_date + '-' + itin["departureTimeDisplay"], '%Y-%m-%d-%I:%M %p')
@@ -56,12 +50,9 @@ CSV.foreach('db/routes.csv') do |route|
           fl.price = (itin['totalFare'].to_f * 100).to_i
           fl.number_of_stops = 0
           fl.is_first_flight = true
-          fl.uid = itin["uniqueId"]
-          fl.rid = rid
         end
-        new_itin.update_attributes!(:date => created_flight.departure_time)
 
-        puts "Scraped Non-stop UID: #{itin["uniqueId"]}"
+        puts "Scraped Non-stop #{itin["airline"]} #{itin["header"][0]["flightNumber"]}"
         flight_count += 1
       end
 
@@ -72,16 +63,11 @@ CSV.foreach('db/routes.csv') do |route|
           itinerary = JSON.parse(RestClient.get 'http://travel.travelocity.com/flights/FlightsDetails.do', params: { jsessionid: '0', locLink: 'OUTBOUND|NAT1', ashopRid: rid, itins: uid, classOfService: 'ECONOMY', paxCount: 1, leavingFrom: origin, goingTo: destination })
 
           if itinerary['details'].length == 2
-            new_itin = Itinerary.create!(
-              :origin_airport_id => origin_airport_id,
-              :destination_airport_id => destination_airport_id)
-
             first_flight = itinerary['details'][0]
             second_flight = itinerary['details'][1]
             next_day = false
 
             flight1 = Flight.create! do |fl|
-              fl.itinerary_id = new_itin.id
               fl.departure_airport_id = origin_airport_id
               fl.arrival_airport_id = Airport.find_by_code(first_flight['details-arrivalLocation'][/\(...\)/].gsub(/\W/, '')).id
               fl.departure_time = DateTime.strptime(formatted_date + '-' + first_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
@@ -95,12 +81,9 @@ CSV.foreach('db/routes.csv') do |route|
               fl.price = (first_flight['details-totalFare'].to_f * 100).to_i
               fl.number_of_stops = 1
               fl.is_first_flight = true
-              fl.uid = uid
-              fl.rid = rid
             end
 
             flight2 = Flight.create! do |fl|
-              fl.itinerary_id = new_itin.id
               fl.departure_airport_id = Airport.find_by_code(second_flight['details-departureLocation'][/\(...\)/].gsub(/\W/, '')).id
               fl.arrival_airport_id = destination_airport_id
               fl.departure_time = DateTime.strptime(formatted_date + '-' + second_flight['details-departureTime'], '%Y-%m-%d-%I:%M %p')
@@ -115,11 +98,10 @@ CSV.foreach('db/routes.csv') do |route|
               fl.price = (second_flight['details-totalFare'].to_f * 100).to_i
               fl.number_of_stops = 1
               fl.is_first_flight = false
-              fl.uid = uid
-              fl.rid = rid
             end
+            flight1.update_attributes(:second_flight => flight2.arrival_airport_id)
 
-            puts "Scraped One-stop UID: #{itin["uniqueId"]}"
+            puts "Scraped One-stop #{first_flight["details-airline"]} #{first_flight['details-flightNumber']} and #{second_flight['details-flightNumber']}"
             flight_count += 2
           end
         rescue
@@ -135,3 +117,18 @@ puts "*" * 50
 puts "Total time: #{time / 60} minutes, #{time % 60} seconds"
 puts "Flights: #{flight_count}"
 puts "Flights scraped per second: #{(flight_count / (Time.now - start_time)).round(2)}"
+
+start_time = Time.now
+puts "*" * 50
+puts "Commencing shortcut calculations..."
+
+flights = Flight.get_shortcuts.uniq
+
+Flight.all.each do |flight|
+  flight.destroy unless flights.include?(flight)
+end
+
+puts "Mission accomplished in #{(Time.now - start_time).round(2)} seconds"
+
+
+

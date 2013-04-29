@@ -1,6 +1,6 @@
 class Flight < ActiveRecord::Base
   attr_accessible :airline, :arrival_airport_id, :arrival_time, :departure_airport_id, :departure_time, :flight_no, :itinerary_id,
-                  :price, :number_of_stops, :uid, :rid, :is_first_flight
+                  :price, :number_of_stops, :uid, :rid, :is_first_flight, :second_flight, :original_price
 
   belongs_to 	:itinerary,
   						:counter_cache => true
@@ -73,17 +73,17 @@ class Flight < ActiveRecord::Base
     non_stop_flight = similar_flights.find {|f| f.number_of_stops == 0 }
 
     if non_stop_flight
-      shortcuts << [cheapest_flight, non_stop_flight]    
+      cheapest_flight.update_attributes(:original_price => non_stop_flight.price)
+      shortcuts << cheapest_flight
     end
-
-    # this array is the first flight of its itinerary
-    # it may be on its own or with another flight
-    # find the cheapest one in the group
-    # if its non-stop then no shortcut (return)
-    # keep the shortcut flight and the nonstop in the group
-
-    # level 3
-
   end
+
+  # Shortcut logic
+  
+  # this array is the first flight of its itinerary
+  # it may be on its own or with another flight
+  # find the cheapest one in the group
+  # if its non-stop then no shortcut (return)
+  # keep the shortcut flight and the nonstop in the group
 
 end

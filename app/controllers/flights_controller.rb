@@ -1,18 +1,19 @@
 class FlightsController < ApplicationController
   def index
-    @flights = Flight.get_shortcuts.uniq
+    # @flights = Flight.get_shortcuts.uniq
+    @flights = Flight.all
     @from = []
     @to = []
     @dates = []
     @combinations = []
 
-    @flights.sort_by! { |flight| flight[0].price }
-    @flights.uniq! { |flight| flight[0].flight_no + flight[0].airline }
+    @flights.sort_by! { |flight| flight.price }
+    @flights.uniq! { |flight| flight.flight_no + flight.airline }
 
     @flights.each do |flight|
-      depart = flight[0].departure_airport.name
-      arrive = flight[0].arrival_airport.name
-      date = flight[0].departure_time.strftime('%Y-%m-%d')
+      depart = flight.departure_airport.name
+      arrive = flight.arrival_airport.name
+      date = flight.departure_time.strftime('%Y-%m-%d')
       @from << depart
       @to << arrive
       @dates << date
