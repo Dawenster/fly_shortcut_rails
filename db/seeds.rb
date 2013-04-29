@@ -2,7 +2,6 @@
 require 'csv'
 require 'rest_client'
 
-# ['IAH', 'ATL', 'PHX', 'DEN', 'YYC', 'DSM', 'FLL', 'AUS', 'CLT', 'CUN', 'ELP', 'DFW', 'MIA', 'ORD', 'BMI', 'CID', 'GRR', 'JFK', 'BTV', 'DTW', 'YYZ', 'GCM', 'PHL', 'BOS', 'BWI', 'IAD', 'NRT', 'ICN', 'TPE', 'MNL']
 start_time = Time.now
 flight_count = 0
 
@@ -135,4 +134,4 @@ time = (Time.now - start_time).to_i
 puts "*" * 50
 puts "Total time: #{time / 60} minutes, #{time % 60} seconds"
 puts "Flights: #{flight_count}"
-puts "Flights scraped per second: #{flight_count / time}"
+puts "Flights scraped per second: #{(flight_count / (Time.now - start_time)).round(2)}"
