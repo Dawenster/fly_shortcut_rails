@@ -26,7 +26,7 @@ class FlightsController < ApplicationController
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json  { render :json => @combinations }
+      format.json  { render :json => { combinations: @combinations, from: @from, to: @to, dates: @dates } }
     end
   end
 end
