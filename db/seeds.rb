@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 require 'csv'
 require 'rest_client'
 
@@ -8,13 +8,13 @@ flight_count = 0
 Flight.destroy_all
 Itinerary.destroy_all
 
-CSV.foreach('db/airports.csv') do |row|
-  Airport.create( :name => row[1].strip,
-                  :code => row[2].strip,
-                  :latitude => row[3].strip,
-                  :longitude => row[4].strip,
-                  :timezone => row[5].strip)
-end
+# CSV.foreach('db/airports.csv') do |row|
+#   Airport.create( :name => row[1].strip,
+#                   :code => row[2].strip,
+#                   :latitude => row[3].strip,
+#                   :longitude => row[4].strip,
+#                   :timezone => row[5].strip)
+# end
 
 CSV.foreach('db/routes.csv') do |route|
 
