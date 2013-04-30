@@ -40,6 +40,7 @@ $(document).ready(function() {
     from = data.from;
     to = data.to;
     dates = data.dates;
+    readable_dates = data.readable_dates;
   })
 
   $("#from-dropdown").change(function() {
@@ -51,18 +52,17 @@ $(document).ready(function() {
       for (i = 0; i < to.length; i++ ) {
         $("#to-dropdown").append("<option value=" + regex.exec(to[i]) + ">" + to[i] + "</option>");
       }
-      for (i = 0; i < dates.length; i++ ) {
-        $("#dates-dropdown").append("<option value=" + regex.exec(dates[i]) + ">" + dates[i] + "</option>");
+      for (i = 0; i < readable_dates.length; i++ ) {
+        $("#dates-dropdown").append("<option value=" + regex.exec(dates[i]) + ">" + readable_dates[i] + "</option>");
       }
     }
     else {
       var toArray = [];
       var datesArray = [];
+      var readableDatesArray = []
 
       $("#to-dropdown").append("<option value='Any'>Any</option>");
       $("#dates-dropdown").append("<option value='Any'>Any</option>");
-
-      // Change date format
 
       for (i = 0; i < combinations.length; i++ ) {
         if (combinations[i][0] == selected.val()) {
@@ -71,18 +71,20 @@ $(document).ready(function() {
           }
           if ($.inArray(combinations[i][2], datesArray) == -1) {
             datesArray.push(combinations[i][2]);
+            readableDatesArray.push(combinations[i][3]);
           }
         }
       }
 
       toArray = toArray.sort();
       datesArray = datesArray.sort();
+      readableDatesArray = readableDatesArray.sort();
 
       for (i = 0; i < toArray.length; i++ ) {
         $("#to-dropdown").append("<option value=" + regex.exec(toArray[i]) + ">" + toArray[i] + "</option>");
       }
       for (i = 0; i < datesArray.length; i++ ) {
-        $("#dates-dropdown").append("<option value=" + regex.exec(datesArray[i]) + ">" + datesArray[i] + "</option>");
+        $("#dates-dropdown").append("<option value=" + regex.exec(datesArray[i]) + ">" + readableDatesArray[i] + "</option>");
       }
     }
   });

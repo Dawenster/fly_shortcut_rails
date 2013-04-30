@@ -22,18 +22,19 @@ class OffsiteFlightsController < ApplicationController
       link = link(departure_airport_code, arrival_airport_code, shortcut_flight, uid, itin_id, rid)
 
     else
-      arrival_airport_code = Airport.find(shortcut_flight.second_flight_destination)
+      arrival_airport_code = Airport.find(shortcut_flight.second_flight_destination).code
       search_result = search_result(departure_date, departure_airport_code, arrival_airport_code)
       flights = search_result["results"]
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
-        if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"] == shortcut_flight.second_flight_no
+        if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"].to_i == shortcut_flight.second_flight_no
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end
       end
       link = link(departure_airport_code, arrival_airport_code, shortcut_flight, uid, itin_id, rid)
+      binding.pry
     end
     redirect_to link
   end
