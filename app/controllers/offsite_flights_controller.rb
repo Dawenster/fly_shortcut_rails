@@ -28,7 +28,7 @@ class OffsiteFlightsController < ApplicationController
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
-        if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"] == second_flight.flight_no
+        if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"] == shortcut_flight.second_flight_no
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end

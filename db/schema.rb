@@ -34,10 +34,11 @@ ActiveRecord::Schema.define(:version => 20130409230702) do
     t.integer  "price"
     t.integer  "number_of_stops"
     t.boolean  "is_first_flight"
-    t.integer  "second_flight"
+    t.integer  "second_flight_destination"
+    t.integer  "second_flight_no"
     t.integer  "original_price"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   add_index "flights", ["arrival_airport_id"], :name => "index_flights_on_arrival_airport_id"

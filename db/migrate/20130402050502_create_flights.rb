@@ -12,6 +12,7 @@ class CreateFlights < ActiveRecord::Migration
       t.integer :number_of_stops
       t.boolean :is_first_flight
       t.integer :second_flight_destination
+      t.integer :second_flight_no
       t.integer :original_price
 
       t.timestamps

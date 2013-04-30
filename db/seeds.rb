@@ -1,4 +1,4 @@
-# require 'pry'
+require 'pry'
 require 'csv'
 require 'rest_client'
 
@@ -99,7 +99,8 @@ CSV.foreach('db/routes.csv') do |route|
               fl.number_of_stops = 1
               fl.is_first_flight = false
             end
-            flight1.update_attributes(:second_flight => flight2.arrival_airport_id)
+            
+            flight1.update_attributes(:second_flight_destination => flight2.arrival_airport_id, :second_flight_no => flight2.flight_no)
 
             puts "Scraped One-stop #{first_flight["details-airline"]} #{first_flight['details-flightNumber']} and #{second_flight['details-flightNumber']}"
             flight_count += 2
