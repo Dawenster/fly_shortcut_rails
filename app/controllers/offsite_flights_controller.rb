@@ -34,7 +34,6 @@ class OffsiteFlightsController < ApplicationController
         end
       end
       link = link(departure_airport_code, arrival_airport_code, shortcut_flight, uid, itin_id, rid)
-      binding.pry
     end
     redirect_to link
   end
