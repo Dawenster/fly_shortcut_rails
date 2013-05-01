@@ -6,6 +6,7 @@ flight_count = 0
 
 Flight.destroy_all
 Itinerary.destroy_all
+Airport.destroy_all
 
 CSV.foreach('db/airports.csv') do |row|
   Airport.create( :name => row[1].strip,
