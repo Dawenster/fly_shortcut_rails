@@ -32,6 +32,10 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
     CSV.foreach(file) do |route|
       begin
+        non_stop_flights = []
+        incomplete_flights = []
+        flights_to_delete = []
+
         origin = route[0]
         origin_airport_id = Airport.find_by_code(origin).id
 
@@ -64,6 +68,8 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
                 fl.pure_date = date
               end
 
+              non_stop_flights << created_flight
+
               puts "Scraped Non-stop #{itin["airline"]} #{itin["header"][0]["flightNumber"]}"
               flight_count += 1
             end
@@ -94,6 +100,9 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
               
               flight1.update_attributes(:second_flight_destination => flight2.arrival_airport_id, :second_flight_no => flight2.flight_no)
 
+              incomplete_flights << flight1
+              flights_to_delete << flight2
+
               puts "Scraped One-stop #{itin['header'][0]['airline']} #{itin['header'][0]['flightNumber']} and #{itin['header'][1]['flightNumber']}"
               flight_count += 2
             end
@@ -106,9 +115,8 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
     puts "*" * 50
     puts "Filling in one-stop flight info..."
 
-    incomplete_flights = Flight.where(:is_first_flight => true, :number_of_stops => 1)
     incomplete_flights.each do |flight|
-      match = Flight.where(:flight_no => flight.flight_no, :airline => flight.airline, :pure_date => flight.pure_date, :number_of_stops => 0)[0]
+      match = non_stop_flights.select { |ns_flight| ns_flight.flight_no == flight.flight_no && ns_flight.airline == flight.airline && ns_flight.pure_date == flight.pure_date }[0]
       flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time) if match
     end
 
@@ -119,9 +127,9 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
     puts "Deleting non-shortcut flights..."
 
-    Flight.all.each do |flight|
-      flight.destroy unless flight.shortcut
-    end
+    non_stop_flights.each { |flight| flight.destroy }
+    flights_to_delete.each { |flight| flight.destroy }
+    incomplete_flights.each { |flight| flight.destroy unless flight.shortcut }
 
     puts "#{origin_code} #{date} complete."
   end
