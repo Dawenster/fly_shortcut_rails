@@ -119,10 +119,10 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
     puts "Deleting non-shortcut flights..."
 
     Flight.all.each do |flight|
-      flight.destroy unless flight.origin_code
+      flight.destroy unless flight.shortcut
     end
 
-    puts "#{origin_code} complete."
+    puts "#{origin_code} #{date} complete."
   end
 end
 
