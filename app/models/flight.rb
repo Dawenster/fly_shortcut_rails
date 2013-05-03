@@ -1,6 +1,7 @@
 class Flight < ActiveRecord::Base
   attr_accessible :airline, :arrival_airport_id, :arrival_time, :departure_airport_id, :departure_time, :flight_no, :itinerary_id,
-                  :price, :number_of_stops, :uid, :rid, :is_first_flight, :second_flight_destination, :second_flight_no, :original_price
+                  :price, :number_of_stops, :uid, :rid, :is_first_flight, :second_flight_destination, :second_flight_no,
+                  :original_price, :origin_code, :shortcut, :pure_date
 
   belongs_to 	:itinerary,
   						:counter_cache => true
@@ -58,22 +59,22 @@ class Flight < ActiveRecord::Base
     where(is_first_flight: true)
   end
 
-  def self.get_shortcuts
+  def self.get_shortcuts(origin_code)
     shortcuts = []
     similar_flights.each do |original_flight_id, similar_flights|
-      add_shortcuts(shortcuts, similar_flights)
+      add_shortcuts(shortcuts, similar_flights, origin_code)
     end
     shortcuts
   end
 
-  def self.add_shortcuts(shortcuts, similar_flights)
+  def self.add_shortcuts(shortcuts, similar_flights, origin_code)
 
     cheapest_flight = similar_flights.first
     return if cheapest_flight.non_stop?
     non_stop_flight = similar_flights.find {|f| f.number_of_stops == 0 }
 
     if non_stop_flight
-      cheapest_flight.update_attributes(:original_price => non_stop_flight.price)
+      cheapest_flight.update_attributes(:original_price => non_stop_flight.price, :origin_code => origin_code, :shortcut => true)
       shortcuts << cheapest_flight
     end
   end
