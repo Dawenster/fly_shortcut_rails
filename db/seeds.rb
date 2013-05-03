@@ -17,7 +17,7 @@ end
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
-  num_days = (1..7).to_a
+  num_days = (1..20).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -29,12 +29,12 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   Flight.where(:origin_code => origin_code).destroy_all
 
   date_array.each do |date|
+    non_stop_flights = []
+    incomplete_flights = []
+    flights_to_delete = []
 
     CSV.foreach(file) do |route|
       begin
-        non_stop_flights = []
-        incomplete_flights = []
-        flights_to_delete = []
 
         origin = route[0]
         origin_airport_id = Airport.find_by_code(origin).id
@@ -107,6 +107,9 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
               flight_count += 2
             end
           rescue
+            created_flight.destroy if created_flight
+            flight1.destroy if flight1
+            flight2.destroy if flight2
           end
         end
       rescue
@@ -124,12 +127,13 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
     puts "Commencing shortcut calculations..."
 
     flights = Flight.get_shortcuts(origin_code).uniq
+    shortcut_flights_indices = flights.map { |flight| incomplete_flights.index(flight) }
 
     puts "Deleting non-shortcut flights..."
 
-    non_stop_flights.each { |flight| flight.destroy }
-    flights_to_delete.each { |flight| flight.destroy }
-    incomplete_flights.each { |flight| flight.destroy unless flight.shortcut }
+    non_stop_flights.map { |flight| flight.destroy }
+    flights_to_delete.map { |flight| flight.destroy }
+    incomplete_flights.each_with_index { |flight, i| flight.destroy unless shortcut_flights_indices.include?(i) }
 
     puts "#{origin_code} #{date} complete."
   end
