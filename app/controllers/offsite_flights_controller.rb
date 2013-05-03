@@ -14,7 +14,7 @@ class OffsiteFlightsController < ApplicationController
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
-        if flight["numberOfStops"] == 0 && flight["airline"] == shortcut_flight.airline && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no
+        if flight["numberOfStops"].to_i == 0 && flight["airline"] == shortcut_flight.airline && flight["header"][0]["flightNumber"].to_i == shortcut_flight.flight_no.to_i
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end
@@ -28,7 +28,7 @@ class OffsiteFlightsController < ApplicationController
       rid = search_result["metadata"]["responseId"]
 
       flights.each do |flight|
-        if flight["numberOfStops"] == 1 && flight["header"][0]["flightNumber"] == shortcut_flight.flight_no && flight["header"][1]["flightNumber"].to_i == shortcut_flight.second_flight_no
+        if flight["numberOfStops"].to_i == 1 && flight["header"][0]["flightNumber"].to_i == shortcut_flight.flight_no.to_i && flight["header"][1]["flightNumber"].to_i == shortcut_flight.second_flight_no.to_i
           uid = flight["uniqueId"]
           itin_id = flight["itinId"]
         end

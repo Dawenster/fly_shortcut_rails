@@ -27,7 +27,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   puts "Scraping flights originating from #{origin_code}"
 
   Flight.where(:origin_code => origin_code).destroy_all
-  
+
   date_array.each do |date|
 
     CSV.foreach(file) do |route|
@@ -108,7 +108,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
     incomplete_flights = Flight.where(:is_first_flight => true, :number_of_stops => 1)
     incomplete_flights.each do |flight|
-      match = Flight.where(:flight_no => flight.flight_no, :pure_date => flight.pure_date, :number_of_stops => 0)[0]
+      match = Flight.where(:flight_no => flight.flight_no, :airline => flight.airline, :pure_date => flight.pure_date, :number_of_stops => 0)[0]
       flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time) if match
     end
 
