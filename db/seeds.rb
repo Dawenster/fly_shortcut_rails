@@ -4,20 +4,20 @@ require 'rest_client'
 start_time = Time.now
 flight_count = 0
 
-Airport.destroy_all
+# Airport.destroy_all
 
-CSV.foreach('db/airports.csv') do |row|
-  Airport.create( :name => row[1].strip,
-                  :code => row[2].strip,
-                  :latitude => row[3].strip,
-                  :longitude => row[4].strip,
-                  :timezone => row[5].strip)
-end
+# CSV.foreach('db/airports.csv') do |row|
+#   Airport.create( :name => row[1].strip,
+#                   :code => row[2].strip,
+#                   :latitude => row[3].strip,
+#                   :longitude => row[4].strip,
+#                   :timezone => row[5].strip)
+# end
 
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
-  num_days = (1..20).to_a
+  num_days = (1..30).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -116,17 +116,21 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
       end
     end
     puts "*" * 50
+    puts "Finding cheapest flight of the day..."
+    cheapest_non_stop = non_stop_flights.min_by { |flight| flight.price }.price
+    cheapest_one_stop = incomplete_flights.min_by { |flight| flight.price }.price
+    cheapest_price = [cheapest_non_stop, cheapest_one_stop].min
+
     puts "Filling in one-stop flight info..."
 
     incomplete_flights.each do |flight|
       match = non_stop_flights.select { |ns_flight| ns_flight.flight_no == flight.flight_no && ns_flight.airline == flight.airline && ns_flight.pure_date == flight.pure_date }[0]
-      flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time) if match
+      flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time, :cheapest_price => cheapest_price) if match
     end
 
-    puts "*" * 50
     puts "Commencing shortcut calculations..."
 
-    flights = Flight.get_shortcuts(origin_code).uniq
+    flights = Flight.get_shortcuts(origin_code).uniq 
     shortcut_flights_indices = flights.map { |flight| incomplete_flights.index(flight) }
 
     puts "Deleting non-shortcut flights..."
