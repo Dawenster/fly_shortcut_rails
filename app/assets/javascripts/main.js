@@ -65,7 +65,25 @@ $(document).ready(function() {
   	$(concat).hide().effect('fade');
   });
 
-  var dynamicDropdown = function(opts){
+  $('.filter-type button').click(function() {
+    var type = $(this).text();
+    typeFilter(type);
+  });
+
+  var typeFilter = function(type) {
+    $('.hero-unit').show().effect('fade');
+    if (type == "Epic") {
+      $('.epic').hide().effect('fade');
+    }
+    else {
+      $('.hero-unit').hide().effect('fade');
+    }
+  }
+
+  typeFilter("Epic");
+  $('.filter-type button:first-child').addClass('active');
+
+  var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];
     selection = opts['selection'];
     index = opts['index'];
@@ -90,23 +108,23 @@ $(document).ready(function() {
       }
     }
     else {
-      var arr1 = [];
+      var tempArray = [];
 
       $(otherTag).append("<option value='Any'>Any</option>");
 
       for (i = 0; i < combinations.length; i++ ) {
         if (combinations[i][index] == thisSelection) {
-          if ($.inArray(combinations[i][otherIndex], arr1) == -1) {
-            arr1.push(combinations[i][otherIndex]);
+          if ($.inArray(combinations[i][otherIndex], tempArray) == -1) {
+            tempArray.push(combinations[i][otherIndex]);
           }
         }
       }
 
-      arr1 = arr1.sort();
+      tempArray = tempArray.sort();
 
-      for (i = 0; i < arr1.length; i++ ) {
-        $(otherTag).append("<option value='" + arr1[i] + "'>" + arr1[i] + "</option>");
-        if (arr1[i] == selection) {
+      for (i = 0; i < tempArray.length; i++ ) {
+        $(otherTag).append("<option value='" + tempArray[i] + "'>" + tempArray[i] + "</option>");
+        if (tempArray[i] == selection) {
           $(otherTag + " option:last-child").attr("selected", "selected");
         }
       }
