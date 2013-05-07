@@ -53,6 +53,16 @@
 
 #dw .top-half {
 	display: inline;
+  position: relative;
+}
+
+#dw .epic {
+  float: left;
+  position: absolute;
+  top: -40px;
+  left: -130px;
+  -webkit-transform: rotate(-35deg); 
+  -moz-transform: rotate(-35deg);
 }
 
 #dw .price {

@@ -43,6 +43,10 @@ class Flight < ActiveRecord::Base
     where(number_of_stops: 0)
   end
 
+  def epic?
+    (cheapest_price - price) > 2000
+  end
+
   def non_stop?
     number_of_stops == 0
   end

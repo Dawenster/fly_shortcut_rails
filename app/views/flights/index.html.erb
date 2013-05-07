@@ -11,8 +11,15 @@
 	  	<div class="hero-unit origin<%= flight.departure_airport.code %> destination<%= flight.arrival_airport.code %> <%= flight.departure_time.to_date %>">
 
 	  		<div class="top-half">
-	  			<div class="price">$<%= flight.rounded_price %></div>
-	  			<div class="savings">Save <strong>$<%= (flight.original_price / 100 + 1) - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %></div>
+	  			<div class="price">
+	  				$<%= flight.rounded_price %>
+	  			</div>
+	  			<% if flight.epic? %>
+	  				<div class="epic label label-warning">EPIC</div>
+	  			<% end %>
+	  			<div class="savings">
+	  				Save <strong>$<%= (flight.original_price / 100 + 1) - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %>
+	  			</div>
 	  		</div>
 
 	  		<div class="bottom-half">

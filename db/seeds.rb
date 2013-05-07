@@ -4,20 +4,22 @@ require 'rest_client'
 start_time = Time.now
 flight_count = 0
 
-# Airport.destroy_all
+# Uncomment the airports only if you are doing a first-time seed
 
-# CSV.foreach('db/airports.csv') do |row|
-#   Airport.create( :name => row[1].strip,
-#                   :code => row[2].strip,
-#                   :latitude => row[3].strip,
-#                   :longitude => row[4].strip,
-#                   :timezone => row[5].strip)
-# end
+Airport.destroy_all
+
+CSV.foreach('db/airports.csv') do |row|
+  Airport.create( :name => row[1].strip,
+                  :code => row[2].strip,
+                  :latitude => row[3].strip,
+                  :longitude => row[4].strip,
+                  :timezone => row[5].strip)
+end
 
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
-  num_days = (1..30).to_a
+  num_days = (1..2).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -44,6 +46,8 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
         formatted_date = date.split("/").rotate(2).join("-")
 
+        cheapest_price = nil
+
         puts "*" * 50
         puts "#{origin}-#{destination}-#{date}"
         puts "*" * 50
@@ -69,6 +73,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
               end
 
               non_stop_flights << created_flight
+              cheapest_price = created_flight.price if (cheapest_price == nil || created_flight.price < cheapest_price)
 
               puts "Scraped Non-stop #{itin["airline"]} #{itin["header"][0]["flightNumber"]}"
               flight_count += 1
@@ -102,6 +107,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
               incomplete_flights << flight1
               flights_to_delete << flight2
+              cheapest_price = flight1.price if (cheapest_price == nil || flight1.price < cheapest_price)
 
               puts "Scraped One-stop #{itin['header'][0]['airline']} #{itin['header'][0]['flightNumber']} and #{itin['header'][1]['flightNumber']}"
               flight_count += 2
@@ -112,20 +118,22 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
             flight2.destroy if flight2
           end
         end
+        Route.create! do |route|
+          route.origin_airport_id = origin_airport_id
+          route.destination_airport_id = destination_airport_id
+          route.cheapest_price = cheapest_price
+          route.date = date
+        end
       rescue
       end
     end
-    puts "*" * 50
-    puts "Finding cheapest flight of the day..."
-    cheapest_non_stop = non_stop_flights.min_by { |flight| flight.price }.price
-    cheapest_one_stop = incomplete_flights.min_by { |flight| flight.price }.price
-    cheapest_price = [cheapest_non_stop, cheapest_one_stop].min
 
+    puts "*" * 50
     puts "Filling in one-stop flight info..."
 
     incomplete_flights.each do |flight|
       match = non_stop_flights.select { |ns_flight| ns_flight.flight_no == flight.flight_no && ns_flight.airline == flight.airline && ns_flight.pure_date == flight.pure_date }[0]
-      flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time, :cheapest_price => cheapest_price) if match
+      flight.update_attributes(:arrival_airport_id => match.arrival_airport_id, :arrival_time => match.arrival_time) if match
     end
 
     puts "Commencing shortcut calculations..."
@@ -142,6 +150,17 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
     puts "#{origin_code} #{date} complete."
   end
 end
+
+puts "*" * 50
+puts "HOME STRETCH!"
+puts "Calculating epic wins..."
+
+Flight.all.each do |flight|
+  route = Route.where(:origin_airport_id => flight.departure_airport_id, :destination_airport_id => flight.arrival_airport_id, :date => flight.pure_date)[0]
+  flight.update_attributes(:cheapest_price => route.cheapest_price)
+end
+
+Route.destroy_all
 
 time = (Time.now - start_time).to_i
 puts "*" * 50
