@@ -6,20 +6,20 @@ flight_count = 0
 
 # Uncomment the airports only if you are doing a first-time seed
 
-Airport.destroy_all
+# Airport.destroy_all
 
-CSV.foreach('db/airports.csv') do |row|
-  Airport.create( :name => row[1].strip,
-                  :code => row[2].strip,
-                  :latitude => row[3].strip,
-                  :longitude => row[4].strip,
-                  :timezone => row[5].strip)
-end
+# CSV.foreach('db/airports.csv') do |row|
+#   Airport.create( :name => row[1].strip,
+#                   :code => row[2].strip,
+#                   :latitude => row[3].strip,
+#                   :longitude => row[4].strip,
+#                   :timezone => row[5].strip)
+# end
 
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
-  num_days = (1..2).to_a
+  num_days = [1,31,62] #(1..2).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')

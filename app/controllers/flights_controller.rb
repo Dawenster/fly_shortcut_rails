@@ -3,8 +3,11 @@ class FlightsController < ApplicationController
     @flights = Flight.where(:shortcut => true)
     @from = []
     @to = []
-    @dates = []
     @combinations = []
+    month1 = Time.now.strftime('%B')
+    month2 = (Time.now + 1.month).strftime('%B')
+    month3 = (Time.now + 2.months).strftime('%B')
+    @months = [month1, month2, month3]
 
     @flights.sort_by! { |flight| flight.price }
     @flights.uniq! { |flight| flight.flight_no + flight.airline }
@@ -12,20 +15,17 @@ class FlightsController < ApplicationController
     @flights.each do |flight|
       depart = flight.departure_airport.name
       arrive = flight.arrival_airport.name
-      date = flight.departure_time.strftime('%Y-%m-%d')
       @from << depart
       @to << arrive
-      @dates << date
-      @combinations << [depart, arrive, date]
+      @combinations << [depart, arrive]
     end
 
     @from = @from.uniq.sort.unshift("Any")
     @to = @to.uniq.sort.unshift("Any")
-    @dates = @dates.uniq.sort.unshift("Any")
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json  { render :json => { combinations: @combinations, from: @from, to: @to, dates: @dates } }
+      format.json  { render :json => { combinations: @combinations, from: @from, to: @to } }
     end
   end
 end
