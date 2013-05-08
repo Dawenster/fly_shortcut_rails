@@ -147,18 +147,19 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
     flights_to_delete.map { |flight| flight.destroy }
     incomplete_flights.each_with_index { |flight, i| flight.destroy unless shortcut_flights_indices.include?(i) }
 
+    puts "Calculating epic wins..."
+
+    flights.each do |flight|
+      route = Route.where(:origin_airport_id => flight.departure_airport_id, :destination_airport_id => flight.arrival_airport_id, :date => flight.pure_date)[0]
+      flight.update_attributes(:cheapest_price => route.cheapest_price)
+    end
+
     puts "#{origin_code} #{date} complete."
   end
 end
 
 puts "*" * 50
-puts "HOME STRETCH!"
-puts "Calculating epic wins..."
-
-Flight.all.each do |flight|
-  route = Route.where(:origin_airport_id => flight.departure_airport_id, :destination_airport_id => flight.arrival_airport_id, :date => flight.pure_date)[0]
-  flight.update_attributes(:cheapest_price => route.cheapest_price)
-end
+puts "Destroying all routes..."
 
 Route.destroy_all
 
@@ -167,6 +168,3 @@ puts "*" * 50
 puts "Total time: #{time / 60} minutes, #{time % 60} seconds"
 puts "Flights: #{flight_count}"
 puts "Flights scraped per second: #{(flight_count / (Time.now - start_time)).round(2)}"
-
-
-

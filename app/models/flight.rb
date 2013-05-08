@@ -14,8 +14,15 @@ class Flight < ActiveRecord::Base
 							:class_name => Airport,
 							:foreign_key => 'arrival_airport_id'
 
+  # Shortcut logic
+  
+  # this array is the first flight of its itinerary
+  # it may be on its own or with another flight
+  # find the cheapest one in the group
+  # if its non-stop then no shortcut (return)
+  # keep the shortcut flight and the nonstop in the group
+
   def similar_flights
-    # level 2
     Flight.where(flight_no: flight_no, departure_time: departure_time,
       departure_airport_id: departure_airport_id, arrival_airport_id: arrival_airport_id)
   end
@@ -77,18 +84,9 @@ class Flight < ActiveRecord::Base
     return if cheapest_flight.non_stop?
     non_stop_flight = similar_flights.find {|f| f.number_of_stops == 0 }
 
-    if non_stop_flight
+    if non_stop_flight && cheapest_flight.price < (non_stop_flight.price - 2000)
       cheapest_flight.update_attributes(:original_price => non_stop_flight.price, :origin_code => origin_code, :shortcut => true)
       shortcuts << cheapest_flight
     end
   end
-
-  # Shortcut logic
-  
-  # this array is the first flight of its itinerary
-  # it may be on its own or with another flight
-  # find the cheapest one in the group
-  # if its non-stop then no shortcut (return)
-  # keep the shortcut flight and the nonstop in the group
-
 end

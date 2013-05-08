@@ -27,6 +27,7 @@ $(document).ready(function() {
       otherArr: to
     }
     dynamicDropdown(opts);
+    updateFlights();
   });
 
   $("#to-dropdown").change(function() {  
@@ -38,50 +39,115 @@ $(document).ready(function() {
       otherArr: from
     }
     dynamicDropdown(opts);
+    updateFlights();
   });
 
-  $('.form-inline').submit(function(e) {
-    e.preventDefault();
-  	var origin = "";
-  	var destination = "";
-  	var date = "";
-  	var concat = "";
-
-  	if ($('#from-dropdown').val() != "Any") {
-  		origin = '.origin' + regex.exec($('#from-dropdown').val())[1];
-  		concat = origin;
-  	}
-
-  	if ($('#to-dropdown').val() != "Any") {
-  		destination = '.destination' + regex.exec($('#to-dropdown').val())[1];
-  		concat = concat + destination
-  	}
-
-  	if (concat == "") {
-  		concat = '.hero-unit';
-  	}
-
-  	$('.hero-unit').show().effect('fade');
-  	$(concat).hide().effect('fade');
+  $('.filter').click(function() {
+    var clicked = $(this).text();
+    updateFlights(clicked);
   });
+    
+  var updateFlights = function(clicked) {
+    var type = null;
+    var sort = null;
+    var month1 = null;
+    var month2 = null;
+    var month3 = null;
+    var typeButton = $('.filter-type button:nth-child(1)');
+    var monthButton1 = $('.filter-month button:nth-child(1)');
+    var monthButton2 = $('.filter-month button:nth-child(2)');
+    var monthButton3 = $('.filter-month button:nth-child(3)');
+    var sortButton = $('.filter-sort button:nth-child(1)');
+    var from = $('#from-dropdown').val();
+    var to = $('#to-dropdown').val();
 
-  $('.filter-type button').click(function() {
-    var type = $(this).text();
-    typeFilter(type);
-  });
-
-  var typeFilter = function(type) {
-    $('.hero-unit').show().effect('fade');
-    if (type == "Epic") {
-      $('.epic').hide().effect('fade');
+    if (typeButton.hasClass('active')) {
+      type = typeButton.text();
     }
-    else {
-      $('.hero-unit').hide().effect('fade');
+    if (sortButton.hasClass('active')) {
+      sort = sortButton.text();
     }
+    if (monthButton1.hasClass('active')) {
+      month1 = monthButton1.text();
+    }
+    if (monthButton2.hasClass('active')) {
+      month2 = monthButton2.text();
+    }
+    if (monthButton3.hasClass('active')) {
+      month3 = monthButton3.text();
+    }
+
+    if (clicked == "Epic") {
+      if (type) {
+        type = null;
+      }
+      else {
+        type = clicked;
+      }
+    }
+
+    if (clicked == "All") {
+      type = null;
+    } 
+
+    if (clicked == "Price") {
+      if (sort) {
+        sort = null;
+      }
+      else {
+        sort = clicked;
+      }
+    }
+
+    if (clicked == "Time") {
+      sort = null;
+    }
+
+    if (clicked == monthButton1.text()) {
+      if (month1) {
+        month1 = null;
+      }
+      else {
+        month1 = clicked;
+      }
+    }
+
+    if (clicked == monthButton2.text()) {
+      if (month2) {
+        month2 = null;
+      }
+      else {
+        month2 = clicked;
+      }
+    }
+
+    if (clicked == monthButton3.text()) {
+      if (month3) {
+        month3 = null;
+      }
+      else {
+        month3 = clicked;
+      }
+    }
+
+    $.ajax({
+      url: '/filter',
+      method: 'get',
+      dataType: 'json',
+      data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort }
+    })
+    .done(function(data) {
+      $('.all-flights').children().remove();
+      $('.all-flights').text("");
+      $('.all-flights').append(data.partial);
+    })
   }
 
-  typeFilter("Epic");
   $('.filter-type button:first-child').addClass('active');
+  $('.filter-month button:nth-child(1)').addClass('active');
+  $('.filter-month button:nth-child(2)').addClass('active');
+  $('.filter-month button:nth-child(3)').addClass('active');
+  $('.filter-sort button:first-child').addClass('active');
 
   var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];

@@ -1,0 +1,18 @@
+<div class="toggle-buttons">
+  Type:
+  <div class="btn-group filter-type" data-toggle="buttons-radio">
+    <button type="button" class="btn btn-large btn-info filter">Epic</button>
+    <button type="button" class="btn btn-large btn-info filter">All</button>
+  </div>
+  Month:
+  <div class="btn-group filter-month" data-toggle="buttons-checkbox">
+    <button type="button" class="btn btn-large btn-info filter"><%= @months[0] %></button>
+    <button type="button" class="btn btn-large btn-info filter"><%= @months[1] %></button>
+    <button type="button" class="btn btn-large btn-info filter"><%= @months[2] %></button>
+  </div>
+  Sort by:
+  <div class="btn-group filter-sort" data-toggle="buttons-radio">
+    <button type="button" class="btn btn-large btn-info filter">Price</button>
+    <button type="button" class="btn btn-large btn-info filter">Time</button>
+  </div>
+</div>

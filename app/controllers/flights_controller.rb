@@ -1,6 +1,7 @@
 class FlightsController < ApplicationController
   def index
-    @flights = Flight.where(:shortcut => true)
+    all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
+    @flights = all_shortcuts.select{ |flight| flight.epic? }
     @from = []
     @to = []
     @combinations = []
@@ -12,7 +13,7 @@ class FlightsController < ApplicationController
     @flights.sort_by! { |flight| flight.price }
     @flights.uniq! { |flight| flight.flight_no + flight.airline }
 
-    @flights.each do |flight|
+    all_shortcuts.each do |flight|
       depart = flight.departure_airport.name
       arrive = flight.arrival_airport.name
       @from << depart
@@ -25,7 +26,36 @@ class FlightsController < ApplicationController
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json  { render :json => { combinations: @combinations, from: @from, to: @to } }
+      format.json { render :json => { combinations: @combinations, from: @from, to: @to } }
+    end
+  end
+
+  def filter
+    @flights = [] #Flight.where(:shortcut => true)
+    Flight.where(:shortcut => true).each do |flight|
+      if params[:type] == "Epic"
+        @flights << flight if flight.epic? &&
+        (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
+        (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
+        (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
+        params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
+        params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
+      else
+        (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
+        (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
+        @flights << flight if (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
+        params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
+        params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
+      end
+    end
+    if params[:sort] == "Price"
+      @flights.sort_by! { |flight| flight.price }
+    else
+      @flights.sort_by! { |flight| flight.departure_time }
+    end
+    @flights.uniq! { |flight| flight.flight_no + flight.airline }
+    respond_to do |format|
+      format.json { render :json => { :partial => render_to_string('_flights.html.erb') } }
     end
   end
 end

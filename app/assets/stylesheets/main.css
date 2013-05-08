@@ -5,8 +5,19 @@
 
 #dw .container {
   min-height: 100%;
-	height: 100%;
+  height: 100%;
 }
+
+/*#dw .top-filter {
+  background-image:url("/img/top_cloud_trans.png");
+  background-repeat: repeat-x;
+  height: 173px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  margin: 0;
+}*/
 
 #dw .toggle-buttons {
   padding: 28px 0px 0px 20px;
@@ -46,6 +57,22 @@
 
 #dw .navbar span p {
 	padding: 0;
+}
+
+#dw .from-airport {
+  margin-top: 25px;
+}
+
+#dw .to-airport {
+  margin-top: 15px;
+}
+
+#dw #from-dropdown {
+  margin-left: 5px;
+}
+
+#dw #to-dropdown {
+  margin-left: 20px;
 }
 
 #dw .hero-unit {
