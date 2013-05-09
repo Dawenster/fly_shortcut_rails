@@ -27,6 +27,10 @@
 	margin: 20px 0;
 }
 
+#dw .loading {
+  text-align: center;
+}
+
 #dw .navbar {
   /*position: fixed;*/
   width: 350px;

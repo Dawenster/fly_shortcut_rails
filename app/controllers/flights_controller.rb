@@ -31,8 +31,9 @@ class FlightsController < ApplicationController
   end
 
   def filter
-    @flights = [] #Flight.where(:shortcut => true)
+    @flights = []
     Flight.where(:shortcut => true).each do |flight|
+      # binding.pry
       if params[:type] == "Epic"
         @flights << flight if flight.epic? &&
         (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&

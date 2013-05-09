@@ -27,7 +27,7 @@ $(document).ready(function() {
       otherArr: to
     }
     dynamicDropdown(opts);
-    updateFlights();
+    updateFlights(thisSelection);
   });
 
   $("#to-dropdown").change(function() {  
@@ -39,7 +39,7 @@ $(document).ready(function() {
       otherArr: from
     }
     dynamicDropdown(opts);
-    updateFlights();
+    updateFlights(thisSelection);
   });
 
   $('.filter').click(function() {
@@ -48,6 +48,9 @@ $(document).ready(function() {
   });
     
   var updateFlights = function(clicked) {
+    $('.all-flights').children('.hero-unit').remove();
+    $('.all-flights no-flights').text("");
+    $('.loading').removeClass('hide');
     var type = null;
     var sort = null;
     var month1 = null;
@@ -137,9 +140,8 @@ $(document).ready(function() {
       data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort }
     })
     .done(function(data) {
-      $('.all-flights').children().remove();
-      $('.all-flights').text("");
       $('.all-flights').append(data.partial);
+      $('.loading').addClass('hide');
     })
   }
 
