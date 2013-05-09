@@ -38,5 +38,10 @@
     </div>
   <% end %>
 <% else %>
-  <div class="no-flights">Sorry - no flights for this particular filter!</div>
+  <div class="hero-unit no-flights"><h2>Ermahgerd! No flights?</h2>
+    <div><h3>1. Try adjusting your filters.</h3></div>
+    <div><h3>2. Still no luck? Sign up for notifications on new routes!</h3></div>
+    <%= image_tag "arrow_up.png", :width => 100, :class => "arrow-up" %>
+    <%= image_tag "arrow_left.png", :width => 230, :class => "arrow-left" %>
+  </div>
 <% end %>

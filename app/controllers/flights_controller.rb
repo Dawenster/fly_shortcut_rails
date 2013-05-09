@@ -52,6 +52,7 @@ class FlightsController < ApplicationController
   def filter
     @flights, @routes = [], []
     @epic, @all, @total_saved = 0, 0, 0
+    @user = User.new
     @stats = {}
 
     Flight.where(:shortcut => true).each do |flight|

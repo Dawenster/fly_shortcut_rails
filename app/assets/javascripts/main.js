@@ -88,7 +88,7 @@ $(document).ready(function() {
   var updateFlights = function(clicked) {
     $('.all-flights').children('.hero-unit').remove();
     $('.all-stats').children().remove();
-    $('.all-flights .no-flights').text("");
+    $('.all-flights .no-flights').children().remove();
     $('.loading').removeClass('hide');
     var type = null;
     var sort = null;

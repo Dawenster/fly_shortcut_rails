@@ -197,6 +197,24 @@
 	margin-left: 10px;
 }
 
+#dw .no-flights h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+#dw .arrow-up {
+  position: absolute;
+  left: 580px;
+  top: 100px;
+}
+
+#dw .arrow-left {
+  position: absolute;
+  left: 360px;
+  top: 110px;
+}
+
 ul.ui-autocomplete {
   position: absolute;
   top: 100%;
