@@ -136,6 +136,10 @@
 	float: left;
 }
 
+#dw form {
+  margin: 0;
+}
+
 #dw .flight-no {
 	float: left;
 	margin-top: 28px;

@@ -15,6 +15,16 @@ $(document).ready(function() {
     to = data.to;
   })
 
+  $('#epic-button').popover({
+    'placement': "bottom",
+    'trigger': 'hover'
+  });
+
+  $('.book-button').popover({
+    'placement': "left",
+    'trigger': 'hover'
+  });
+
   var selectedFrom = "Any";
   var selectedTo = "Any";
 
@@ -142,6 +152,14 @@ $(document).ready(function() {
     .done(function(data) {
       $('.all-flights').append(data.partial);
       $('.loading').addClass('hide');
+      $('#epic-button').popover({
+        'placement': "bottom",
+        'trigger': 'hover'
+      });
+      $('.book-button').popover({
+        'placement': "left",
+        'trigger': 'hover'
+      });
     })
   }
 
