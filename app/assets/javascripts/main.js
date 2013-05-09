@@ -59,6 +59,7 @@ $(document).ready(function() {
     
   var updateFlights = function(clicked) {
     $('.all-flights').children('.hero-unit').remove();
+    $('.all-stats').children().remove();
     $('.all-flights .no-flights').text("");
     $('.loading').removeClass('hide');
     var type = null;
@@ -150,7 +151,8 @@ $(document).ready(function() {
       data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort }
     })
     .done(function(data) {
-      $('.all-flights').append(data.partial);
+      $('.all-flights').append(data.flights);
+      $('.all-stats').append(data.stats);
       $('.loading').addClass('hide');
       $('#epic-button').popover({
         'placement': "bottom",

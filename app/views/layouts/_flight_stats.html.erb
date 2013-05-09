@@ -1,0 +1,22 @@
+<table class="stats">
+  <tr class="stats-header">
+    <th class="stats-route">Route</th>
+    <th class="stats-num">Epic</th>
+    <th class="stats-num">All</th>
+    <th class="stats-savings">Total saved</th>
+  </tr>
+  <% @stats.sort.each do |route, stats| %>
+    <tr>
+      <td><%= route %></td>
+      <td class="stats-num"><%= stats[0] %></td>
+      <td class="stats-num"><%= stats[1] %></td>
+      <td class="stats-savings"><%= number_to_currency(stats[2] / 100, :precision => 0) %></td>
+    </tr>
+  <% end %>
+  <tr class="stats-last-row">
+    <td>Total:</td>
+    <td class="stats-num"><%= @epic %></td>
+    <td class="stats-num"><%= @all %></td>
+    <td class="stats-savings"><%= number_to_currency(@total_saved, :precision => 0) %></td>
+  </tr>
+</table>

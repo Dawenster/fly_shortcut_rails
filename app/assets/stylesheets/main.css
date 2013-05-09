@@ -83,6 +83,29 @@
   padding-top: 20px;
 }
 
+#dw .stats-header {
+  text-align: left;
+  border-bottom: 1px black solid;
+}
+
+#dw .stats-route {
+  width: 90px;
+}
+
+#dw .stats-num {
+  width: 40px;
+  text-align: center;
+}
+
+#dw .stats-savings {
+  width: 80px;
+  text-align: right;
+}
+
+#dw .stats-last-row {
+  border-top: 1px black solid;
+}
+
 #dw .hero-unit {
 	margin: 60px 20px 80px 20px;
 	padding: 20px 40px 40px 40px;
