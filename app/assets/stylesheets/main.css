@@ -59,6 +59,15 @@
 	padding: 0;
 }
 
+#dw #flash {
+  margin: 20px 0px 0px 0px;
+}
+
+#dw .alert-errors {
+  background-color: #F2DEDE;
+  border: 0;
+}
+
 #dw .email-box {
   position: relative;
 }

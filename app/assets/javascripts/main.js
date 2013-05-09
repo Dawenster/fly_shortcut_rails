@@ -25,6 +25,34 @@ $(document).ready(function() {
     'trigger': 'hover'
   });
 
+  $('#signup-link').popover({
+    'placement': "top",
+    'trigger': 'hover'
+  });
+
+  $('#signup-link').click(function() {
+    $('.email-box').toggle();
+    $('#signup-link').toggle();
+    $('#close-link').toggle();
+  });
+
+  $('#close-link').click(function() {
+    $('.email-box').toggle();
+    $('#signup-link').toggle();
+    $('#close-link').toggle();
+  });  
+
+  $('#new_user').on('ajax:success', function(event, data) {
+    $('#flash').text("");
+    $('#flash').text(data.email + " successfully added to the list.");
+  });
+
+  $('#new_user').on('ajax:error', function(event, data) {
+    $('#flash').text("");
+    $('#flash').addClass("alert alert-errors");
+    $('#flash').html(data.responseText);
+  });
+
   var selectedFrom = "Any";
   var selectedTo = "Any";
 
