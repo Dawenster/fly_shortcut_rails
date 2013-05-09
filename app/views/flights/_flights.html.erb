@@ -1,7 +1,6 @@
 <% if @flights.any? %>  
   <% @flights.each do |flight| %>
-    <div class="hero-unit origin<%= flight.departure_airport.code %> destination<%= flight.arrival_airport.code %> <%= flight.departure_time.strftime('%B') %> <%= "epic" if flight.epic? %>">
-
+    <div class="hero-unit">
       <div class="top-half">
         <div class="price">
           $<%= flight.rounded_price %>

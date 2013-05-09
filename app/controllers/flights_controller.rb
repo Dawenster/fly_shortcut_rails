@@ -33,7 +33,6 @@ class FlightsController < ApplicationController
   def filter
     @flights = []
     Flight.where(:shortcut => true).each do |flight|
-      # binding.pry
       if params[:type] == "Epic"
         @flights << flight if flight.epic? &&
         (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
@@ -54,6 +53,9 @@ class FlightsController < ApplicationController
     else
       @flights.sort_by! { |flight| flight.departure_time }
     end
+
+    
+    
     @flights.uniq! { |flight| flight.flight_no + flight.airline }
     respond_to do |format|
       format.json { render :json => { :partial => render_to_string('_flights.html.erb') } }
