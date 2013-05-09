@@ -1,0 +1,6 @@
+<div class="email-box">
+  <%= form_for @user do |f| %>
+    <%= f.email_field :email, :placeholder => "Email", :id => "email" %>
+    <%= f.submit "Sign up", :class => "btn btn-success", :id => "email-button" %>
+  <% end %>
+</div>

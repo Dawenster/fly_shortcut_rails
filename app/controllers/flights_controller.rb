@@ -5,6 +5,8 @@ class FlightsController < ApplicationController
     @flights, @from, @to, @combinations = [], [], [], []
     @epic, @all, @total_saved = 0, 0, 0
     @stats = {}
+    @user = User.new
+
     month1 = Time.now.strftime('%B')
     month2 = (Time.now + 1.month).strftime('%B')
     month3 = (Time.now + 2.months).strftime('%B')

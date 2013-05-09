@@ -59,6 +59,21 @@
 	padding: 0;
 }
 
+#dw .email-box {
+  position: relative;
+}
+
+#dw #email {
+  width: 170px;
+  float: left;
+  margin: 20px 0px 0px 0px;
+}
+
+#dw #email-button {
+  float: right;
+  margin: 20px 0px 0px 0px;
+}
+
 #dw .from-airport {
   margin-top: 25px;
 }
