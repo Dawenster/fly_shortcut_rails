@@ -91,7 +91,6 @@ class FlightsController < ApplicationController
     end
 
     @total_saved /= 100
-    @total_saved += 1
 
     if params[:sort] == "Price"
       @flights.sort_by! { |flight| flight.price }
