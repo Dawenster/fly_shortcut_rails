@@ -19,7 +19,7 @@ flight_count = 0
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
-  num_days = [1,31,62] #(1..2).to_a
+  num_days = (1..30).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
