@@ -36,10 +36,6 @@
   width: 350px;
 }
 
-#dw .navbar ul {
-	padding-left: 30px;
-}
-
 #dw .navbar input {
 	margin-bottom: 10px;
 	height: 40px;
@@ -77,6 +73,37 @@
 
 #dw #to-dropdown {
   margin-left: 20px;
+}
+
+#dw .to-label {
+  margin-bottom: 20px;
+}
+
+#dw .stats {
+  padding-top: 20px;
+}
+
+#dw .stats-header {
+  text-align: left;
+  border-bottom: 1px black solid;
+}
+
+#dw .stats-route {
+  width: 90px;
+}
+
+#dw .stats-num {
+  width: 40px;
+  text-align: center;
+}
+
+#dw .stats-savings {
+  width: 80px;
+  text-align: right;
+}
+
+#dw .stats-last-row {
+  border-top: 1px black solid;
 }
 
 #dw .hero-unit {
