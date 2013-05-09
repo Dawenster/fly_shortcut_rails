@@ -32,6 +32,8 @@ class FlightsController < ApplicationController
 
   def filter
     @flights = []
+    @routes = []
+
     Flight.where(:shortcut => true).each do |flight|
       if params[:type] == "Epic"
         @flights << flight if flight.epic? &&
@@ -41,7 +43,7 @@ class FlightsController < ApplicationController
         params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
         params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
       else
-        (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
+        @flights << flight if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
         (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
         @flights << flight if (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
         params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
@@ -54,7 +56,7 @@ class FlightsController < ApplicationController
       @flights.sort_by! { |flight| flight.departure_time }
     end
 
-    
+
     
     @flights.uniq! { |flight| flight.flight_no + flight.airline }
     respond_to do |format|

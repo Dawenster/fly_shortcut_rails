@@ -36,10 +36,6 @@
   width: 350px;
 }
 
-#dw .navbar ul {
-	padding-left: 30px;
-}
-
 #dw .navbar input {
 	margin-bottom: 10px;
 	height: 40px;
@@ -77,6 +73,14 @@
 
 #dw #to-dropdown {
   margin-left: 20px;
+}
+
+#dw .to-label {
+  margin-bottom: 20px;
+}
+
+#dw .stats {
+  padding-top: 20px;
 }
 
 #dw .hero-unit {
