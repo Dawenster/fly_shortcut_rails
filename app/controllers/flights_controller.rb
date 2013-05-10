@@ -45,7 +45,7 @@ class FlightsController < ApplicationController
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json { render :json => { combinations: @combinations, from: @from, to: @to } }
+      format.json { render :json => { combinations: @combinations.uniq!, from: @from, to: @to } }
     end
   end
 
@@ -70,7 +70,11 @@ class FlightsController < ApplicationController
         flight.departure_time.strftime('%B') == params[:month2] ||
         flight.departure_time.strftime('%B') == params[:month3])
       end
+    end
 
+    @flights.uniq! { |flight| flight.flight_no + flight.airline + flight.departure_time.strftime('%B %d %Y') }
+
+    @flights.each do |flight|
       if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
         (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
         (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
@@ -84,8 +88,6 @@ class FlightsController < ApplicationController
           end
       end
     end
-
-    @flights.uniq! { |flight| flight.flight_no + flight.airline + flight.departure_time.strftime('%B %d %Y') }
 
     @stats.values.each do |stat|
       @epic += stat[0]

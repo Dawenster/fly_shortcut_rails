@@ -217,7 +217,7 @@ $(document).ready(function() {
 
     if (thisSelection == "Any") {
       for (i = 0; i < otherArr.length; i++ ) {
-        $(otherTag).append("<option value='" + otherArr[i] + "'>" + otherArr[i] + "</option>");
+        $(otherTag).append("<option value=" + '"' + otherArr[i] + '"' + ">" + otherArr[i] + "</option>");
         if (otherArr[i] == selection) {
           $(otherTag + " option:last-child").attr("selected", "selected");
         }
@@ -238,8 +238,10 @@ $(document).ready(function() {
 
       tempArray = tempArray.sort();
 
+      debugger
+
       for (i = 0; i < tempArray.length; i++ ) {
-        $(otherTag).append("<option value='" + tempArray[i] + "'>" + tempArray[i] + "</option>");
+        $(otherTag).append("<option value=" + '"' + tempArray[i] + '"' + ">" + tempArray[i] + "</option>");
         if (tempArray[i] == selection) {
           $(otherTag + " option:last-child").attr("selected", "selected");
         }
