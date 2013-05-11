@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def create
-    @user = User.new(params[:user])
+    @user = User.new(params[:user] || { "email" => params[:email] })
     if @user.save
       render :json => { :email => @user.email }, :status => :created
     else

@@ -3,6 +3,9 @@ $(document).ready(function() {
   var from = [];
   var to = [];
 	var regex = /\(([^\)]+)\)/;
+  var pageCount = 1;
+  var noMoreFlights = false;
+  var emptySearch = false;
   
   $.ajax({
     url: '/flights',
@@ -13,7 +16,17 @@ $(document).ready(function() {
     combinations = data.combinations;
     from = data.from;
     to = data.to;
+    totalPages = data.totalPages;
   })
+
+  $('.all-flights').append("<div class='infinite-more'></div><div class='infinite-loading hide'><img src='/assets/loading.gif'></div>");
+
+  $('.infinite-more').bind('inview', function(event, isInView, visiblePartX, visiblePartY) {
+    if (isInView && !noMoreFlights && !emptySearch) {
+      $('infinite-more').addClass('hide');
+      updateFlights(null);
+    }
+  });
 
   $('#epic-button').popover({
     'placement': "bottom",
@@ -43,14 +56,17 @@ $(document).ready(function() {
   });  
 
   $('#new_user').on('ajax:success', function(event, data) {
-    $('#flash').text("");
-    $('#flash').text(data.email + " successfully added to the list.");
+    $('.flash').removeClass("hide");
+    $('.flash').removeClass("alert alert-errors");
+    $('.flash').text("");
+    $('.flash').text(data.email + " successfully added to the list.");
   });
 
   $('#new_user').on('ajax:error', function(event, data) {
-    $('#flash').text("");
-    $('#flash').addClass("alert alert-errors");
-    $('#flash').html(data.responseText);
+    $('.flash').removeClass("hide");
+    $('.flash').addClass("alert alert-errors");
+    $('.flash').text("");
+    $('.flash').html(data.responseText);
   });
 
   var selectedFrom = "Any";
@@ -86,10 +102,10 @@ $(document).ready(function() {
   });
     
   var updateFlights = function(clicked) {
-    $('.all-flights').children('.hero-unit').remove();
-    $('.all-stats').children().remove();
-    $('.all-flights .no-flights').children().remove();
-    $('.loading').removeClass('hide');
+    $('.infinite-more').addClass('hide');
+    $('.filter').attr('disabled', 'disabled').addClass('disabled');
+    $('#from-dropdown').attr('disabled', 'disabled').addClass('disabled');
+    $('#to-dropdown').attr('disabled', 'disabled').addClass('disabled');
     var type = null;
     var sort = null;
     var month1 = null;
@@ -119,78 +135,151 @@ $(document).ready(function() {
       month3 = monthButton3.text();
     }
 
-    if (clicked == "Epic") {
-      if (type) {
+    if (clicked) {
+      $('.loading').removeClass('hide');
+      $('.hero-unit').remove();
+      $('.all-stats').children().remove();
+      $('.all-flights .no-flights').children().remove();
+      $('.no-more-flights').remove();
+      noMoreFlights = false;
+      pageCount = 1;
+
+      if (clicked == "Epic") {
+        if (type) {
+          type = null;
+        }
+        else {
+          type = clicked;
+        }
+      }
+
+      if (clicked == "All") {
         type = null;
-      }
-      else {
-        type = clicked;
-      }
-    }
+      } 
 
-    if (clicked == "All") {
-      type = null;
-    } 
+      if (clicked == "Price") {
+        if (sort) {
+          sort = null;
+        }
+        else {
+          sort = clicked;
+        }
+      }
 
-    if (clicked == "Price") {
-      if (sort) {
+      if (clicked == "Time") {
         sort = null;
       }
-      else {
-        sort = clicked;
-      }
-    }
 
-    if (clicked == "Time") {
-      sort = null;
-    }
+      if (clicked == monthButton1.text()) {
+        if (month1) {
+          month1 = null;
+        }
+        else {
+          month1 = clicked;
+        }
+      }
 
-    if (clicked == monthButton1.text()) {
-      if (month1) {
-        month1 = null;
+      if (clicked == monthButton2.text()) {
+        if (month2) {
+          month2 = null;
+        }
+        else {
+          month2 = clicked;
+        }
       }
-      else {
-        month1 = clicked;
-      }
-    }
 
-    if (clicked == monthButton2.text()) {
-      if (month2) {
-        month2 = null;
+      if (clicked == monthButton3.text()) {
+        if (month3) {
+          month3 = null;
+        }
+        else {
+          month3 = clicked;
+        }
       }
-      else {
-        month2 = clicked;
-      }
-    }
 
-    if (clicked == monthButton3.text()) {
-      if (month3) {
-        month3 = null;
-      }
-      else {
-        month3 = clicked;
-      }
-    }
+      $.ajax({
+        url: '/filter',
+        method: 'get',
+        dataType: 'json',
+        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount, clicked: clicked }
+      })
+      .done(function(data) {
+        $('.infinite-more').before(data.flights);
+        $('.all-stats').append(data.stats);
+        $('.loading').addClass('hide');
+        $('#epic-button').popover({
+          'placement': "bottom",
+          'trigger': 'hover'
+        });
+        $('.book-button').popover({
+          'placement': "left",
+          'trigger': 'hover'
+        });
+        if (data.noMoreFlights) {
+          noMoreFlights = true;
+        }
+        else {
+          $('.infinite-more').removeClass('hide');
+        }
+        $('.filter').removeAttr('disabled').removeClass('disabled');
+        $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
+        $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
+        $('#second-email-button').click(function(e) {
+          e.preventDefault();
 
-    $.ajax({
-      url: '/filter',
-      method: 'get',
-      dataType: 'json',
-      data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort }
-    })
-    .done(function(data) {
-      $('.all-flights').append(data.flights);
-      $('.all-stats').append(data.stats);
-      $('.loading').addClass('hide');
-      $('#epic-button').popover({
-        'placement': "bottom",
-        'trigger': 'hover'
-      });
-      $('.book-button').popover({
-        'placement': "left",
-        'trigger': 'hover'
-      });
-    })
+          $.ajax({
+            url: '/users',
+            method: 'post',
+            dataType: 'json',
+            data: { email: $('#second-email').val() }
+          })
+          .done(function(data) {
+            $('.flash').text("");
+            $('.flash').removeClass("alert alert-errors");
+            $('.flash').removeClass("hide");
+            $('.flash').text("Added " + data.email);
+          })
+          .fail(function(data) {
+            $('.flash').text("");
+            $('.flash').removeClass("hide");
+            $('.flash').addClass("alert alert-errors");
+            $('.flash').html(data.responseText.replace("<BR>", ", "));
+          })
+        });
+      })
+    }
+    else {
+      pageCount += 1;
+      $('.infinite-loading').removeClass('hide');
+      $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+      $.ajax({
+        url: '/filter',
+        method: 'get',
+        dataType: 'json',
+        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount }
+      })
+      .done(function(data) {
+        $('.infinite-loading').addClass('hide');
+        $('.infinite-more').removeClass('hide');
+        $('.infinite-more').before(data.flights);
+        $('#epic-button').popover({
+          'placement': "bottom",
+          'trigger': 'hover'
+        });
+        $('.book-button').popover({
+          'placement': "left",
+          'trigger': 'hover'
+        });
+        if (data.noMoreFlights) {
+          noMoreFlights = true;
+        }
+        $('.infinite-loading').addClass('hide');
+        $('.filter').removeAttr('disabled').removeClass('disabled');
+        $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
+        $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
+      })
+    }
   }
 
   $('.filter-type button:first-child').addClass('active');
@@ -237,8 +326,6 @@ $(document).ready(function() {
       }
 
       tempArray = tempArray.sort();
-
-      debugger
 
       for (i = 0; i < tempArray.length; i++ ) {
         $(otherTag).append("<option value=" + '"' + tempArray[i] + '"' + ">" + tempArray[i] + "</option>");

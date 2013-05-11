@@ -14,7 +14,7 @@
 		<div class="span3">
 			<%= link_to "How this works", "/#panel2" %> | <a id="signup-link" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" class="hide" href="#">Close sign up</a>
 			<div class="email-box hide">
-				<div id="flash">
+				<div class="flash hide">
 		      <% flash.each do |name, msg| %>
 		        <%= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}" %>
 		      <% end %>
@@ -25,7 +25,10 @@
 			<div class="all-stats"><%= render 'layouts/flight_stats' %></div>
 		</div>
 		<div class="span8 offset1 all-flights">
-			<div class="loading hide"><%= image_tag "loading.gif" %></div>
+			<div class="loading hide">
+				<%= image_tag "loading.gif" %>
+			</div>
+			<!-- <img src="http://i29.photobucket.com/albums/c275/electricnomad/Animated%20GIF%20part%20II/penis-punch.gif" %></div> -->
 			<%= render 'flights' %>
 		</div>
 	</div>

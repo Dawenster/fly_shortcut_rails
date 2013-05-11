@@ -59,8 +59,9 @@
 	padding: 0;
 }
 
-#dw #flash {
+#dw .flash {
   margin: 20px 0px 0px 0px;
+  background-color: #FCF8E3;
 }
 
 #dw .alert-errors {
@@ -185,6 +186,7 @@
 #dw .btn-success {
 	margin-top: 20px;
 	float: left;
+  z-index: 100;
 }
 
 #dw form {
@@ -199,13 +201,39 @@
 
 #dw .no-flights h2 {
   text-align: center;
-  margin-bottom: 30px;
   position: relative;
 }
 
-#dw .arrow-up {
+#dw .inline-email {
+  width: 280px;
+  float: left;
+}
+
+#dw #second-email {
+  width: 170px;
+  float: left;
+  margin: 20px 10px 0px 0px;
+}
+
+#dw #second-email-button {
+  margin-right: 10px;
+}
+
+#dw .flash {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#dw .inline-flash {
+  float: left;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+/*#dw .arrow-up {
   position: absolute;
-  left: 580px;
+  left: 180px;
   top: 100px;
 }
 
@@ -213,6 +241,16 @@
   position: absolute;
   left: 360px;
   top: 110px;
+}*/
+
+#dw .no-more-flights {
+  margin-bottom: 180px;
+  margin-left: 42%;
+}
+
+#dw .infinite-loading {
+  margin-bottom: 180px;
+  margin-left: 42%;
 }
 
 ul.ui-autocomplete {

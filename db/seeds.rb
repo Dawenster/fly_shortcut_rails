@@ -20,7 +20,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
 
-  num_days = (1..90).to_a
+  num_days = [1,31,61] #(1..90).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -139,7 +139,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
     puts "Commencing shortcut calculations..."
 
-    flights = Flight.get_shortcuts(origin_code).uniq 
+    flights = Flight.get_shortcuts(origin_code).uniq! { |flight| flight.flight_no + flight.airline + flight.departure_time.strftime('%B %d %Y') }
     shortcut_flights_indices = flights.map { |flight| incomplete_flights.index(flight) }
 
     puts "Deleting non-shortcut flights..."

@@ -1,7 +1,8 @@
+require 'will_paginate/array'
+
 class FlightsController < ApplicationController
   def index
     all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
-    all_shortcuts.uniq! { |flight| flight.flight_no + flight.airline + flight.departure_time.strftime('%B %d %Y') }
     @flights, @from, @to, @combinations = [], [], [], []
     @epic, @all, @total_saved = 0, 0, 0
     @stats = {}
@@ -28,9 +29,12 @@ class FlightsController < ApplicationController
       @total_saved += stat[2]
     end
 
-    @total_saved /= 100 + 1
+    @total_saved /= 100
 
     @flights.sort_by! { |flight| flight.price }
+    @flights = @flights.paginate(:page => 1, :per_page => 10)
+
+    @empty_search = false
 
     all_shortcuts.each do |flight|
       depart = flight.departure_airport.name
@@ -45,7 +49,7 @@ class FlightsController < ApplicationController
 
     respond_to do |format|
       format.html  # index.html.erb
-      format.json { render :json => { combinations: @combinations.uniq!, from: @from, to: @to } }
+      format.json { render :json => { :combinations => @combinations.uniq!, :from => @from, :to => @to } }
     end
   end
 
@@ -55,7 +59,9 @@ class FlightsController < ApplicationController
     @user = User.new
     @stats = {}
 
-    Flight.where(:shortcut => true).each do |flight|
+    all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
+
+    all_shortcuts.each do |flight|
       if params[:type] == "Epic"
         @flights << flight if flight.epic? &&
         (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
@@ -72,9 +78,7 @@ class FlightsController < ApplicationController
       end
     end
 
-    @flights.uniq! { |flight| flight.flight_no + flight.airline + flight.departure_time.strftime('%B %d %Y') }
-
-    @flights.each do |flight|
+    all_shortcuts.each do |flight|
       if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
         (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
         (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
@@ -97,14 +101,25 @@ class FlightsController < ApplicationController
 
     @total_saved /= 100
 
+    @empty_search = false
+    @empty_search = true if @flights.empty?
+
     if params[:sort] == "Price"
       @flights.sort_by! { |flight| flight.price }
+      @flights = @flights.paginate(:page => params[:page], :per_page => 10)
     else
       @flights.sort_by! { |flight| flight.departure_time }
+      @flights = @flights.paginate(:page => params[:page], :per_page => 10)
     end
     
     respond_to do |format|
-      format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :stats => render_to_string('layouts/_flight_stats.html.erb') } }
+      if @flights.any?
+        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :stats => render_to_string('layouts/_flight_stats.html.erb') } }
+      elsif @empty_search
+        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :stats => render_to_string('layouts/_flight_stats.html.erb'), :noMoreFlights => true } }
+      else
+        format.json { render :json => { :flights => "<div class='no-more-flights label label-info'>No more flights to show</div>", :noMoreFlights => true } }
+      end
     end
   end
 end
