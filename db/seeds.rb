@@ -20,7 +20,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
 
-  num_days = [1,31,62]#(1..90).to_a
+  num_days = (1..90).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -184,5 +184,5 @@ time = (Time.now - start_time).to_i
 puts "*" * 50
 puts "Total time: #{time / 60} minutes, #{time % 60} seconds"
 puts "Flights: #{flight_count}"
-purs "Shortcuts: #{Flight.count}"
+puts "Shortcuts: #{Flight.count}"
 puts "Flights scraped per second: #{(flight_count / (Time.now - start_time)).round(2)}"
