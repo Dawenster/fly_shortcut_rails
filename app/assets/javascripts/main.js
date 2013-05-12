@@ -284,16 +284,16 @@ $(document).ready(function() {
   }
 
   $('.filter-type button:first-child').addClass('active');
-  $('.filter-month button:nth-child(1)').addClass('active');
-  $('.filter-month button:nth-child(2)').addClass('active');
-  $('.filter-month button:nth-child(3)').addClass('active');
+  // $('.filter-month button:nth-child(1)').addClass('active');
+  // $('.filter-month button:nth-child(2)').addClass('active');
+  // $('.filter-month button:nth-child(3)').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
 
   var updateActive = function(clicked) {
     if (clicked.hasClass('active') && clicked.parent().hasClass('filter-month')) {
       clicked.removeClass('active');
     }
-    else {
+    else if (!clicked.hasClass('active') && clicked.parent().hasClass('filter-month')) {
       clicked.addClass('active');
     }
   }
