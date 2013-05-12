@@ -43,6 +43,13 @@ $(document).ready(function() {
     'trigger': 'hover'
   });
 
+  $('.contact-us').popover({
+    'placement': "top",
+    'trigger': 'hover',
+    'title': 'Contact us',
+    'content': "We'd love to hear to your comments, suggestions, and travel stories!"
+  });
+
   $('#signup-link').click(function() {
     $('.email-box').toggle();
     $('#signup-link').toggle();
@@ -53,7 +60,7 @@ $(document).ready(function() {
     $('.email-box').toggle();
     $('#signup-link').toggle();
     $('#close-link').toggle();
-  });  
+  });
 
   $('#new_user').on('ajax:success', function(event, data) {
     $('.flash').removeClass("hide");

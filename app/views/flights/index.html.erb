@@ -12,7 +12,8 @@
 	</div>
 	<div class="row">
 		<div class="span3">
-			<%= link_to "How this works", "/#panel2" %> | <a id="signup-link" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" class="hide" href="#">Close sign up</a>
+			<%= link_to "About", "/#panel2" %> | <a id="signup-link" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" class="hide" href="#">Close sign up</a>
+			 | <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
 			<div class="email-box hide">
 				<div class="flash hide">
 		      <% flash.each do |name, msg| %>
