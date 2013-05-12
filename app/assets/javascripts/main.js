@@ -98,10 +98,13 @@ $(document).ready(function() {
 
   $('.filter').click(function() {
     var clicked = $(this).text();
+    console.log("Before updateFlights: " + $('.filter-month button:nth-child(1)').hasClass('active'));
     updateFlights(clicked, $(this));
+    console.log("After updateFlights: " + $('.filter-month button:nth-child(1)').hasClass('active'));
   });
     
   var updateFlights = function(clicked, thisButton) {
+    console.log("Inside updateFlights" + $('.filter-month button:nth-child(1)').hasClass('active'));
     $('.infinite-more').addClass('hide');
     $('.filter').attr('disabled', 'disabled').addClass('disabled');
     $('#from-dropdown').attr('disabled', 'disabled').addClass('disabled');
@@ -136,6 +139,7 @@ $(document).ready(function() {
     }
 
     if (clicked) {
+      console.log("Inside updateFlights - clicked: " + $('.filter-month button:nth-child(1)').hasClass('active'));
       $('.loading').removeClass('hide');
       $('.hero-unit').remove();
       $('.all-stats').children().remove();
@@ -196,6 +200,7 @@ $(document).ready(function() {
           month3 = clicked;
         }
       }
+      console.log("Before ajax call: " + $('.filter-month button:nth-child(1)').hasClass('active'));
 
       $.ajax({
         url: '/filter',
@@ -204,6 +209,8 @@ $(document).ready(function() {
         data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount, clicked: clicked }
       })
       .done(function(data) {
+        console.log("Inside ajax done: " + $('.filter-month button:nth-child(1)').hasClass('active'));
+
         $('.infinite-more').before(data.flights);
         $('.all-stats').append(data.stats);
         $('.loading').addClass('hide');
@@ -224,9 +231,11 @@ $(document).ready(function() {
         $('.filter').removeAttr('disabled').removeClass('disabled');
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
+        console.log("Before updateActive: " + $('.filter-month button:nth-child(1)').hasClass('active'));
+        updateActive(thisButton);
+        console.log("After updateActive: " + $('.filter-month button:nth-child(1)').hasClass('active'));
         $('#second-email-button').click(function(e) {
           e.preventDefault();
-          updateActive(thisButton);
 
           $.ajax({
             url: '/users',
@@ -284,9 +293,9 @@ $(document).ready(function() {
   }
 
   $('.filter-type button:first-child').addClass('active');
-  // $('.filter-month button:nth-child(1)').addClass('active');
-  // $('.filter-month button:nth-child(2)').addClass('active');
-  // $('.filter-month button:nth-child(3)').addClass('active');
+  $('.filter-month button:nth-child(1)').addClass('active');
+  $('.filter-month button:nth-child(2)').addClass('active');
+  $('.filter-month button:nth-child(3)').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
 
   var updateActive = function(clicked) {
