@@ -11,6 +11,14 @@
         <div class="savings">
           Save <strong><%= "$#{(flight.cheapest_price - flight.price) / 100 + 1}" if flight.epic? %></strong> <%= "off the cheapest flight, and " if flight.epic? %><strong>$<%= (flight.original_price / 100 + 1) - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %>
         </div>
+        <div class="social-buttons">
+          <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://flyshortcut.com" data-text="What?! I just found <%= flight.epic? ? "an epic flight" : "a flight" %> from <%= flight.departure_airport.code %> to <%= flight.arrival_airport.code %> for $<%= flight.rounded_price %>! on" data-size="large" data-count="none" data-hashtags="flyshortcut">Tweet</a>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          <div id='fb-root'></div>
+          <script src='http://connect.facebook.net/en_US/all.js'></script>
+          <p><a href="#" onclick='postToFeed(); return false;'>Post to Facebook</a></p>
+          <p id='msg'></p>
+        </div>
       </div>
 
       <div class="bottom-half">

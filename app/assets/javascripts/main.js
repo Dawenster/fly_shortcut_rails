@@ -1,4 +1,24 @@
 $(document).ready(function() {
+  FB.init({appId: "651908141502421", status: true, cookie: true});
+  function postToFeed() {
+    // calling the API ...
+    var obj = {
+      method: 'feed',
+      redirect_uri: 'http://flyshortcut.com/flights',
+      link: 'http://flyshortcut.com',
+      picture: 'http://fbrell.com/f8.jpg',
+      name: 'Fly Shortcut',
+      caption: 'Cheaper than the cheapest flights',
+      description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
+    };
+
+    function callback(response) {
+      document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+    }
+
+    FB.ui(obj, callback);
+  }
+
   var combinations = [];
   var from = [];
   var to = [];
@@ -27,6 +47,22 @@ $(document).ready(function() {
       updateFlights(null);
     }
   });
+
+  FB.ui({
+    method: 'feed',
+    name: 'Facebook Dialogs',
+    link: 'https://developers.facebook.com/docs/reference/dialogs/',
+    picture: 'http://fbrell.com/f8.jpg',
+    caption: 'Reference Documentation',
+    description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
+  }, function(response) {
+      if (response && response.post_id) {
+        alert('Post was published.');
+      } else {
+        alert('Post was not published.');
+      }
+    }
+  );
 
   $('#epic-button').popover({
     'placement': "bottom",
