@@ -78,39 +78,39 @@ class FlightsController < ApplicationController
       end
     end
 
-    all_shortcuts.each do |flight|
-      if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
-        (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
-        (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
-        params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
-        params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
-          @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, 0]
-          @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
-          @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] += (flight.original_price - flight.price)
-          if flight.epic?
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
-          end
+    unless params[:scroll]
+      all_shortcuts.each do |flight|
+        if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
+          (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
+          (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
+          params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
+          params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
+            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, 0]
+            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
+            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] += (flight.original_price - flight.price)
+            if flight.epic?
+              @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
+            end
+        end
       end
+      @stats.values.each do |stat|
+        @epic += stat[0]
+        @all += stat[1]
+        @total_saved += stat[2]
+      end
+
+      @total_saved /= 100
+      
+      if params[:sort] == "Price"
+        @flights.sort_by! { |flight| flight.price }
+      else
+        @flights.sort_by! { |flight| flight.departure_time }
+      end
+      @empty_search = false
+      @empty_search = true if @flights.empty?
     end
 
-    @stats.values.each do |stat|
-      @epic += stat[0]
-      @all += stat[1]
-      @total_saved += stat[2]
-    end
-
-    @total_saved /= 100
-
-    @empty_search = false
-    @empty_search = true if @flights.empty?
-
-    if params[:sort] == "Price"
-      @flights.sort_by! { |flight| flight.price }
-      @flights = @flights.paginate(:page => params[:page], :per_page => 10)
-    else
-      @flights.sort_by! { |flight| flight.departure_time }
-      @flights = @flights.paginate(:page => params[:page], :per_page => 10)
-    end
+    @flights = @flights.paginate(:page => params[:page], :per_page => 10)
     
     respond_to do |format|
       if @flights.any?

@@ -258,7 +258,7 @@ $(document).ready(function() {
         url: '/filter',
         method: 'get',
         dataType: 'json',
-        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount }
+        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount, scroll: true }
       })
       .done(function(data) {
         $('.infinite-loading').addClass('hide');
