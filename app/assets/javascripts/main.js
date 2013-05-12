@@ -81,7 +81,7 @@ $(document).ready(function() {
       otherArr: to
     }
     dynamicDropdown(opts);
-    updateFlights(thisSelection);
+    updateFlights(thisSelection, $(this));
   });
 
   $("#to-dropdown").change(function() {  
@@ -93,15 +93,15 @@ $(document).ready(function() {
       otherArr: from
     }
     dynamicDropdown(opts);
-    updateFlights(thisSelection);
+    updateFlights(thisSelection, $(this));
   });
 
   $('.filter').click(function() {
     var clicked = $(this).text();
-    updateFlights(clicked);
+    updateFlights(clicked, $(this));
   });
     
-  var updateFlights = function(clicked) {
+  var updateFlights = function(clicked, thisButton) {
     $('.infinite-more').addClass('hide');
     $('.filter').attr('disabled', 'disabled').addClass('disabled');
     $('#from-dropdown').attr('disabled', 'disabled').addClass('disabled');
@@ -226,6 +226,7 @@ $(document).ready(function() {
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#second-email-button').click(function(e) {
           e.preventDefault();
+          updateActive(thisButton);
 
           $.ajax({
             url: '/users',
@@ -287,6 +288,15 @@ $(document).ready(function() {
   $('.filter-month button:nth-child(2)').addClass('active');
   $('.filter-month button:nth-child(3)').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
+
+  var updateActive = function(clicked) {
+    if (clicked.hasClass('active') && clicked.parent().hasClass('filter-month')) {
+      clicked.removeClass('active');
+    }
+    else {
+      clicked.addClass('active');
+    }
+  }
 
   var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];
