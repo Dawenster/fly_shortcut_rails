@@ -101,13 +101,13 @@ class FlightsController < ApplicationController
 
       @total_saved /= 100
       
-      if params[:sort] == "Price"
-        @flights.sort_by! { |flight| flight.price }
-      else
-        @flights.sort_by! { |flight| flight.departure_time }
-      end
       @empty_search = false
       @empty_search = true if @flights.empty?
+    end
+    if params[:sort] == "Price"
+      @flights.sort_by! { |flight| flight.price }
+    else
+      @flights.sort_by! { |flight| flight.departure_time }
     end
 
     @flights = @flights.paginate(:page => params[:page], :per_page => 10)
