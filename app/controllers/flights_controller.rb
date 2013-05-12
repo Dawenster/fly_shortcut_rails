@@ -4,7 +4,7 @@ class FlightsController < ApplicationController
   def index
     all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
     @flights, @from, @to, @combinations = [], [], [], []
-    @epic, @all, @total_saved = 0, 0, 0
+    @epic, @all = 0, 0
     @stats = {}
     @user = User.new
 
@@ -15,9 +15,9 @@ class FlightsController < ApplicationController
 
     all_shortcuts.each do |flight|
       @flights << flight if flight.epic?
-      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, 0]
+      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, flight.price]
       @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
-      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] += (flight.original_price - flight.price)
+      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] = flight.price if flight.price < @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2]
       if flight.epic?
         @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
       end
@@ -26,10 +26,7 @@ class FlightsController < ApplicationController
     @stats.values.each do |stat|
       @epic += stat[0]
       @all += stat[1]
-      @total_saved += stat[2]
     end
-
-    @total_saved /= 100
 
     @flights.sort_by! { |flight| flight.price }
     @flights = @flights.paginate(:page => 1, :per_page => 10)
@@ -55,7 +52,7 @@ class FlightsController < ApplicationController
 
   def filter
     @flights, @routes = [], []
-    @epic, @all, @total_saved = 0, 0, 0
+    @epic, @all = 0, 0
     @user = User.new
     @stats = {}
 
@@ -85,22 +82,20 @@ class FlightsController < ApplicationController
           (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
           params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
           params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, 0]
+            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, flight.price]
             @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] += (flight.original_price - flight.price)
+            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] = flight.price if flight.price < @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2]
             if flight.epic?
               @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
             end
         end
       end
+
       @stats.values.each do |stat|
         @epic += stat[0]
         @all += stat[1]
-        @total_saved += stat[2]
       end
 
-      @total_saved /= 100
-      
       @empty_search = false
       @empty_search = true if @flights.empty?
     end

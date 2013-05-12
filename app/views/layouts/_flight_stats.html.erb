@@ -3,7 +3,7 @@
     <th class="stats-route">Route</th>
     <th class="stats-num">Epic</th>
     <th class="stats-num">All</th>
-    <th class="stats-savings">Total saved</th>
+    <th class="stats-savings">Cheapest</th>
   </tr>
   <% @stats.sort.each do |route, stats| %>
     <tr>
@@ -17,6 +17,6 @@
     <td>Total:</td>
     <td class="stats-num"><%= @epic %></td>
     <td class="stats-num"><%= @all %></td>
-    <td class="stats-savings"><%= number_to_currency(@total_saved, :precision => 0) %></td>
+    <td class="stats-savings"></td>
   </tr>
 </table>

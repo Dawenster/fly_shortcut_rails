@@ -23,6 +23,6 @@ class Flight < ActiveRecord::Base
   end
 
   def rounded_price
-    price / 100 + 1
+    (price / 100).round(0)
   end
 end

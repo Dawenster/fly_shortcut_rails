@@ -29,11 +29,13 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   puts "*" * 50
   puts "Scraping flights originating from #{origin_code}"
 
-  Flight.where(:origin_code => origin_code).destroy_all
+  Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
 
   date_array.each do |date|
     non_stop_flights = []
     incomplete_flights = []
+
+    Flight.where(:origin_code => origin_code, :pure_date => date).destroy_all
 
     CSV.foreach(file) do |route|
       begin
