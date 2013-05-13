@@ -344,10 +344,11 @@ ul.ui-autocomplete > .active > a:focus {
   position: absolute;
   bottom: 5px;
   left: 40%;
+  display:hidden;
 }
 
 #dw #fb-root {
-  position: absolute;
+  position: fixed;
   bottom: 15px;
   right: 15px;
 }
