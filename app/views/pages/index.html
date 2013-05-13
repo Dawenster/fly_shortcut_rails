@@ -13,14 +13,87 @@
 <body>
   <div id="ak" class="container">
     <div class="panel1 clearfix">
+<map name="ribbon">
+    <area shape="poly" coords="0,0,200,200,200,0">
+</map>
+<img src="/img/ribbon.png" usemap="#ribbon" alt="All routes for at least $20 less!"
+     style="position:absolute;top:0;right:0;border:none;">
       <div class="panel1Container clearfix">
         <div class="headline">
           <h1></h1>
           <img src="/img/fs_logo.png">
           <h2 class="light">is a "hidden city ticketing" search engine -</h2>
           <h2 class="sharp">when the lowest fare isn't low enough</h2>
+          <div class="mediaSnap">
+            <p>Technique featured in:</p>
+              <img src="/assets/nytlogo.gif" class="nyt">
+              <img src="/assets/economistlogo.gif" class="economist">
+              <img src="/assets/usatlogo.gif" class="usat">
+          </div>
         </div>
         <div class="highlight clearfix">
+          <p class="opportunitySample">Top opportunities we spotted from Toronto Pearson (YYZ):</p>
+          <div class="sampleRow clearfix">
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Edmonton</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$306</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$255</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Halifax</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$218</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$152</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Winnipeg</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$243</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$151</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>San Francisco</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$320</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$300</p></div>
+            </div>
+          </div>
+          </div>
+          <div class="sampleRow clearfix">
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Dallas</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$362</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$237</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Detroit</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$232</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$183</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Philadelphia</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$237</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$164</p></div>
+            </div>
+          </div>
+          <div class="sampleFare clearfix">
+            <div class="sampleTop"><h3>Houston</h3></div>
+            <div class="sampleBottom">
+              <div class="sampleLeft"><p>Lowest Fare</p><p>$265</p></div>
+              <div class="sampleRight"><p>Hidden City</p><p class="ourPrice">$191</p></div>
+            </div>
+          </div>
+          </div>
+          <!--
           <div class="featured">
             <div class="top">
               <p>Technique featured in:</p>
@@ -53,12 +126,16 @@
             </div>
           </div>
         </div>
+      -->
           <div class="nextPanel">
-            <form action="/flights"><button class="btn btn-success" data-loading-text="Loading flights..." id="let-me-proceed">I understand.  Let me proceed at my own risk!</button></form>
+            <div class="nextPanelC1">
+            <form action="/flights"><button class="btn btn-success" data-loading-text="Loading flights..." id="let-me-proceed">Browse opportunities</button></form>
+            </div>
+            <div class="nextPanelC2"><p>or</p></div>
+            <div class="nextPanelC3">
+          <a href="#panel2" class="smoothScroll"><button class="btn btn-info">Learn more</button></a>
           </div>
-        <div class="nextPanel">
-          <a href="#panel2" class="smoothScroll"><button class="btn btn-info">Learn the secret</button></a>
-        </div>
+          </div>
       </div> 
     </div>
 

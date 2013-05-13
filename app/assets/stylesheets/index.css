@@ -42,7 +42,7 @@ html, body {
 .panel1Container h1 {
   color:white;
   font-size:500%;
-  margin-top:110px;
+  margin-top:70px;
   margin-bottom:20px;
 }
 
@@ -50,17 +50,19 @@ html, body {
   color:#D1E1FF;
   margin-bottom:0;
   line-height:1;
+  margin-top:20px;
 }
 
 .panel1Container h2.sharp {
   color:white;
   margin-top:0;
   line-height:1;
+  margin-bottom:20px;
 }
 
 .panel1Container .highlight {
-  width:600px;
-  margin:70px auto;
+  width:1000px;
+  margin:30px auto;
 }
 
 .panel1Container .featured {
@@ -71,6 +73,24 @@ html, body {
   border-radius:8px;
   margin-right:10px;
   padding:10px;
+}
+
+.panel1Container .mediaSnap p {
+  display:inline;
+  color:black;
+  margin-right:10px;
+}
+
+.panel1Container img.nyt {
+  width:130px;
+}
+
+.panel1Container img.economist {
+  width:70px;
+}
+
+.panel1Container img.usat {
+  width:70px;
 }
 
 .panel1Container .top {
@@ -130,6 +150,88 @@ html, body {
 
 .panel1Container .example td.r3.c2 {
   color:darkred;
+}
+
+.sampleRow {
+  margin-bottom:10px;
+}
+
+.panel1Container p.opportunitySample {
+  color:white;
+  text-align:left;
+  font-style:italic;
+}
+
+.panel1Container div.sampleFare {
+  width:200px;
+  background-color:rgba(255,255,255,0.8);
+  float:left;
+  margin:0 5px;
+  padding:5px 20px 15px 20px;
+}
+
+.panel1Container div.sampleBottom {
+  clear:both;
+}
+
+.panel1Container div.nextPanelC1 {
+  width:48%;
+  float:left;
+}
+
+.panel1Container div.nextPanelC2 {
+  width:4%;
+  float:left;
+  text-align:center;
+}
+
+.panel1Container div.nextPanelC3 {
+  width:48%;
+  float:left;
+}
+
+.panel1Container div.nextPanel {
+  text-align:left;
+  margin-top:20px;
+}
+
+.panel1Container div.nextPanel button{
+  width:300px;
+}
+
+.panel1Container div.nextPanel p{
+  color:white;
+}
+
+.panel1Container div.nextPanel form {
+  float:right;
+}
+
+.sampleTop h3 {
+  font-size:130%;
+  margin:0;
+}
+
+.sampleLeft {
+  width:50%;
+  float:left;
+  text-decoration:line-through;
+  color:grey;
+}
+
+.sampleRight {
+  width:50%;
+  float:left;
+  color:#CC0000;
+  font-weight:bold;
+}
+
+.sampleFare p {
+  margin:0;
+}
+
+p.ourPrice {
+  font-size:180%;
 }
 
 .nextPanel {
