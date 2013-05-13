@@ -48,21 +48,24 @@ $(document).ready(function() {
     }
   });
 
-  FB.ui({
-    method: 'feed',
-    name: 'Facebook Dialogs',
-    link: 'https://developers.facebook.com/docs/reference/dialogs/',
-    picture: 'http://fbrell.com/f8.jpg',
-    caption: 'Reference Documentation',
-    description: 'Dialogs provide a simple, consistent interface for applications to interface with users.'
-  }, function(response) {
-      if (response && response.post_id) {
-        alert('Post was published.');
-      } else {
-        alert('Post was not published.');
+  $('.fb-post').click(function() {
+    FB.ui({
+      method: 'feed',
+      redirect_uri: 'http://flyshortcut.com/flights',
+      link: 'http://flyshortcut.com',
+      picture: 'http://www.flyshortcut.com/img/fs_logo.png',
+      name: 'Fly Shortcut',
+      caption: 'Cheaper than the cheapest flights',
+      description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
+    }, function(response) {
+        if (response && response.post_id) {
+          alert('Your post was successfully published - thanks for sharing with your friends!');
+        } else {
+          alert('Post was not published.');
+        }
       }
-    }
-  );
+    );
+  });
 
   $('#epic-button').popover({
     'placement': "bottom",
