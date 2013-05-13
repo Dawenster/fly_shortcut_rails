@@ -53,7 +53,7 @@ $(document).ready(function() {
   $('.fb-button').click(function() {
     FB.ui({
       method: 'feed',
-      redirect_uri: 'http://flyshortcut.com/flights',
+      // redirect_uri: 'http://flyshortcut.com/flights',
       link: 'http://flyshortcut.com',
       picture: 'http://www.flyshortcut.com/img/fs_logo.png',
       name: 'Fly Shortcut',
