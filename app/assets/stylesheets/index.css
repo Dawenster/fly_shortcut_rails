@@ -185,6 +185,10 @@ html, body {
   text-align:center;
 }
 
+.panel1Container div.nextPanelC2 p {
+  margin-top: 15px;
+}
+
 .panel1Container div.nextPanelC3 {
   width:48%;
   float:left;
