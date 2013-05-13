@@ -331,12 +331,12 @@ ul.ui-autocomplete > .active > a:focus {
 #dw footer {
 	background-image:url("/img/bk_header_cloud_trans.png");
 	background-repeat: repeat-x;
-  background-position-y: -180px;
+/*  background-position-y: -180px; */
 	height: 140px;
 	text-align: center;
-	position: fixed;
+/*	position: fixed;
   left: 0;
-  bottom: 0;
+  bottom: 0; */
   width: 100%;
 }
 
