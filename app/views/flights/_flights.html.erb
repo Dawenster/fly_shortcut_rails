@@ -12,8 +12,6 @@
           Save <strong><%= "$#{(flight.cheapest_price - flight.price) / 100 + 1}" if flight.epic? %></strong> <%= "off the cheapest flight, and " if flight.epic? %><strong>$<%= (flight.original_price / 100 + 1) - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %>
         </div>
         <div class="social-buttons">
-          <!-- <div class="twitter-button"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://flyshortcut.com" data-text="What?! I just found <%= flight.epic? ? "an #epic flight" : "a flight" %> from #<%= flight.departure_airport.code %> to #<%= flight.arrival_airport.code %> for $<%= flight.rounded_price %>!" data-size="large" data-count="none" data-hashtags="flyshortcut,travel" target="_blank">Tweet</a></div> -->
-
           <% epic = flight.epic? ? "an%20%23epic%20flight" : "a%20flight" %>
 
           <% link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{flight.departure_airport.code}%20to%20%23#{flight.arrival_airport.code}%20for%20%24#{flight.rounded_price}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com" %>
