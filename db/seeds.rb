@@ -164,7 +164,11 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
       shortcuts.uniq! { |flight| flight.flight_no + flight.airline + flight.pure_date }
       shortcuts.each do |flight|
         route = Route.where(:origin_airport_id => flight.departure_airport_id, :destination_airport_id => flight.arrival_airport_id, :date => flight.pure_date)[0]
-        flight.update_attributes(:cheapest_price => route.cheapest_price)
+        if (route.cheapest_price - flight.price) > 2000
+          flight.update_attributes(:cheapest_price => route.cheapest_price, :epic => true)
+        else
+          flight.update_attributes(:cheapest_price => route.cheapest_price)
+        end
       end
 
       shortcuts.map { |flight| flight.destroy unless flight.cheapest_price }

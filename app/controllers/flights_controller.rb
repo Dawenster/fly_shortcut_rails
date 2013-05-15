@@ -2,36 +2,15 @@ require 'will_paginate/array'
 
 class FlightsController < ApplicationController
   def index
-    all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
-    @flights, @from, @to, @combinations = [], [], [], []
-    @epic, @all = 0, 0
-    @stats = {}
+    @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND epic = ?", true, 0, true).order("price ASC").paginate(:page => 1, :per_page => 10)
+    @from, @to, @combinations = [], [], []
     @user = User.new
 
-    month1 = Time.now.strftime('%B')
-    month2 = (Time.now + 1.month).strftime('%B')
-    month3 = (Time.now + 2.months).strftime('%B')
-    @months = [month1, month2, month3]
+    @month1 = Time.now.strftime('%B')
+    @month2 = (Time.now + 1.month).strftime('%B')
+    @month3 = (Time.now + 2.months).strftime('%B')
 
-    all_shortcuts.each do |flight|
-      @flights << flight if flight.epic?
-      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, flight.price]
-      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
-      @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] = flight.price if flight.price < @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2]
-      if flight.epic?
-        @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
-      end
-    end
-
-    @stats.values.each do |stat|
-      @epic += stat[0]
-      @all += stat[1]
-    end
-
-    @flights.sort_by! { |flight| flight.price }
-    @flights = @flights.paginate(:page => 1, :per_page => 10)
-
-    @empty_search = false
+    all_shortcuts = Flight.find(:all, :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
 
     all_shortcuts.each do |flight|
       depart = flight.departure_airport.name
@@ -41,12 +20,15 @@ class FlightsController < ApplicationController
       @combinations << [depart, arrive]
     end
 
+    @empty_search = false
+
     @from = @from.uniq.sort.unshift("Any")
     @to = @to.uniq.sort.unshift("Any")
+    @combinations = @combinations.uniq
 
     respond_to do |format|
-      format.html  # index.html.erb
-      format.json { render :json => { :combinations => @combinations.uniq!, :from => @from, :to => @to } }
+      format.html
+      format.json { render :json => { :combinations => @combinations, :from => @from, :to => @to } }
     end
   end
 
