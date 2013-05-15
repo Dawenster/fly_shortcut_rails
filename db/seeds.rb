@@ -60,6 +60,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
                 fl.departure_airport_id = origin_airport_id
                 fl.arrival_airport_id = destination_airport_id
                 fl.departure_time = DateTime.strptime(formatted_date + '-' + itin["departureTimeDisplay"], '%Y-%m-%d-%I:%M %p')
+                fl.month = fl.departure_time.strftime("%B")
                 fl.arrival_time = DateTime.strptime(formatted_date + '-' + itin["arrivalTimeDisplay"], '%Y-%m-%d-%I:%M %p')
                 fl.arrival_time = fl.arrival_time + 1.day if fl.arrival_time < fl.departure_time
                 fl.airline = itin["airline"]
@@ -80,6 +81,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
               flight = Flight.create! do |fl|
                 fl.departure_airport_id = origin_airport_id
                 fl.departure_time = DateTime.strptime(formatted_date + '-' + itin['departureTimeDisplay'], '%Y-%m-%d-%I:%M %p')
+                fl.month = fl.departure_time.strftime("%B")
                 fl.airline = itin['header'][0]['airline']
                 fl.flight_no = itin['header'][0]['flightNumber']
                 fl.price = (itin['totalFare'].to_f * 100).to_i

@@ -33,67 +33,73 @@ class FlightsController < ApplicationController
   end
 
   def filter
-    @flights, @routes = [], []
-    @epic, @all = 0, 0
-    @user = User.new
-    @stats = {}
+    months = []
 
-    all_shortcuts = Flight.where("shortcut = ? AND cheapest_price > ?", true, 0)
+    params[:sort] == "Price" ? sort = "price ASC" : sort = "departure_time ASC"
 
-    all_shortcuts.each do |flight|
-      if params[:type] == "Epic"
-        @flights << flight if flight.epic? &&
-        (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
-        (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
-        (flight.departure_time.strftime('%B') == params[:month1] ||
-        flight.departure_time.strftime('%B') == params[:month2] ||
-        flight.departure_time.strftime('%B') == params[:month3])
-      else
-        @flights << flight if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
-        (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
-        (flight.departure_time.strftime('%B') == params[:month1] ||
-        flight.departure_time.strftime('%B') == params[:month2] ||
-        flight.departure_time.strftime('%B') == params[:month3])
-      end
-    end
+    months << params[:month1] if params[:month1]
+    months << params[:month2] if params[:month2]
+    months << params[:month3] if params[:month3]
+    months << nil if months.empty?
 
-    unless params[:scroll]
-      all_shortcuts.each do |flight|
-        if (flight.departure_airport.name == params[:from] || params[:from] == "Any") &&
-          (flight.arrival_airport.name == params[:to] || params[:to] == "Any") &&
-          (params[:month1] && flight.departure_time.strftime('%B') == params[:month1] ||
-          params[:month2] && flight.departure_time.strftime('%B') == params[:month2] ||
-          params[:month3] && flight.departure_time.strftime('%B') == params[:month3])
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"] ||= [0, 0, flight.price]
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][1] += 1
-            @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2] = flight.price if flight.price < @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][2]
-            if flight.epic?
-              @stats["#{flight.departure_airport.code} - #{flight.arrival_airport.code}"][0] += 1
-            end
-        end
-      end
-
-      @stats.values.each do |stat|
-        @epic += stat[0]
-        @all += stat[1]
-      end
-
-      @empty_search = false
-      @empty_search = true if @flights.empty?
-    end
-    if params[:sort] == "Price"
-      @flights.sort_by! { |flight| flight.price }
+    if params[:from] == "Any"
+      from_where = "departure_airport_id > ?"
+      from = 0
     else
-      @flights.sort_by! { |flight| flight.departure_time }
+      from_where = "departure_airport_id = ?"
+      from = Airport.find_by_name(params[:from]).id
     end
 
-    @flights = @flights.paginate(:page => params[:page], :per_page => 10)
+    if params[:to] == "Any"
+      to_where = "arrival_airport_id > ?"
+      to = 0
+    else
+      to_where = "arrival_airport_id = ?"
+      to = Airport.find_by_name(params[:to]).id
+    end
+
+    if params[:type] == "Epic"
+      case months.count
+      when 3
+        month_where = "AND (month = ? OR month = ? OR month = ?)"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND epic = ? #{month_where}", true, 0, from, to, true, months[0], months[1], months[2]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      when 2
+        month_where = "AND (month = ? OR month = ?)"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND epic = ? #{month_where}", true, 0, from, to, true, months[0], months[1]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      when 1
+        month_where = "AND month = ?"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND epic = ? #{month_where}", true, 0, from, to, true, months[0]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      else
+        month_where = "AND month != ?"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND epic = ? #{month_where}", true, 0, from, to, true, months[0]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      end
+    else
+      case months.count
+      when 3
+        month_where = "AND (month = ? OR month = ? OR month = ?)"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} #{month_where}", true, 0, from, to, months[0], months[1], months[2]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      when 2
+        month_where = "AND (month = ? OR month = ?)"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} #{month_where}", true, 0, from, to, months[0], months[1]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      when 1
+        month_where = "AND month = ?"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} #{month_where}", true, 0, from, to, months[0]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      else
+        month_where = "AND month != ?"
+        @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} #{month_where}", true, 0, from, to, months[0]).order(sort).paginate(:page => params[:page], :per_page => 10)
+      end
+    end
+
+    @user = User.new
+
+    @empty_search = false
+    @empty_search = true if @flights.empty? && !params[:scroll]
     
     respond_to do |format|
       if @flights.any?
-        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :stats => render_to_string('layouts/_flight_stats.html.erb') } }
+        format.json { render :json => { :flights => render_to_string('_flights.html.erb') } }
       elsif @empty_search
-        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :stats => render_to_string('layouts/_flight_stats.html.erb'), :noMoreFlights => true } }
+        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :noMoreFlights => true } }
       else
         format.json { render :json => { :flights => "<div class='no-more-flights label label-info'>No more flights to show</div>", :noMoreFlights => true } }
       end

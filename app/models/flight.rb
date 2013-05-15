@@ -1,7 +1,7 @@
 class Flight < ActiveRecord::Base
   attr_accessible :airline, :arrival_airport_id, :arrival_time, :departure_airport_id, :departure_time, :flight_no, :itinerary_id,
                   :price, :number_of_stops, :uid, :rid, :is_first_flight, :second_flight_destination, :second_flight_no,
-                  :original_price, :origin_code, :shortcut, :pure_date, :cheapest_price, :epic
+                  :original_price, :origin_code, :shortcut, :pure_date, :cheapest_price, :epic, :month
 
   belongs_to 	:itinerary,
   						:counter_cache => true
@@ -15,7 +15,8 @@ class Flight < ActiveRecord::Base
 							:foreign_key => 'arrival_airport_id'
 
   def epic?
-    (cheapest_price - price) > 2000
+    epic
+    # (cheapest_price - price) > 2000
   end
 
   def non_stop?
