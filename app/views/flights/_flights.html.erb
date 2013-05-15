@@ -49,19 +49,6 @@
 <% else %>
   <div class="hero-unit no-flights"><h2>Ermahgerd! No flights?</h2>
     <div><h3>1. Try adjusting your filters.</h3></div>
-    <div><h3>2. Still no luck? Sign up for notifications on new routes!</h3></div>
-    <div class="inline-email">
-      <form>
-        <input type="text" name="user[email]" placeholder="Email" id="second-email">
-        <button value="Sign up" class="btn btn-success", id="second-email-button">Sign up</button>
-      </form>
-    </div>
-    <div class="inline-flash flash hide">
-      <% flash.each do |name, msg| %>
-        <%= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}" %>
-      <% end %>
-    </div>
-    <!--<%= image_tag "arrow_up.png", :width => 100, :class => "arrow-up" %>
-    <%= image_tag "arrow_left.png", :width => 230, :class => "arrow-left" %>-->
+    <div><h3>2. Still no luck? <a class="empty-results-signup" href="#">Sign up</a> for notifications on new routes!</h3></div>
   </div>
 <% end %>

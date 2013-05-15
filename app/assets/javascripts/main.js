@@ -92,29 +92,55 @@ $(document).ready(function() {
   });
 
   $('#signup-link').click(function() {
-    $('.email-box').toggle();
     $('#signup-link').toggle();
     $('#close-link').toggle();
+    $('.email-signup').toggle();
   });
 
   $('#close-link').click(function() {
-    $('.email-box').toggle();
+    $('.email-signup').toggle();
     $('#signup-link').toggle();
     $('#close-link').toggle();
   });
 
-  $('#new_user').on('ajax:success', function(event, data) {
-    $('.flash').removeClass("hide");
-    $('.flash').removeClass("alert alert-errors");
-    $('.flash').text("");
-    $('.flash').text(data.email + " successfully added to the list.");
+  $('.alert').bind('closed', function () {
+    $('.email-signup').toggle();
+    $('#signup-link').toggle();
+    $('#close-link').toggle();
+  })
+
+  $('.close').click(function() {
+    $('.email-signup').toggle();
+    $('#signup-link').toggle();
+    $('#close-link').toggle();
   });
 
-  $('#new_user').on('ajax:error', function(event, data) {
-    $('.flash').removeClass("hide");
-    $('.flash').addClass("alert alert-errors");
-    $('.flash').text("");
-    $('.flash').html(data.responseText);
+  $('.initial-signup-button').click(function(e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: '/users',
+      method: 'post',
+      dataType: 'json',
+      data: { email: $('#initial-email').val(), city: $("#all-airports").val() }
+    })
+    .done(function(data) {
+      $('.flash').text("");
+      $('.flash').removeClass("alert alert-errors");
+      $('.flash').removeClass("hide");
+      if (data.noCity) {
+        $('.flash').text(data.email + data.message);
+      }
+      else {
+        $('.flash').text(data.email + data.message + " " + data.city_msg + data.city + ".");
+      }
+    })
+    .fail(function(data) {
+      $('.flash').text("");
+      $('.flash').removeClass("hide");
+      $('.flash').addClass("alert alert-errors");
+      $('.flash').html(data.responseText.replace("<BR>", ", "));
+    })
   });
 
   var selectedFrom = "Any";
@@ -273,6 +299,13 @@ $(document).ready(function() {
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         updateActive(thisButton);
+
+        $('.empty-results-signup').click(function() {
+          $('#signup-link').toggle();
+          $('#close-link').toggle();
+          $('.email-signup').toggle();
+        });
+        
         $('#second-email-button').click(function(e) {
           e.preventDefault();
 

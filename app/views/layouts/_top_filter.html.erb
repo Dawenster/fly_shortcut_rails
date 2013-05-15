@@ -1,18 +1,26 @@
 <div class="toggle-buttons">
-  Type:
-  <div class="btn-group filter-type" data-toggle="buttons-radio">
-    <button type="button" class="btn btn-large btn-info filter" id="epic-button" title="Epic flights" data-content="These flights are at least $20 cheaper than the cheapest, non-shortcut flight of the same itinerary">Epic</button>
-    <button type="button" class="btn btn-large btn-info filter">All</button>
+  <div>
+    <div>Type:</div>
+    <div class="btn-group filter-type" data-toggle="buttons-radio">
+      <button type="button" class="btn btn-info btn-large filter" id="epic-button" title="Epic flights" data-content="These flights are at least $20 cheaper than the cheapest, non-shortcut flight of the same itinerary">Epic</button>
+      <button type="button" class="btn btn-info btn-large filter">All</button>
+    </div>
   </div>
-  Month:
-  <div class="btn-group filter-month" data-toggle="buttons-checkbox">
-    <button type="button" class="btn btn-large btn-info filter"><%= @month1 %></button>
-    <button type="button" class="btn btn-large btn-info filter"><%= @month2 %></button>
-    <button type="button" class="btn btn-large btn-info filter"><%= @month3 %></button>
+  <BR>
+  <div>
+    <div>Month:</div>
+    <div class="btn-group filter-month" data-toggle="buttons-checkbox">
+      <button type="button" class="btn btn-info btn-large filter"><%= @month1 %></button>
+      <button type="button" class="btn btn-info btn-large filter"><%= @month2 %></button>
+      <button type="button" class="btn btn-info btn-large filter"><%= @month3 %></button>
+    </div>
   </div>
-  Sort by:
-  <div class="btn-group filter-sort" data-toggle="buttons-radio">
-    <button type="button" class="btn btn-large btn-info filter">Price</button>
-    <button type="button" class="btn btn-large btn-info filter">Time</button>
+  <BR>
+  <div>
+    <div>Sort by:</div>
+    <div class="btn-group filter-sort" data-toggle="buttons-radio">
+      <button type="button" class="btn btn-info btn-large filter">Price</button>
+      <button type="button" class="btn btn-info btn-large filter">Time</button>
+    </div>
   </div>
 </div>

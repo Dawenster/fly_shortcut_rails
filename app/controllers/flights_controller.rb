@@ -20,6 +20,8 @@ class FlightsController < ApplicationController
       @combinations << [depart, arrive]
     end
 
+    @airports = Airport.all.map { |airport| airport.name }.unshift("(Desired departure airport)")
+
     @empty_search = false
 
     @from = @from.uniq.sort.unshift("Any")

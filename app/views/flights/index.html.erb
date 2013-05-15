@@ -1,30 +1,20 @@
 <iframe src="http://www.tkqlhce.com/click-5835159-10415728" width="0" height="0"></iframe>
 <div class="container">
-	<div class="row top-filter">
-		<div class="span3">
-			<div id="logo">
-				<img src="/img/fs_logo.png">
-			</div>
-		</div>
-		<div class="span8 offset1">
-			<%= render 'layouts/top_filter' %>
-		</div>
-	</div>
 	<div class="row">
 		<div class="span3">
-			<%= link_to "About", "/#panel2" %> | <a id="signup-link" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" class="hide" href="#">Close sign up</a>
-			 | <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
-			<div class="email-box hide">
-				<div class="flash hide">
-		      <% flash.each do |name, msg| %>
-		        <%= content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}" %>
-		      <% end %>
-		    </div>
-				<div><%= render 'layouts/email' %></div>
+			<div class="top-bar">
+				<div class="navbar">
+					<ul class="nav">
+						<div class="hard-links"><%= render 'layouts/flight_filter' %></div>
+						<div><%= render 'layouts/top_filter' %></div>
+					</ul>
+				</div>
 			</div>
-			<div><%= render 'layouts/flight_filter' %></div>
 		</div>
 		<div class="span8 offset1 all-flights">
+			<div>
+				<%= render 'layouts/alerts' %>
+			</div>
 			<div class="loading hide">
 				<%= image_tag "loading.gif" %>
 			</div>

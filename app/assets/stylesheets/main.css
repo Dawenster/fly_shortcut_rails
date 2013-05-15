@@ -8,19 +8,81 @@
   height: 100%;
 }
 
-/*#dw .top-filter {
-  background-image:url("/img/top_cloud_trans.png");
-  background-repeat: repeat-x;
-  height: 173px;
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  margin: 0;
-}*/
+#dw a {
+  text-decoration: none;
+  color: #2F96B4;
+}
+
+#dw a:hover {
+  text-decoration: none;
+  color: #F26C55;
+}
+
+#dw .alert {
+  width: 680px;
+  margin-left: 20px;
+  background-color: #632523;
+  border: none;
+  color: white;
+  text-shadow: none;
+}
+
+#dw .alert:first-child {
+  margin-top: 30px;
+}
+
+#dw .alert a.close {
+  opacity: 0.6;
+  color: white;
+}
+
+#dw .learn-more-link {
+  padding: 5px;
+  background-color: #2F96B4;
+  border-radius: 5px;
+  color: white;
+  float: right;
+  width: 150px;
+  text-align: center;
+  margin-top: 5px;
+}
+
+#dw .learn-more-link:hover {
+  color: black;
+}
+
+#dw .initial-flash {
+  width: 647px;
+  color: black;
+}
+
+#dw .initial-signup-button {
+  padding: 5px;
+  background-color: #92D050;
+  border-radius: 5px;
+  color: white;
+  float: right;
+  width: 150px;
+  text-align: center;
+  margin-top: 15px;
+  margin-right: 13px;
+}
+
+#dw .initial-signup-button:hover {
+  color: black;
+}
+
+#dw #initial-email {
+  margin-top: 15px;
+}
+
+#dw #all-airports {
+  margin-top: 5px;
+  margin-left: 10px;
+}
 
 #dw .toggle-buttons {
-  padding: 28px 0px 0px 20px;
+  padding: 0px 0px 0px 17px;
 }
 
 #dw #logo {
@@ -32,7 +94,7 @@
 }
 
 #dw .navbar {
-  /*position: fixed;*/
+  position: fixed;
   width: 350px;
 }
 
@@ -57,6 +119,10 @@
 
 #dw .navbar span p {
 	padding: 0;
+}
+
+#dw .hard-links {
+  text-align: center;
 }
 
 #dw .flash {
