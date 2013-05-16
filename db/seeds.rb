@@ -16,6 +16,12 @@ flight_count = 0
 #                   :timezone => row[5].strip)
 # end
 
+puts "*" * 50
+puts "Commencing scraping sequence..."
+puts "Marking all old flights..."
+
+Flight.where(:shortcut => true).each { |flight| flight.update_attributes(:new => false) }
+
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
@@ -27,7 +33,6 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   end
 
   # Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
-  Flight.where(:shortcut => true).each { |flight| flight.update_attributes(:new => false) }
 
   puts "*" * 50
   puts "Scraping flights originating from #{origin_code}"
