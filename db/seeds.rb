@@ -20,13 +20,14 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
 
-  num_days = [1]#(1..90).to_a
+  num_days = (1..90).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
   end
 
-  Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
+  # Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
+  Flight.where(:shortcut => true).each { |flight| flight.update_attributes(:new => false) }
 
   puts "*" * 50
   puts "Scraping flights originating from #{origin_code}"
@@ -167,13 +168,11 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
       shortcuts.each do |flight|
         route = Route.where(:origin_airport_id => flight.departure_airport_id, :destination_airport_id => flight.arrival_airport_id, :date => flight.pure_date)[0]
         if (route.cheapest_price - flight.price) > 2000
-          flight.update_attributes(:cheapest_price => route.cheapest_price, :epic => true)
+          flight.update_attributes(:cheapest_price => route.cheapest_price, :new => true, :epic => true)
         else
-          flight.update_attributes(:cheapest_price => route.cheapest_price)
+          flight.update_attributes(:cheapest_price => route.cheapest_price, :new => true)
         end
       end
-
-      shortcuts.map { |flight| flight.destroy unless flight.cheapest_price }
 
       puts "#{origin_code} #{date} complete."
     else
@@ -187,6 +186,11 @@ puts "*" * 50
 puts "Destroying all routes..."
 
 Route.destroy_all
+
+puts "*" * 50
+puts "Destroying remaining old flights..."
+
+Flight.where(:new => false).destroy_all
 
 time = (Time.now - start_time).to_i
 puts "*" * 50

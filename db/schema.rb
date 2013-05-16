@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130515230256) do
+ActiveRecord::Schema.define(:version => 20130516050242) do
 
   create_table "airports", :force => true do |t|
     t.string   "code"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130515230256) do
     t.integer  "cheapest_price"
     t.boolean  "epic"
     t.string   "month"
+    t.boolean  "new"
   end
 
   add_index "flights", ["arrival_airport_id"], :name => "index_flights_on_arrival_airport_id"
