@@ -20,16 +20,16 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
 
-  num_days = (1..90).to_a
+  num_days = [1]#(1..90).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
   end
 
+  Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
+
   puts "*" * 50
   puts "Scraping flights originating from #{origin_code}"
-
-  Flight.where(:origin_code => origin_code, :pure_date => (Time.now - 1.day).strftime('%m/%d/%Y')).destroy_all
 
   date_array.each do |date|
     non_stop_flights = []
