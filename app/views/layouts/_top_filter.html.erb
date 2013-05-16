@@ -1,26 +1,24 @@
 <div class="toggle-buttons">
-  <div>
+  <div class="type-filter">
     <div>Type:</div>
     <div class="btn-group filter-type" data-toggle="buttons-radio">
-      <button type="button" class="btn btn-info btn-large filter" id="epic-button" title="Epic flights" data-content="These flights are at least $20 cheaper than the cheapest, non-shortcut flight of the same itinerary">Epic</button>
-      <button type="button" class="btn btn-info btn-large filter">All</button>
+      <button type="button" class="btn btn-info filter" id="epic-button" title="Epic flights" data-content="These flights are at least $20 cheaper than the cheapest, non-shortcut flight of the same itinerary">Epic</button>
+      <button type="button" class="btn btn-info filter">All</button>
     </div>
   </div>
-  <BR>
-  <div>
+  <div class="sort-filter">
+    <div>Sort by:</div>
+    <div class="btn-group filter-sort" data-toggle="buttons-radio">
+      <button type="button" class="btn btn-info filter">Price</button>
+      <button type="button" class="btn btn-info filter">Time</button>
+    </div>
+  </div>
+  <!-- <div>
     <div>Month:</div>
     <div class="btn-group filter-month" data-toggle="buttons-checkbox">
       <button type="button" class="btn btn-info btn-large filter"><%= @month1 %></button>
       <button type="button" class="btn btn-info btn-large filter"><%= @month2 %></button>
       <button type="button" class="btn btn-info btn-large filter"><%= @month3 %></button>
     </div>
-  </div>
-  <BR>
-  <div>
-    <div>Sort by:</div>
-    <div class="btn-group filter-sort" data-toggle="buttons-radio">
-      <button type="button" class="btn btn-info btn-large filter">Price</button>
-      <button type="button" class="btn btn-info btn-large filter">Time</button>
-    </div>
-  </div>
+  </div> -->
 </div>

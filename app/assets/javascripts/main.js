@@ -115,6 +115,16 @@ $(document).ready(function() {
     $('#close-link').toggle();
   });
 
+  $('input[name="daterange"]').daterangepicker(
+    {},
+    function(start, end) {
+      if (start) {
+        $('#daterange').val(start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY') );
+      }
+      updateFlights(true, null);
+    }
+  );
+
   $('.initial-signup-button').click(function(e) {
     e.preventDefault();
 
@@ -180,15 +190,10 @@ $(document).ready(function() {
     $('.filter').attr('disabled', 'disabled').addClass('disabled');
     $('#from-dropdown').attr('disabled', 'disabled').addClass('disabled');
     $('#to-dropdown').attr('disabled', 'disabled').addClass('disabled');
+    var dates = $('#daterange').val();
     var type = null;
     var sort = null;
-    var month1 = null;
-    var month2 = null;
-    var month3 = null;
     var typeButton = $('.filter-type button:nth-child(1)');
-    var monthButton1 = $('.filter-month button:nth-child(1)');
-    var monthButton2 = $('.filter-month button:nth-child(2)');
-    var monthButton3 = $('.filter-month button:nth-child(3)');
     var sortButton = $('.filter-sort button:nth-child(1)');
     var from = $('#from-dropdown').val();
     var to = $('#to-dropdown').val();
@@ -198,15 +203,6 @@ $(document).ready(function() {
     }
     if (sortButton.hasClass('active')) {
       sort = sortButton.text();
-    }
-    if (monthButton1.hasClass('active')) {
-      month1 = monthButton1.text();
-    }
-    if (monthButton2.hasClass('active')) {
-      month2 = monthButton2.text();
-    }
-    if (monthButton3.hasClass('active')) {
-      month3 = monthButton3.text();
     }
 
     if (clicked) {
@@ -244,38 +240,11 @@ $(document).ready(function() {
         sort = null;
       }
 
-      if (clicked == monthButton1.text()) {
-        if (month1) {
-          month1 = null;
-        }
-        else {
-          month1 = clicked;
-        }
-      }
-
-      if (clicked == monthButton2.text()) {
-        if (month2) {
-          month2 = null;
-        }
-        else {
-          month2 = clicked;
-        }
-      }
-
-      if (clicked == monthButton3.text()) {
-        if (month3) {
-          month3 = null;
-        }
-        else {
-          month3 = clicked;
-        }
-      }
-
       $.ajax({
         url: '/filter',
         method: 'get',
         dataType: 'json',
-        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount, clicked: clicked }
+        data: { type: type, dates: dates, from: from, to: to, sort: sort, page: pageCount, clicked: clicked }
       })
       .done(function(data) {
         $('.infinite-more').before(data.flights);
@@ -298,7 +267,6 @@ $(document).ready(function() {
         $('.filter').removeAttr('disabled').removeClass('disabled');
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
-        updateActive(thisButton);
 
         $('.empty-results-signup').click(function() {
           $('#signup-link').toggle();
@@ -339,7 +307,7 @@ $(document).ready(function() {
         url: '/filter',
         method: 'get',
         dataType: 'json',
-        data: { type: type, month1: month1, month2: month2, month3: month3, from: from, to: to, sort: sort, page: pageCount, scroll: true }
+        data: { type: type, dates: dates, from: from, to: to, sort: sort, page: pageCount, scroll: true }
       })
       .done(function(data) {
         $('.infinite-loading').addClass('hide');
@@ -365,19 +333,7 @@ $(document).ready(function() {
   }
 
   $('.filter-type button:first-child').addClass('active');
-  $('.filter-month button:nth-child(1)').addClass('active');
-  $('.filter-month button:nth-child(2)').addClass('active');
-  $('.filter-month button:nth-child(3)').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
-
-  var updateActive = function(clicked) {
-    if (clicked.hasClass('active') && clicked.parent().hasClass('filter-month')) {
-      clicked.removeClass('active');
-    }
-    else if (!clicked.hasClass('active') && clicked.parent().hasClass('filter-month')) {
-      clicked.addClass('active');
-    }
-  }
 
   var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];
