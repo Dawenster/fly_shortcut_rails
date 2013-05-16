@@ -85,7 +85,7 @@ $(document).ready(function() {
   });
 
   $('.contact-us').popover({
-    'placement': "top",
+    'placement': "left",
     'trigger': 'hover',
     'title': 'Contact us',
     'content': "We'd love to hear to your comments, suggestions, and travel stories!"
@@ -305,7 +305,7 @@ $(document).ready(function() {
           $('#close-link').toggle();
           $('.email-signup').toggle();
         });
-        
+
         $('#second-email-button').click(function(e) {
           e.preventDefault();
 
