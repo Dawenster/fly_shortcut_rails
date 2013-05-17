@@ -1,6 +1,6 @@
 <% unless @empty_search %>
   <% @flights.each do |flight| %>
-    <%= if flight.departure_airport %>
+    <% if flight.departure_airport %>
       <div class="hero-unit">
         <div class="top-half">
           <div class="price">
