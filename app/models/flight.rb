@@ -16,7 +16,6 @@ class Flight < ActiveRecord::Base
 
   def epic?
     epic
-    # (cheapest_price - price) > 2000
   end
 
   def non_stop?
