@@ -6,10 +6,6 @@ class FlightsController < ApplicationController
     @from, @to, @combinations = [], [], []
     @user = User.new
 
-    @month1 = Time.now.strftime('%B')
-    @month2 = (Time.now + 1.month).strftime('%B')
-    @month3 = (Time.now + 2.months).strftime('%B')
-
     all_shortcuts = Flight.find(:all, :conditions => "shortcut = true", :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
 
     all_shortcuts.each do |flight|
