@@ -9,11 +9,11 @@ class FlightsController < ApplicationController
     all_shortcuts = Flight.find(:all, :conditions => ["shortcut = ? AND cheapest_price > ?", true, 0], :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
 
     all_shortcuts.each do |flight|
-      depart = flight.departure_airport.name
-      arrive = flight.arrival_airport.name
-      @from << depart
-      @to << arrive
-      @combinations << [depart, arrive]
+      depart = flight.departure_airport.name if flight.departure_airport.name
+      arrive = flight.arrival_airport.name if flight.arrival_airport.name
+      @from << depart if depart
+      @to << arrive if arrive
+      @combinations << [depart, arrive] if depart
     end
 
     @airports = Airport.all.map { |airport| airport.name }.unshift("(Desired departure airport)")

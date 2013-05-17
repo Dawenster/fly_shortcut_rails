@@ -4,17 +4,20 @@ require 'rest_client'
 start_time = Time.now
 flight_count = 0
 
-# Uncomment the airports only if you are doing a first-time seed
+# IMPORTANT!!!  DANGEROUS!!!  Uncomment the airports ONLY if you are doing a first-time seed.
+# THE BELOW CODE SHOULD NOT RUN ON PRODUCTION:
 
-Airport.destroy_all
+# Airport.destroy_all
 
-CSV.foreach('db/airports.csv') do |row|
-  Airport.create( :name => row[1].strip,
-                  :code => row[2].strip,
-                  :latitude => row[3].strip,
-                  :longitude => row[4].strip,
-                  :timezone => row[5].strip)
-end
+# CSV.foreach('db/airports.csv') do |row|
+#   Airport.create( :name => row[1].strip,
+#                   :code => row[2].strip,
+#                   :latitude => row[3].strip,
+#                   :longitude => row[4].strip,
+#                   :timezone => row[5].strip)
+# end
+
+# THE ABOVE CODE NEEDS TO STAY COMMENTED WHEN PUSHING TO PRODUCTION!!!
 
 puts "*" * 50
 puts "Commencing scraping sequence..."
