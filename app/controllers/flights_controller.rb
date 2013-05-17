@@ -6,7 +6,7 @@ class FlightsController < ApplicationController
     @from, @to, @combinations = [], [], []
     @user = User.new
 
-    all_shortcuts = Flight.find(:all, :conditions => "shortcut = true", :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
+    all_shortcuts = Flight.find(:all, :conditions => ["shortcut = ? AND cheapest_price > ?", true, 0], :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
 
     all_shortcuts.each do |flight|
       depart = flight.departure_airport.name
