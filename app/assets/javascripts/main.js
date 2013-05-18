@@ -98,6 +98,11 @@ $(document).ready(function() {
     'content': "For now, we only have data for the next three months. We're working on it though!"
   });
 
+  $('.actual-destination').popover({
+    'placement': "right",
+    'trigger': 'hover'
+  });
+
   $('#signup-link').click(function() {
     $('#signup-link').toggle();
     $('#close-link').toggle();
@@ -276,6 +281,10 @@ $(document).ready(function() {
           'placement': "left",
           'trigger': 'hover'
         });
+        $('.actual-destination').popover({
+          'placement': "right",
+          'trigger': 'hover'
+        });
         if (data.noMoreFlights) {
           noMoreFlights = true;
         }
@@ -337,6 +346,10 @@ $(document).ready(function() {
         });
         $('.book-button').popover({
           'placement': "left",
+          'trigger': 'hover'
+        });
+        $('.actual-destination').popover({
+          'placement': "right",
           'trigger': 'hover'
         });
         if (data.noMoreFlights) {
