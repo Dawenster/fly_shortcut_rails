@@ -17,7 +17,7 @@ flight_count = 0
 #                   :timezone => row[5].strip)
 # end
 
-# THE ABOVE CODE NEEDS TO STAY COMMENTED WHEN PUSHING TO PRODUCTION!!!
+# THE ABOVE CODE NEEDS Total STAY COMMENTED WHEN PUSHING TO PRODUCTION!!!
 
 puts "*" * 50
 puts "Commencing scraping sequence..."
