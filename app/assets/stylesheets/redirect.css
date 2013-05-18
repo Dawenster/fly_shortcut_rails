@@ -1,0 +1,28 @@
+#dw #overlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  background: black;
+  opacity: 0.7;
+  filter: alpha(Opacity=70);
+  z-index: 999;
+}
+
+#dw .redirect-box {
+  position: fixed;
+  left: 35%;
+  top: 30%;
+  height: 40%;
+  width: 30%;
+  z-index: 1000;
+  background-color: #BDE3E1;
+  border-radius: 10px;
+  text-align: center;
+  padding-top: 20px;
+}
+
+#dw .redirect-text {
+  margin-top: 30px;
+}

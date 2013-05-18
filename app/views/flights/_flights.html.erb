@@ -46,7 +46,7 @@
             <form action="<%= offsite_flight_path(flight, original: false) %>" target="_blank">
               <button type="submit" class="btn btn-success btn-large book-button" title="Book the flight" data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!">Book</button>
             </form>
-            <div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %></div>
+            <div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %> | Shortcut: <%= Airport.find(flight.second_flight_destination).name %></div>
           </div>
         </div>
       </div>
