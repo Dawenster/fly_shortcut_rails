@@ -125,14 +125,12 @@ $(document).ready(function() {
   var today = new Date();
   var lastDay = new Date();
   lastDay.setDate(lastDay.getDate() + 90);
-  var randomDay = Math.floor(Math.random()*91);
 
   $('input[name="daterange"]').daterangepicker(
     {
       ranges: {
         'Next 7 days': [new Date(), moment().add('days', 6)],
-        'Next 30 days': [new Date(), moment().add('days', 29)],
-        'Random day': [moment().add('days', randomDay), moment().add('days', randomDay)]
+        'Next 30 days': [new Date(), moment().add('days', 29)]
       },
       minDate: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
       maxDate: (lastDay.getMonth() + 1) + "/" + lastDay.getDate() + "/" + lastDay.getFullYear()
