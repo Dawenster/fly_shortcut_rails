@@ -14,10 +14,6 @@ class Flight < ActiveRecord::Base
 							:class_name => Airport,
 							:foreign_key => 'arrival_airport_id'
 
-  def epic?
-    epic
-  end
-
   def non_stop?
     number_of_stops == 0
   end
