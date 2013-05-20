@@ -81,6 +81,11 @@
   margin-left: 10px;
 }
 
+#dw .explanation-image {
+  margin-top: 20px;
+  margin-left: 30px;
+}
+
 #dw .toggle-buttons {
   padding: 0px 0px 0px 17px;
 }
