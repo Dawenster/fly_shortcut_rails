@@ -1,23 +1,23 @@
 $(document).ready(function() {
-  FB.init({appId: "651908141502421", status: true, cookie: true});
-  function postToFeed() {
-    // calling the API ...
-    var obj = {
-      method: 'feed',
-      redirect_uri: 'http://flyshortcut.com/flights',
-      link: 'http://flyshortcut.com',
-      picture: 'http://www.flyshortcut.com/img/fs_logo.png',
-      name: 'Fly Shortcut',
-      caption: 'Cheaper than the cheapest flights',
-      description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
-    };
+  // FB.init({appId: "651908141502421", status: true, cookie: true});
+  // function postToFeed() {
+  //   // calling the API ...
+  //   var obj = {
+  //     method: 'feed',
+  //     redirect_uri: 'http://flyshortcut.com/flights',
+  //     link: 'http://flyshortcut.com',
+  //     picture: 'http://www.flyshortcut.com/img/fs_logo.png',
+  //     name: 'Fly Shortcut',
+  //     caption: 'Cheaper than the cheapest flights',
+  //     description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
+  //   };
 
-    function callback(response) {
-      document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-    }
+  //   function callback(response) {
+  //     document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+  //   }
 
-    FB.ui(obj, callback);
-  }
+  //   FB.ui(obj, callback);
+  // }
 
   var combinations = [];
   var from = [];
