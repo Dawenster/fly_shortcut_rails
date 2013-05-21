@@ -5,4 +5,7 @@ class PagesController < ApplicationController
 
   def about_us
 	end
+
+  def fbtest
+  end
 end

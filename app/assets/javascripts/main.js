@@ -6,7 +6,7 @@ $(document).ready(function() {
       method: 'feed',
       redirect_uri: 'http://flyshortcut.com/flights',
       link: 'http://flyshortcut.com',
-      picture: 'http://fbrell.com/f8.jpg',
+      picture: 'http://www.flyshortcut.com/img/fs_logo.png',
       name: 'Fly Shortcut',
       caption: 'Cheaper than the cheapest flights',
       description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
