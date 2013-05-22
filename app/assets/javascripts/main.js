@@ -127,6 +127,12 @@ $(document).ready(function() {
     $('#close-link').toggle();
   });
 
+  $('.learn-more-close').click(function() {
+    $.ajax({
+      url: '/visited'
+    })
+  });
+
   var today = new Date();
   var lastDay = new Date();
   lastDay.setDate(lastDay.getDate() + 90);

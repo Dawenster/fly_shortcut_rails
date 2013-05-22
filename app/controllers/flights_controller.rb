@@ -2,8 +2,6 @@ require 'will_paginate/array'
 
 class FlightsController < ApplicationController
   def index
-    session[:visited] ||= 0
-    session[:visited] += 1
     @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND epic = ?", true, 0, true).order("price ASC").paginate(:page => 1, :per_page => 10)
     @from, @to, @combinations = [], [], []
     @user = User.new
@@ -99,6 +97,13 @@ class FlightsController < ApplicationController
       else
         format.json { render :json => { :flights => "<div class='no-more-flights label label-info'>No more flights to show</div>", :noMoreFlights => true } }
       end
+    end
+  end
+
+  def visited
+    session[:visited] = true
+    respond_to do |format|
+      format.json { render :json => "Done" }
     end
   end
 end
