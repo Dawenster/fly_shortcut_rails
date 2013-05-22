@@ -2,6 +2,8 @@ require 'will_paginate/array'
 
 class FlightsController < ApplicationController
   def index
+    session[:visited] ||= 0
+    session[:visited] += 1
     @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND epic = ?", true, 0, true).order("price ASC").paginate(:page => 1, :per_page => 10)
     @from, @to, @combinations = [], [], []
     @user = User.new

@@ -1,10 +1,12 @@
-<div class="alert">
-  <a class="close" data-dismiss="alert" href="#">&times;</a>
-  <div><a href="/#panel2" class="learn-more-link">Learn more</a></div>
-  <div><h4>First time here?</h4></div>
-  <div>We're not your average flight search engine.</div>
-  <div class="explanation-image"><%= image_tag "panel3image.png", :width => 600 %></div>
-</div>
+<% unless session[:visited] > 1 %>
+  <div class="alert">
+    <a class="close" data-dismiss="alert" href="#">&times;</a>
+    <div><a href="/#panel2" class="learn-more-link">Learn more</a></div>
+    <div><h4>First time here?</h4></div>
+    <div>We're not your average flight search engine.</div>
+    <div class="explanation-image"><%= image_tag "panel3image.png", :width => 600 %></div>
+  </div>
+<% end %>
 <div class="alert email-signup">
   <a class="close" href="#">&times;</a>
   <div><h4>100% epic travel hacks and deals. 0% spam.</h4></div>
