@@ -15,6 +15,16 @@
 			<div>
 				<%= render 'layouts/alerts' %>
 			</div>
+	    <div class="btn-group segment" data-toggle="buttons-radio">
+	    	<div class="input-prepend">
+		      <button type="button" class="btn btn-large btn-success">Going</button>
+				  <input type="text" name="daterange" class="date-input-field" id="daterange" placeholder="Click to select">
+			  </div>
+			  <div class="input-prepend">
+		      <button type="button" class="btn btn-large btn-success">Returning</button>
+				  <input type="text" name="daterange-return" class="date-input-field opensright" id="daterange-return" placeholder="Click to select">
+			  </div>
+	    </div>
 			<div class="loading hide">
 				<%= image_tag "loading.gif" %>
 			</div>

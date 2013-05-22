@@ -131,12 +131,8 @@ $(document).ready(function() {
   var lastDay = new Date();
   lastDay.setDate(lastDay.getDate() + 90);
 
-  $('input[name="daterange"]').daterangepicker(
+  $('#daterange').daterangepicker(
     {
-      ranges: {
-        'Next 7 days': [new Date(), moment().add('days', 6)],
-        'Next 30 days': [new Date(), moment().add('days', 29)]
-      },
       minDate: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
       maxDate: (lastDay.getMonth() + 1) + "/" + lastDay.getDate() + "/" + lastDay.getFullYear()
     },
@@ -144,7 +140,21 @@ $(document).ready(function() {
       if (start) {
         $('#daterange').val(start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY') );
       }
-      updateFlights(true, null);
+      updateFlights(true);
+    }
+  );
+
+  $('#daterange-return').daterangepicker(
+    {
+      opens: 'left',
+      minDate: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
+      maxDate: (lastDay.getMonth() + 1) + "/" + lastDay.getDate() + "/" + lastDay.getFullYear()
+    },
+    function(start, end) {
+      if (start) {
+        $('#daterange-return').val(start.format('MMM D, YYYY') + ' - ' + end.format('MMM D, YYYY') );
+      }
+      updateFlights(true);
     }
   );
 
@@ -188,7 +198,7 @@ $(document).ready(function() {
       otherArr: to
     }
     dynamicDropdown(opts);
-    updateFlights(thisSelection, $(this));
+    updateFlights(thisSelection);
   });
 
   $("#to-dropdown").change(function() {  
@@ -200,24 +210,31 @@ $(document).ready(function() {
       otherArr: from
     }
     dynamicDropdown(opts);
-    updateFlights(thisSelection, $(this));
+    updateFlights(thisSelection);
   });
 
   $('.filter').click(function() {
     var clicked = $(this).text();
-    updateFlights(clicked, $(this));
+    updateFlights(clicked);
+  });
+
+  $('.segment button').click(function() {
+    var clicked = $(this).text();
+    updateFlights(clicked);
   });
     
-  var updateFlights = function(clicked, thisButton) {
+  var updateFlights = function(clicked) {
     $('.infinite-more').addClass('hide');
     $('.filter').attr('disabled', 'disabled').addClass('disabled');
     $('#from-dropdown').attr('disabled', 'disabled').addClass('disabled');
     $('#to-dropdown').attr('disabled', 'disabled').addClass('disabled');
-    var dates = $('#daterange').val();
     var type = null;
     var sort = null;
+    var dates = null;
+    var segment = null;
     var typeButton = $('.filter-type button:nth-child(1)');
     var sortButton = $('.filter-sort button:nth-child(1)');
+    var segmentButton = $('.segment .input-prepend:first-child button');
     var from = $('#from-dropdown').val();
     var to = $('#to-dropdown').val();
 
@@ -226,6 +243,13 @@ $(document).ready(function() {
     }
     if (sortButton.hasClass('active')) {
       sort = sortButton.text();
+    }
+    if (segmentButton.hasClass('active')) {
+      segment = segmentButton.text();
+      dates = $('#daterange').val();
+    }
+    else {
+      dates = $('#daterange-return').val();
     }
 
     if (clicked) {
@@ -238,12 +262,7 @@ $(document).ready(function() {
       pageCount = 1;
 
       if (clicked == "Epic") {
-        if (type) {
-          type = null;
-        }
-        else {
-          type = clicked;
-        }
+        type = "Epic";
       }
 
       if (clicked == "All") {
@@ -251,23 +270,28 @@ $(document).ready(function() {
       } 
 
       if (clicked == "Price") {
-        if (sort) {
-          sort = null;
-        }
-        else {
-          sort = clicked;
-        }
+        sort = "Price";
       }
 
       if (clicked == "Time") {
         sort = null;
       }
 
+      if (clicked == "Going") {
+        segment = "Going";
+        dates = $('#daterange').val();
+      }
+
+      if (clicked == "Returning") {
+        segment = "";
+        dates = $('#daterange-return').val();
+      }
+
       $.ajax({
         url: '/filter',
         method: 'get',
         dataType: 'json',
-        data: { type: type, dates: dates, from: from, to: to, sort: sort, page: pageCount, clicked: clicked }
+        data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount }
       })
       .done(function(data) {
         $('.infinite-more').before(data.flights);
@@ -334,7 +358,7 @@ $(document).ready(function() {
         url: '/filter',
         method: 'get',
         dataType: 'json',
-        data: { type: type, dates: dates, from: from, to: to, sort: sort, page: pageCount, scroll: true }
+        data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount, scroll: true }
       })
       .done(function(data) {
         $('.infinite-loading').addClass('hide');
@@ -365,6 +389,7 @@ $(document).ready(function() {
 
   $('.filter-type button:first-child').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
+  $('.segment .input-prepend:first-child button').addClass('active');
 
   var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];

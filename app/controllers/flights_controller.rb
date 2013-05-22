@@ -33,20 +33,38 @@ class FlightsController < ApplicationController
   def filter
     params[:sort] == "Price" ? sort = "price ASC" : sort = "departure_time ASC"
 
-    if params[:from] == "Any"
-      from_where = "departure_airport_id > ?"
-      from = 0
-    else
-      from_where = "departure_airport_id = ?"
-      from = Airport.find_by_name(params[:from]).id
-    end
+    if params[:segment] == "Going"
+      if params[:from] == "Any"
+        from_where = "departure_airport_id > ?"
+        from = 0
+      else
+        from_where = "departure_airport_id = ?"
+        from = Airport.find_by_name(params[:from]).id
+      end
 
-    if params[:to] == "Any"
-      to_where = "arrival_airport_id > ?"
-      to = 0
+      if params[:to] == "Any"
+        to_where = "arrival_airport_id > ?"
+        to = 0
+      else
+        to_where = "arrival_airport_id = ?"
+        to = Airport.find_by_name(params[:to]).id
+      end
     else
-      to_where = "arrival_airport_id = ?"
-      to = Airport.find_by_name(params[:to]).id
+      if params[:to] == "Any"
+        to_where = "departure_airport_id > ?"
+        to = 0
+      else
+        to_where = "departure_airport_id = ?"
+        to = Airport.find_by_name(params[:to]).id
+      end
+
+      if params[:from] == "Any"
+        from_where = "arrival_airport_id > ?"
+        from = 0
+      else
+        from_where = "arrival_airport_id = ?"
+        from = Airport.find_by_name(params[:from]).id
+      end
     end
 
     if params[:dates] == ""

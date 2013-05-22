@@ -116,6 +116,7 @@
 
 #dw .loading {
   text-align: center;
+  margin-top: 30px;
 }
 
 #dw .navbar {
@@ -202,6 +203,23 @@
 
 #dw .stats-last-row {
   border-top: 1px black solid;
+}
+
+#dw .segment {
+  margin-left: 8%;
+  margin-top: 20px;
+}
+
+#dw .segment button {
+  margin-top: 0;
+}
+
+#dw .segment input {
+  height: 33px;
+}
+
+#dw .segment .input-prepend:first-child input {
+  margin-right: 10px;
 }
 
 #dw .hero-unit {

@@ -1,6 +1,6 @@
 .daterangepicker.dropdown-menu {
   max-width: none;
-  position: fixed;
+  /*position: fixed;*/
 }
 
 .daterangepicker.opensleft .ranges, .daterangepicker.opensleft .calendar {

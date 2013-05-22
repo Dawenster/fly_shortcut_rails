@@ -1,7 +1,7 @@
 <div id="logo">
 	<a href="/"><img src="/img/fs_logo.png"></a>
 </div>
-<%= link_to "About", "/#panel2" %> | <a id="signup-link" class="hide" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" href="#">Close sign up</a> | <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
+<%= link_to "About", "/#panel2" %> | <a id="signup-link" class="hide" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" href="#">Close sign up box</a> | <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
 <form class="form-inline">
 	<div class="from-airport">
   	<!-- <span class="add-on"><p>From:</p></span> -->
@@ -15,8 +15,12 @@
   	<%= select_tag "to-dropdown", options_for_select(@to) %>
   	<!-- <input type="text" class="input-large" id="destination" placeholder="Where you wanna go..."> -->
 	</div>
-  <div class="date-filter">
-    <span><label for="daterange" class="label label-info dates-label">Dates:</label></span>
-    <input type="text" name="daterange" id="daterange" placeholder="Click to select">
+  <!-- <div class="date-filter">
+    <span><label for="daterange" class="label label-info dates-label">Going:</label></span>
+    <input type="text" name="daterange" class="date-input-field" id="daterange" placeholder="Click to select">
   </div>
+  <div class="date-filter">
+    <span><label for="daterange-return" class="label label-info dates-label">Returning:</label></span>
+    <input type="text" name="daterange-return" class="date-input-field" id="daterange-return" placeholder="Click to select">
+  </div> -->
 </form>
