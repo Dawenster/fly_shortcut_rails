@@ -52,6 +52,8 @@ class FlightsController < ApplicationController
         to = Airport.find_by_name(params[:to]).id
       end
     else
+      @returning = true
+
       if params[:to] == "Any"
         to_where = "departure_airport_id > ?"
         to = 0

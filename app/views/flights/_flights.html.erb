@@ -1,4 +1,4 @@
-<% unless @empty_search %>
+<% if !@empty_search %>
   <% @flights.each do |flight| %>
     <% if flight.departure_airport %>
       <div class="hero-unit">
@@ -52,6 +52,12 @@
       </div>
     <% end %>
   <% end %>
+<% elsif @returning %>
+  <div class="hero-unit no-flights"><h2>No returning flights?</h2>
+    <div><h3>1. Try adjusting your filters.</h3></div>
+    <div><h3>2. Still no luck? <a class="empty-results-signup" href="#">Sign up</a> for notifications on new routes!</h3></div>
+    <div>Note: If you already have a shortcut flight going to your destination, you're already going to pay less than you would have if you booked a traditional roundtrip ticket. Even if you buy a normal returning one-way ticket, you'll still win.</div>
+  </div>
 <% else %>
   <div class="hero-unit no-flights"><h2>Ermahgerd! No flights?</h2>
     <div><h3>1. Try adjusting your filters.</h3></div>
