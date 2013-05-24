@@ -23,13 +23,13 @@ puts "*" * 50
 puts "Commencing scraping sequence..."
 puts "Marking all old flights..."
 
-Flight.where(:shortcut => true).each { |flight| flight.update_attributes(:new => false) }
+Flight.all.each { |flight| flight.update_attributes(:new => false) }
 
 Dir[Rails.root.join('db/routes/*.csv')].each do |file|
   origin_code = file.split('/').last[0..2]
   date_array = []
 
-  num_days = (1..90).to_a
+  num_days = [1,7,14,21]#(1..90).to_a
 
   num_days.each do |num|
     date_array << (Time.now + num.days).strftime('%m/%d/%Y')
@@ -148,7 +148,7 @@ Dir[Rails.root.join('db/routes/*.csv')].each do |file|
 
     potential_shortcuts.each do |flight|
       similar_flights = all_flights.select { |all_flight| all_flight.flight_no == flight.flight_no && all_flight.airline == flight.airline && all_flight.pure_date == flight.pure_date }
-      similar_flights.sort! { |flight| flight.price }
+      similar_flights = similar_flights.sort_by { |flight| flight.price }
 
       cheapest_flight = similar_flights.first
       non_stop_flight = similar_flights.find {|f| f.number_of_stops == 0 }
