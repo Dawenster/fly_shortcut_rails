@@ -6,7 +6,26 @@
 				<div class="navbar">
 					<ul class="nav">
 						<div class="hard-links"><%= render 'layouts/flight_filter' %></div>
-						<div><%= render 'layouts/top_filter' %></div>
+				    <div class="btn-group segment" data-toggle="buttons-radio">
+				    	<div>
+				    		<div><label for="daterange" class="going-label">Going:</label></div>
+				    		<div class="input-prepend">
+								  <div class="btn-group">
+								    <button type="button" class="btn btn-success going-button">Showing</button>
+								  </div>
+								  <input type="text" name="daterange" class="date-input-field" id="daterange" placeholder="Select departure date range">
+								</div>
+						  </div>
+						  <div>
+						  	<div><label for="daterange-return" class="returning-label">Returning:</label></div>
+							  <div class="input-prepend">
+						      <div class="btn-group">
+							      <button type="button" class="btn btn-success returning-button">Click to show</button>
+						      </div>
+								  <input type="text" name="daterange-return" class="date-input-field opensright" id="daterange-return" placeholder="Select returning date range">
+							  </div>
+							</div>
+				    </div>
 					</ul>
 				</div>
 			</div>
@@ -15,16 +34,7 @@
 			<div>
 				<%= render 'layouts/alerts' %>
 			</div>
-	    <div class="btn-group segment" data-toggle="buttons-radio">
-	    	<div class="input-prepend">
-		      <button type="button" class="btn btn-large btn-success">Going</button>
-				  <input type="text" name="daterange" class="date-input-field" id="daterange" placeholder="Select departure date range">
-			  </div>
-			  <div class="input-prepend">
-		      <button type="button" class="btn btn-large btn-success">Returning</button>
-				  <input type="text" name="daterange-return" class="date-input-field opensright" id="daterange-return" placeholder="Select returning date range">
-			  </div>
-	    </div>
+			<div><%= render 'layouts/top_filter' %></div>
 			<div class="loading hide">
 				<%= image_tag "loading.gif" %>
 			</div>

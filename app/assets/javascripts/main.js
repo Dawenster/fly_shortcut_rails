@@ -152,7 +152,6 @@ $(document).ready(function() {
 
   $('#daterange-return').daterangepicker(
     {
-      opens: 'left',
       minDate: (today.getMonth() + 1) + "/" + today.getDate() + "/" + today.getFullYear(),
       maxDate: (lastDay.getMonth() + 1) + "/" + lastDay.getDate() + "/" + lastDay.getFullYear()
     },
@@ -225,8 +224,23 @@ $(document).ready(function() {
   });
 
   $('.segment button').click(function() {
-    var clicked = $(this).text();
+    var clicked = null;
+    if ($(this).hasClass("going-button")) {
+      clicked = "Going";
+    }
+    else {
+      clicked = "Returning";
+    }
+
     updateFlights(clicked);
+
+    if ($('.going-button').text() == "Showing") {
+      $('.going-button').text("Click to show");
+    }
+    else {
+      $('.returning-button').text("Click to show");
+    }
+    $(this).text("Showing");
   });
     
   var updateFlights = function(clicked) {
@@ -395,7 +409,7 @@ $(document).ready(function() {
 
   $('.filter-type button:first-child').addClass('active');
   $('.filter-sort button:first-child').addClass('active');
-  $('.segment .input-prepend:first-child button').addClass('active');
+  $('.going-button').addClass('active');
 
   var dynamicDropdown = function(opts) {
     thisSelection = opts['thisSelection'];

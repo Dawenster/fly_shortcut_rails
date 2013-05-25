@@ -92,11 +92,11 @@
 
 #dw .type-filter {
   float: left;
-  margin-top: 20px;
+  margin: 20px 10px 60px 30%;
 }
 
 #dw .sort-filter {
-  float: right;
+  float: left;
   margin-top: 20px;
 }
 
@@ -205,17 +205,22 @@
   border-top: 1px black solid;
 }
 
+#dw .going-label, #dw .returning-label {
+  font-weight: bold;
+}
+
 #dw .segment {
-  margin-left: 8%;
-  margin-top: 20px;
+  margin-left: 5px;
 }
 
 #dw .segment button {
   margin-top: 0;
+  font-size: 8pt;
+  width: 90px;
 }
 
 #dw .segment input {
-  height: 33px;
+  width: 190px;
 }
 
 #dw .segment .input-prepend:first-child input {
@@ -227,6 +232,7 @@
 	padding: 20px 40px 20px 40px;
   min-height: 200px;
   font-size: 1.1em;
+  clear: both;
 }
 
 #dw .top-half {
