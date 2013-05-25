@@ -254,7 +254,7 @@ $(document).ready(function() {
     var segment = null;
     var typeButton = $('.filter-type button:nth-child(1)');
     var sortButton = $('.filter-sort button:nth-child(1)');
-    var segmentButton = $('.segment .input-prepend:first-child button');
+    var segmentButton = $('.going-button');
     var from = $('#from-dropdown').val();
     var to = $('#to-dropdown').val();
 
@@ -265,7 +265,7 @@ $(document).ready(function() {
       sort = sortButton.text();
     }
     if (segmentButton.hasClass('active')) {
-      segment = segmentButton.text();
+      segment = "Going"
       dates = $('#daterange').val();
     }
     else {
