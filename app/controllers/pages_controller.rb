@@ -34,7 +34,6 @@ class PagesController < ApplicationController
         end
       end
     end
-
     @cheapest_analysis.each do |k, v|
       v[4] = v[0] + v[2]
     end
