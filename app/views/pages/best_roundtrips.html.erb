@@ -1,0 +1,20 @@
+<table>
+  <tr>
+    <th>Route</th>
+    <th>Going price</th>
+    <th>Going date</th>
+    <th>Return price</th>
+    <th>Return date</th>
+    <th>Total price</th>
+  </tr>
+  <% @cheapest_analysis.sort.each do |k, v| %>
+    <tr>
+      <th><%= k %></th>
+      <th><%= v[0] %></th>
+      <th><%= v[1] %></th>
+      <th><%= v[2] %></th>
+      <th><%= v[3] %></th>
+      <th><%= v[4] %></th>
+    </tr>
+  <% end %>
+</table>
