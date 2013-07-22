@@ -44,7 +44,7 @@
           </table>
           <div class="below-table">
             <form action="<%= offsite_flight_path(flight, original: false) %>" target="_blank">
-              <button type="submit" class="btn btn-success btn-large book-button" title="Book the flight" data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'book-button']);">Book</button>
+              <button type="submit" class="btn btn-success btn-large book-button" title="Book the flight" data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: <%= flight.departure_airport.code %>-<%= flight.arrival_airport.code %>']);">Book</button>
             </form>
             <div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %> <a class="actual-destination" title="Actual destination" data-content="This ticket has a connecting flight to <%= Airport.find(flight.second_flight_destination).name %>. You don't need to get on this flight :)"><i class="icon-exclamation-sign"></i></a></div>
           </div>
