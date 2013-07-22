@@ -38,4 +38,7 @@ class PagesController < ApplicationController
       v[4] = v[0] + v[2]
     end
   end
+
+  def ga_test
+  end
 end
