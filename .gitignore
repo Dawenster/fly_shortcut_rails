@@ -16,3 +16,4 @@
 
 # Ignore database backup
 /fly_shortcut_development_2.dump
+*.dump

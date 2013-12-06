@@ -1,0 +1,22 @@
+table.table
+  tr
+    th
+      | Email
+    th
+      | City count
+    th
+      | Cities
+    th
+      | Date signed up
+  - @users.each do |user|
+    tr
+      td
+        = user.email
+      td
+        = user.cities.map{ |c| c.name }.uniq.count
+      td
+        - user.cities.map{ |c| c.name }.uniq.each do |city_name|
+          div
+            = city_name
+      td
+        = user.created_at.strftime("%b %d, %Y")

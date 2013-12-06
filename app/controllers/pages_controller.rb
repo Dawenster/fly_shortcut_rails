@@ -41,4 +41,8 @@ class PagesController < ApplicationController
 
   def ga_test
   end
+
+  def signups
+    @users = User.all
+  end
 end
