@@ -1,24 +1,4 @@
 $(document).ready(function() {
-  // FB.init({appId: "651908141502421", status: true, cookie: true});
-  // function postToFeed() {
-  //   // calling the API ...
-  //   var obj = {
-  //     method: 'feed',
-  //     redirect_uri: 'http://flyshortcut.com/flights',
-  //     link: 'http://flyshortcut.com',
-  //     picture: 'http://www.flyshortcut.com/img/fs_logo.png',
-  //     name: 'Fly Shortcut',
-  //     caption: 'Cheaper than the cheapest flights',
-  //     description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
-  //   };
-
-  //   function callback(response) {
-  //     document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-  //   }
-
-  //   FB.ui(obj, callback);
-  // }
-
   var combinations = [];
   var from = [];
   var to = [];
@@ -49,89 +29,6 @@ $(document).ready(function() {
   });
 
   !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-
-  $('.fb-button').click(function() {
-    FB.ui({
-      method: 'feed',
-      // redirect_uri: 'http://flyshortcut.com/flights',
-      link: 'http://flyshortcut.com',
-      picture: 'http://www.flyshortcut.com/img/fs_logo.png',
-      name: 'Fly Shortcut',
-      caption: 'Cheaper than the cheapest flights',
-      description: 'Find A:B:C flights that are cheaper than A:B flights and simply drop the last segment.'
-    }, function(response) {
-        if (response && response.post_id) {
-          alert('Your post was successfully published - thanks for sharing with your friends!');
-        } else {
-          alert('Post was not published.');
-        }
-      }
-    );
-  });
-
-  $('#epic-button').popover({
-    'placement': "bottom",
-    'trigger': 'hover'
-  });
-
-  $('.book-button').popover({
-    'placement': "left",
-    'trigger': 'hover'
-  });
-
-  $('#signup-link').popover({
-    'placement': "top",
-    'trigger': 'hover'
-  });
-
-  $('.contact-us').popover({
-    'placement': "left",
-    'trigger': 'hover',
-    'title': 'Contact us',
-    'content': "We'd love to hear to your comments, suggestions, and travel stories!"
-  });
-
-  $('.dates-label').popover({
-    'placement': "top",
-    'trigger': 'hover',
-    'title': 'Available dates',
-    'content': "For now, we only have data for the next three months. We're working on it though!"
-  });
-
-  $('.actual-destination').popover({
-    'placement': "right",
-    'trigger': 'hover'
-  });
-
-  $('#signup-link').click(function() {
-    $('#signup-link').toggle();
-    $('#close-link').toggle();
-    $('.email-signup').toggle();
-  });
-
-  $('#close-link').click(function() {
-    $('.email-signup').toggle();
-    $('#signup-link').toggle();
-    $('#close-link').toggle();
-  });
-
-  $('.alert').bind('closed', function () {
-    $('.email-signup').toggle();
-    $('#signup-link').toggle();
-    $('#close-link').toggle();
-  })
-
-  $('.close').click(function() {
-    $('.email-signup').toggle();
-    $('#signup-link').toggle();
-    $('#close-link').toggle();
-  });
-
-  $('.learn-more-close').click(function() {
-    $.ajax({
-      url: '/visited'
-    })
-  });
 
   var today = new Date();
   var lastDay = new Date();
@@ -459,29 +356,3 @@ $(document).ready(function() {
     }
   }
 });
-
-  // $(function() {
- //    $('#datetimepicker4').datetimepicker({
- //      maskInput: true,           // disables the text input mask
-  //    pickDate: true,            // disables the date picker
-  //    pickTime: false,           // disables de time picker
-  //    pick12HourFormat: false,   // enables the 12-hour format time picker
-  //    pickSeconds: true,         // disables seconds in the time picker
-  //    startDate: new Date(),     // set a minimum date
-  //    endDate: new Date() + 7    // set a maximum date
- //    });
- //  });
-
-  // $(function() {
-  //   var availableTags = airports;
-  //   $("#origin").autocomplete({
-  //     source: availableTags,
-  //   });
-  // });
-
-  // $(function() {
-  //   var availableTags = airports;
-  //   $("#destination").autocomplete({
-  //     source: availableTags
-  //   });
-  // });
