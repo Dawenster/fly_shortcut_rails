@@ -1,5 +1,5 @@
 class Airport < ActiveRecord::Base
-  attr_accessible :code, :latitude, :longitude, :name, :timezone
+  attr_accessible :city, :code, :latitude, :longitude, :name, :timezone
 
   has_one :itinerary, 
 					:class_name => Itinerary, 

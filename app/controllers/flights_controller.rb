@@ -2,27 +2,26 @@ require 'will_paginate/array'
 
 class FlightsController < ApplicationController
   def index
-    @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND epic = ?", true, 0, true).order("price ASC").paginate(:page => 1, :per_page => 10)
-    @from, @to, @combinations = [], [], []
+    origin_code ||= "YYZ"
+    origin_airport = Airport.find_by_code(origin_code)
+
     @user = User.new
-
-    all_shortcuts = Flight.find(:all, :conditions => ["shortcut = ? AND cheapest_price > ?", true, 0], :select => "departure_airport_id, arrival_airport_id", :group => "departure_airport_id, arrival_airport_id")
-
-    all_shortcuts.each do |flight|
-      depart = flight.departure_airport.name if flight.departure_airport
-      arrive = flight.arrival_airport.name if flight.arrival_airport
-      @from << depart if depart
-      @to << arrive if arrive
-      @combinations << [depart, arrive] if depart
-    end
-
     @airports = Airport.all.map { |airport| airport.name }.unshift("(Desired departure airport)")
-
     @empty_search = false
 
-    @from = @from.uniq.sort.unshift("Any")
-    @to = @to.uniq.sort.unshift("Any")
-    @combinations = @combinations.uniq
+    params_to_send = {
+      :password => ENV['POST_PASSWORD']
+    }
+
+    results = JSON.parse(RestClient.get "http://fs-#{origin_code.downcase}-api.herokuapp.com/flights", { :params => params_to_send })
+    @flights = results["flights"]
+
+    @from = [
+      "Toronto Lester B Pearson, ON (YYZ)",
+      "Vancouver International, BC (YVR)"
+    ]
+    @default_from = origin_airport.name
+    @to = sort_destinations(results["destinations"])
 
     respond_to do |format|
       format.html
@@ -31,71 +30,53 @@ class FlightsController < ApplicationController
   end
 
   def filter
-    params[:sort] == "Price" ? sort = "price ASC" : sort = "departure_time ASC"
+    destination_name = params[:to]
 
-    if params[:segment] == "Going"
-      if params[:from] == "Any"
-        from_where = "departure_airport_id > ?"
-        from = 0
-      else
-        from_where = "departure_airport_id = ?"
-        from = Airport.find_by_name(params[:from]).id
-      end
-
-      if params[:to] == "Any"
-        to_where = "arrival_airport_id > ?"
-        to = 0
-      else
-        to_where = "arrival_airport_id = ?"
-        to = Airport.find_by_name(params[:to]).id
-      end
+    if params["segment"] == "Going"
+      origin_airport = Airport.find_by_name(params[:from])
+      origin_code = origin_airport.code
     else
+      origin_airport = Airport.find_by_name(params[:to])
+      origin_code = origin_airport.code
       @returning = true
+    end
 
-      if params[:to] == "Any"
-        to_where = "departure_airport_id > ?"
-        to = 0
-      else
-        to_where = "departure_airport_id = ?"
-        to = Airport.find_by_name(params[:to]).id
+    params[:from] = origin_airport.id
+    params[:to] = params[:to] == "Any" ? 0 : Airport.find_by_name(params[:to]).id
+
+    params_to_send = {
+      :password => ENV['POST_PASSWORD'],
+      :passed_params => params
+    }
+
+    current_airports = [
+      "YVR",
+      "YYZ"
+    ]
+
+    if current_airports.include?(origin_code)
+      results = JSON.parse(RestClient.get "http://fs-#{origin_code.downcase}-api.herokuapp.com/filter", { :params => params_to_send })
+      # results = JSON.parse(RestClient.get "http://localhost:3001/filter", { :params => params_to_send })
+      @flights = results["flights"]
+
+      destinations = sort_destinations(results["destinations"])
+
+      @user = User.new
+      @empty_search = @flights.empty? && !params[:scroll] ? true : false
+      
+      respond_to do |format|
+        if @flights.any?
+          format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :destinations => destinations, :destination_name => destination_name } }
+        elsif @empty_search
+          format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :destinations => destinations, :destination_name => destination_name, :noMoreFlights => true } }
+        else
+          format.json { render :json => { :flights => "<div class='no-more-flights label label-info'>No more flights to show</div>", :destinations => destinations, :destination_name => destination_name, :noMoreFlights => true } }
+        end
       end
-
-      if params[:from] == "Any"
-        from_where = "arrival_airport_id > ?"
-        from = 0
-      else
-        from_where = "arrival_airport_id = ?"
-        from = Airport.find_by_name(params[:from]).id
-      end
-    end
-
-    if params[:dates] == ""
-      start_date = Time.now - 1.year
-      end_date = Time.now + 1.year
     else
-      dates = params[:dates].split(" - ") 
-      start_date = DateTime.strptime(dates[0], "%B %d, %Y")
-      end_date = DateTime.strptime(dates[1], "%B %d, %Y") + 1.day
-    end
-
-    if params[:type] == "Epic"
-      @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND departure_time >= ? AND arrival_time <= ? AND epic = ?", true, 0, from, to, start_date, end_date, true).order(sort).paginate(:page => params[:page], :per_page => 10)
-    else
-      @flights = Flight.where("shortcut = ? AND cheapest_price > ? AND #{from_where} AND #{to_where} AND departure_time >= ? AND arrival_time <= ?", true, 0, from, to, start_date, end_date).order(sort).paginate(:page => params[:page], :per_page => 10)
-    end
-
-    @user = User.new
-
-    @empty_search = false
-    @empty_search = true if @flights.empty? && !params[:scroll]
-    
-    respond_to do |format|
-      if @flights.any?
-        format.json { render :json => { :flights => render_to_string('_flights.html.erb') } }
-      elsif @empty_search
-        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :noMoreFlights => true } }
-      else
-        format.json { render :json => { :flights => "<div class='no-more-flights label label-info'>No more flights to show</div>", :noMoreFlights => true } }
+      respond_to do |format|
+        @empty_search = true
+        format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :destinations => [], :destination_name => "", :noMoreFlights => true } }
       end
     end
   end
@@ -105,5 +86,11 @@ class FlightsController < ApplicationController
     respond_to do |format|
       format.json { render :json => "Done" }
     end
+  end
+
+  private
+
+  def sort_destinations(arr)
+    arr.map{ |airport_id| Airport.find(airport_id).name }.sort.unshift("Any")
   end
 end

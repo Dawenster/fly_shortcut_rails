@@ -6,7 +6,7 @@
 	<div class="from-airport">
   	<!-- <span class="add-on"><p>From:</p></span> -->
   	<span><label for="from-dropdown" class="label label-info">From:</label></span>
-  	<%= select_tag "from-dropdown", options_for_select(@from) %>
+  	<%= select_tag "from-dropdown", options_for_select(@from, :selected => @default_from) %>
 	  <!-- <input type="text" class="input-large" id="origin"placeholder="Where you are..."> -->
 	</div>
 	<div class="to-airport">

@@ -1,8 +1,9 @@
 $(document).ready(function() {
-  var combinations = [];
+  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+  
   var from = [];
   var to = [];
-	var regex = /\(([^\)]+)\)/;
+  var regex = /\(([^\)]+)\)/;
   var pageCount = 1;
   var noMoreFlights = false;
   var emptySearch = false;
@@ -13,7 +14,6 @@ $(document).ready(function() {
     dataType: 'json'
   })
   .done(function(data) {
-    combinations = data.combinations;
     from = data.from;
     to = data.to;
     totalPages = data.totalPages;
@@ -27,8 +27,6 @@ $(document).ready(function() {
       updateFlights(null);
     }
   });
-
-  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
 
   var today = new Date();
   var lastDay = new Date();
@@ -60,59 +58,13 @@ $(document).ready(function() {
     }
   );
 
-  $('.initial-signup-button').click(function(e) {
-    e.preventDefault();
-
-    $.ajax({
-      url: '/users',
-      method: 'post',
-      dataType: 'json',
-      data: { email: $('#initial-email').val(), city: $("#all-airports").val() }
-    })
-    .done(function(data) {
-      $('.flash').text("");
-      $('.flash').removeClass("alert alert-errors");
-      $('.flash').removeClass("hide");
-      if (data.noCity) {
-        $('.flash').text(data.email + data.message);
-      }
-      else {
-        $('.flash').text(data.email + data.message + " " + data.city_msg + data.city + ".");
-      }
-    })
-    .fail(function(data) {
-      $('.flash').text("");
-      $('.flash').removeClass("hide");
-      $('.flash').addClass("alert alert-errors");
-      $('.flash').html(data.responseText.replace("<BR>", ", "));
-    })
-  });
-
-  var selectedFrom = "Any";
-  var selectedTo = "Any";
-
-  $("#from-dropdown").change(function() {  
-    opts = {
-      thisSelection: $(this).val(),
-      selection: $('#to-dropdown').val(),
-      index: 0,
-      otherTag: "#to-dropdown",
-      otherArr: to
-    }
-    dynamicDropdown(opts);
-    updateFlights(thisSelection);
+  $("#from-dropdown").change(function() { 
+    $('#to-dropdown').val("Any");
+    updateFlights($(this).val());
   });
 
   $("#to-dropdown").change(function() {  
-    opts = {
-      thisSelection: $(this).val(),
-      selection: $('#from-dropdown').val(),
-      index: 1,
-      otherTag: "#from-dropdown",
-      otherArr: from
-    }
-    dynamicDropdown(opts);
-    updateFlights(thisSelection);
+    updateFlights($(this).val());
   });
 
   $('.filter').click(function() {
@@ -211,6 +163,8 @@ $(document).ready(function() {
         data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount }
       })
       .done(function(data) {
+        updateDropdowns(data.destinations, data.destination_name);
+
         $('.infinite-more').before(data.flights);
         $('.all-stats').append(data.stats);
         $('.loading').addClass('hide');
@@ -278,6 +232,8 @@ $(document).ready(function() {
         data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount, scroll: true }
       })
       .done(function(data) {
+        updateDropdowns(data.destinations, data.destination_name);
+
         $('.infinite-loading').addClass('hide');
         $('.infinite-more').removeClass('hide');
         $('.infinite-more').before(data.flights);
@@ -308,49 +264,13 @@ $(document).ready(function() {
   $('.filter-sort button:first-child').addClass('active');
   $('.going-button').addClass('active');
 
-  var dynamicDropdown = function(opts) {
-    thisSelection = opts['thisSelection'];
-    selection = opts['selection'];
-    index = opts['index'];
-    otherTag = opts['otherTag'];
-    otherArr = opts['otherArr'];
-
-    if (index == 0) {
-      var otherIndex = 1;
-    }
-    else if (index == 1) {
-      var otherIndex = 0;
-    }
-
-    $(otherTag + " option").remove();
-
-    if (thisSelection == "Any") {
-      for (i = 0; i < otherArr.length; i++ ) {
-        $(otherTag).append("<option value=" + '"' + otherArr[i] + '"' + ">" + otherArr[i] + "</option>");
-        if (otherArr[i] == selection) {
-          $(otherTag + " option:last-child").attr("selected", "selected");
-        }
-      }
-    }
-    else {
-      var tempArray = [];
-
-      $(otherTag).append("<option value='Any'>Any</option>");
-
-      for (i = 0; i < combinations.length; i++ ) {
-        if (combinations[i][index] == thisSelection) {
-          if ($.inArray(combinations[i][otherIndex], tempArray) == -1) {
-            tempArray.push(combinations[i][otherIndex]);
-          }
-        }
-      }
-
-      tempArray = tempArray.sort();
-
-      for (i = 0; i < tempArray.length; i++ ) {
-        $(otherTag).append("<option value=" + '"' + tempArray[i] + '"' + ">" + tempArray[i] + "</option>");
-        if (tempArray[i] == selection) {
-          $(otherTag + " option:last-child").attr("selected", "selected");
+  var updateDropdowns = function(destinations, name) {
+    if (destinations.length > 0) {
+      $("#to-dropdown option").remove();
+      for (i = 0; i < destinations.length; i++ ) {
+        $("#to-dropdown").append("<option value=" + '"' + destinations[i] + '"' + ">" + destinations[i] + "</option>");
+        if (destinations[i] == name) {
+          $("#to-dropdown option:last-child").attr("selected", "selected");
         }
       }
     }

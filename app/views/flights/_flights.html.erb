@@ -1,25 +1,30 @@
 <% if !@empty_search %>
   <% @flights.each do |flight| %>
-    <% if flight.departure_airport %>
+    <% flight = format_flight(flight) %>
+
+    <% departure_airport = Airport.find(flight["departure_airport_id"]) %>
+    <% arrival_airport = Airport.find(flight["arrival_airport_id"]) %>
+
+    <% if departure_airport %>
       <div class="hero-unit">
         <div class="top-half">
           <div class="price">
-            $<%= flight.rounded_price %>
+            $<%= rounded_price(flight["price"]) %>
           </div>
-          <% if flight.epic %>
+          <% if flight["epic"] %>
             <div class="epic-word label label-warning">EPIC</div>
           <% end %>
           <div class="savings">
             Save 
-            <% if flight.epic %>
-              <strong><%= "$#{(flight.cheapest_price - flight.price) / 100 + 1}" %></strong> off the <%= link_to "cheapest flight", offsite_flight_path(flight, pure_search: true), :target => "_blank" %>, and
+            <% if flight["epic"] %>
+              <strong><%= "$#{(flight['cheapest_price'] - flight['price']) / 100 + 1}" %></strong> off the <%= link_to "cheapest flight", offsite_flight_path(flight, pure_search: true), :target => "_blank" %>, and
             <% end %>
-              <strong>$<%= (flight.original_price / 100 + 1) - flight.rounded_price %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %>
+              <strong>$<%= (flight["original_price"] / 100 + 1) - rounded_price(flight["price"]) %></strong> off the <%= link_to "original flight", offsite_flight_path(flight, original: true), :target => "_blank" %>
           </div>
           <div class="social-buttons">
-            <% epic = flight.epic ? "an%20%23epic%20flight" : "a%20flight" %>
+            <% epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight" %>
 
-            <% link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{flight.departure_airport.code}%20to%20%23#{flight.arrival_airport.code}%20for%20%24#{flight.rounded_price}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com" %>
+            <% link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com" %>
 
             <div class="twitter-button">
               <a href="<%= link %>"><%= image_tag "twitter_button.png", :width => 75 %></a>
@@ -31,22 +36,22 @@
           <table>
             <tr>
               <td><strong>Depart</strong></td>
-              <td><%= flight.departure_airport.name %></td>
-              <td><%= flight.departure_time.strftime('%B %d, %Y') %></td>
-              <td><%= flight.departure_time.strftime("%I:%M%p") %></td>
+              <td><%= departure_airport.name %></td>
+              <td><%= flight["departure_time"].strftime('%B %d, %Y') %></td>
+              <td><%= flight["departure_time"].strftime("%I:%M%p") %></td>
             </tr>
             <tr>
               <td><strong>Arrive</strong></td>
-              <td><%= flight.arrival_airport.name %></td>
-              <td><%= flight.arrival_time.strftime('%B %d, %Y') %></td>
-              <td><%= flight.arrival_time.strftime("%I:%M%p") %></td>
+              <td><%= arrival_airport.name %></td>
+              <td><%= flight["arrival_time"].strftime('%B %d, %Y') %></td>
+              <td><%= flight["arrival_time"].strftime("%I:%M%p") %></td>
             </tr>
           </table>
           <div class="below-table">
             <form action="<%= offsite_flight_path(flight, original: false) %>" target="_blank">
-              <button type="submit" class="btn btn-success btn-large book-button" title="Book the flight" data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: <%= flight.departure_airport.code %>-<%= flight.arrival_airport.code %>']);">Book</button>
+              <button type="submit" class="btn btn-success btn-large book-button" title="Book the flight" data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: <%= departure_airport.code %>-<%= arrival_airport.code %>']);">Book</button>
             </form>
-            <div class="flight-no"><%= flight.airline %> Flt: <%= flight.flight_no %> <a class="actual-destination" title="Actual destination" data-content="This ticket has a connecting flight to <%= Airport.find(flight.second_flight_destination).name %>. You don't need to get on this flight :)"><i class="icon-exclamation-sign"></i></a></div>
+            <div class="flight-no"><%= flight["airline"] %> Flt: <%= flight["flight_no"] %> <a class="actual-destination" title="Actual destination" data-content="This ticket has a connecting flight to <%= Airport.find(flight['second_flight_destination']).name %>. You don't need to get on this flight :)"><i class="icon-exclamation-sign"></i></a></div>
           </div>
         </div>
       </div>
