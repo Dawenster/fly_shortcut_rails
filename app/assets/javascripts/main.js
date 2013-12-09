@@ -7,6 +7,7 @@ $(document).ready(function() {
   var pageCount = 1;
   var noMoreFlights = false;
   var emptySearch = false;
+  var changedFromCity = false;
   
   $.ajax({
     url: '/flights',
@@ -58,13 +59,24 @@ $(document).ready(function() {
     }
   );
 
+  $('.returning-button').attr('disabled', 'disabled').addClass('disabled');
+  $('#daterange-return').attr('disabled', 'disabled').addClass('disabled');
+
   $("#from-dropdown").change(function() { 
     $('#to-dropdown').val("Any");
+    changedFromCity = true;
+    switchDirection();
+    disableReturnButton();
     updateFlights($(this).val());
   });
 
   $("#to-dropdown").change(function() {  
     updateFlights($(this).val());
+    if ($('#to-dropdown').val() == "Any") {
+      disableReturnButton();
+    } else {
+      enableReturnButton();
+    }
   });
 
   $('.filter').click(function() {
@@ -163,7 +175,9 @@ $(document).ready(function() {
         data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount }
       })
       .done(function(data) {
-        updateDropdowns(data.destinations, data.destination_name);
+        if (changedFromCity) {
+          updateDropdowns(data.destinations, data.destination_name);
+        }
 
         $('.infinite-more').before(data.flights);
         $('.all-stats').append(data.stats);
@@ -232,7 +246,9 @@ $(document).ready(function() {
         data: { type: type, dates: dates, from: from, to: to, sort: sort, segment: segment, page: pageCount, scroll: true }
       })
       .done(function(data) {
-        updateDropdowns(data.destinations, data.destination_name);
+        if (changedFromCity) {
+          updateDropdowns(data.destinations, data.destination_name);
+        }
 
         $('.infinite-loading').addClass('hide');
         $('.infinite-more').removeClass('hide');
@@ -273,6 +289,31 @@ $(document).ready(function() {
           $("#to-dropdown option:last-child").attr("selected", "selected");
         }
       }
+      changedFromCity = false;
     }
+  }
+
+  var switchDirection = function() {
+    $('.going-button').text("Showing");
+    $('.going-button').addClass("active");
+    $('.returning-button').text("Click to show");
+    $('.returning-button').removeClass("active");
+  }
+
+  var enableReturnButton = function() {
+    $('.returning-button').removeAttr('disabled').removeClass('disabled');
+    $('#daterange-return').removeAttr('disabled').removeClass('disabled');
+    $(".returning-filters").popover('destroy');
+  }
+
+  var disableReturnButton = function() {
+    $('.returning-button').attr('disabled', 'disabled').addClass('disabled');
+    $('#daterange-return').attr('disabled', 'disabled').addClass('disabled');
+    $('.returning-filters').popover({
+      'title': "Returning flight",
+      'content': "Please select a city to go to first.",
+      'placement': "bottom",
+      'trigger': 'hover'
+    });
   }
 });

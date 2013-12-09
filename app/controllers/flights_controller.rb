@@ -35,14 +35,19 @@ class FlightsController < ApplicationController
     if params["segment"] == "Going"
       origin_airport = Airport.find_by_name(params[:from])
       origin_code = origin_airport.code
+
+      params[:to] = params[:to] == "Any" ? 0 : Airport.find_by_name(params[:to]).id
+      params[:from] = origin_airport.id
     else
       origin_airport = Airport.find_by_name(params[:to])
       origin_code = origin_airport.code
+
+      params[:to] = Airport.find_by_name(params[:from]).id
+      params[:from] = origin_airport.id
+      
       @returning = true
     end
 
-    params[:from] = origin_airport.id
-    params[:to] = params[:to] == "Any" ? 0 : Airport.find_by_name(params[:to]).id
 
     params_to_send = {
       :password => ENV['POST_PASSWORD'],

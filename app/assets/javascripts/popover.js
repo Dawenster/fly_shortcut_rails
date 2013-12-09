@@ -32,4 +32,11 @@ $(document).ready(function() {
     'placement': "right",
     'trigger': 'hover'
   });
+
+  $('.returning-filters').popover({
+    'title': "Returning flight",
+    'content': "Please select a city to go to first.",
+    'placement': "bottom",
+    'trigger': 'hover'
+  });
 });
