@@ -103,6 +103,12 @@ $(document).ready(function() {
     }
     $(this).text("Showing");
   });
+
+  $(".book-button").click(function(e) {
+    e.preventDefault();
+    var win=window.open($(this).parent().attr("action"), '_blank');
+    win.focus();
+  });
     
   var updateFlights = function(clicked) {
     $('.infinite-more').addClass('hide');

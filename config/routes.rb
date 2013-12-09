@@ -5,7 +5,7 @@ FlyShortcutRails::Application.routes.draw do
   match 'about_us' => 'pages#about_us', as: :about_us
   match 'fbtest' => 'pages#fbtest', as: :fbtest
   match 'best_roundtrips' => 'pages#best_roundtrips', as: :best_roundtrips
-  match 'offsite_flight/:id' => 'offsite_flights#redirect', as: :offsite_flight
+  match 'offsite_flight' => 'offsite_flights#redirect', as: :offsite_flight
   match 'ga_test' => 'pages#ga_test', as: :ga_test
   match 'signups' => 'pages#signups', as: :signups
   resources :users, :only => [:create]
