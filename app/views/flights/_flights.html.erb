@@ -11,10 +11,8 @@
           <div class="price">
             $<%= rounded_price(flight["price"]) %>
           </div>
-          <% if flight["epic"] && special_epic(flight) %>
+          <% if flight["epic"] %>
             <div class="epic-word label label-warning">EPIC</div>
-          <% elsif flight["epic"] %>
-            <div class="epic-word label">NICE</div>
           <% end %>
           <div class="savings">
             Save 

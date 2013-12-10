@@ -17,6 +17,9 @@ class FlightsController < ApplicationController
     @flights = results["flights"]
 
     @from = [
+      "Calgary International, AB (YYC)",
+      "Chicago O'Hare, IL (ORD)",
+      "San Francisco International, CA (SFO)",
       "Toronto Lester B Pearson, ON (YYZ)",
       "Vancouver International, BC (YVR)"
     ]
@@ -55,7 +58,10 @@ class FlightsController < ApplicationController
     }
 
     current_airports = [
+      "ORD",
+      "SFO",
       "YVR",
+      "YYC",
       "YYZ"
     ]
 

@@ -40,10 +40,10 @@ $(document).ready(function() {
     'trigger': 'hover'
   });
 
-  $('.label-warning').popover({
-    'title': "Epic flight",
-    'content': "This flight is among the cheapest we've ever seen for this route.",
-    'placement': "top",
-    'trigger': 'hover'
-  });
+  // $('.label-warning').popover({
+  //   'title': "Epic flight",
+  //   'content': "This flight is among the cheapest we've ever seen for this route.",
+  //   'placement': "top",
+  //   'trigger': 'hover'
+  // });
 });
