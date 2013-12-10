@@ -44,7 +44,7 @@ class FlightsController < ApplicationController
 
       params[:to] = Airport.find_by_name(params[:from]).id
       params[:from] = origin_airport.id
-      
+
       @returning = true
     end
 

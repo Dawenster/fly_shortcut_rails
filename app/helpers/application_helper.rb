@@ -32,4 +32,13 @@ module ApplicationHelper
   def to_date(str)
     DateTime.strptime(str, "%Y-%m-%dT%H:%M:%S")
   end
+
+  def special_epic(flight)
+    route = Route.where("origin_airport_id = ? AND destination_airport_id = ?", flight["departure_airport_id"], flight["arrival_airport_id"])[0]
+    if route
+      return flight["price"] < route.cheapest_price
+    else
+      return false
+    end
+  end
 end

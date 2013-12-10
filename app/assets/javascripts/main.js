@@ -148,7 +148,7 @@ $(document).ready(function() {
       noMoreFlights = false;
       pageCount = 1;
 
-      if (clicked == "Epic") {
+      if (clicked == "Top") {
         type = "Epic";
       }
 
@@ -198,6 +198,12 @@ $(document).ready(function() {
         });
         $('.actual-destination').popover({
           'placement': "right",
+          'trigger': 'hover'
+        });
+        $('.label-warning').popover({
+          'title': "Epic flight",
+          'content': "This flight is among the cheapest we've ever seen for this route.",
+          'placement': "top",
           'trigger': 'hover'
         });
         if (data.noMoreFlights) {
@@ -269,6 +275,12 @@ $(document).ready(function() {
         });
         $('.actual-destination').popover({
           'placement': "right",
+          'trigger': 'hover'
+        });
+        $('.label-warning').popover({
+          'title': "Epic flight",
+          'content': "This flight is among the cheapest we've ever seen for this route.",
+          'placement': "top",
           'trigger': 'hover'
         });
         if (data.noMoreFlights) {

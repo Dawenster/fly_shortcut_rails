@@ -9,6 +9,7 @@ FlyShortcutRails::Application.routes.draw do
   match 'ga_test' => 'pages#ga_test', as: :ga_test
   match 'signups' => 'pages#signups', as: :signups
   resources :users, :only => [:create]
+  resources :routes, :except => [:show]
   root :to => 'pages#index'
 
   # The priority is based upon order of creation:

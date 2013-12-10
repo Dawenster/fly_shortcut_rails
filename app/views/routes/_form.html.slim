@@ -1,0 +1,28 @@
+= simple_form_for @route, :url => url_for(:action => "#{@route.id ? 'update' : 'create'}", :controller => "routes") do |f|
+  .form-group
+    label for="route_origin_airport_id"
+      b Origin airport
+    = f.text_field :origin_airport_id, :value => "#{@route.origin_airport_id ? Airport.find(@route.origin_airport_id).code : nil}", :class => "form-control"
+
+  .form-group
+    label for="route_destination_airport_id"
+      b Destination airport
+    = f.text_field :destination_airport_id, :value => "#{@route.destination_airport_id ? Airport.find(@route.destination_airport_id).code : nil}", :class => "form-control"
+
+  .form-group
+    label for="route_cheapest_price"
+      b Cheapest price
+    = f.text_field :cheapest_price, :value => "#{@route.cheapest_price ? @route.cheapest_price / 100 : nil}", :class => "form-control"
+
+  br
+
+  button.btn.btn-success type="submit"
+    = "#{Route.find_by_id(@route.id) ? "Save" : "Create"}"
+
+  br
+  br
+  br
+
+  - if Route.find_by_id(@route.id)
+    div style="padding: 10px 5px;"
+      = link_to "Delete", { :id => @route.id, :action => :destroy }, :method => :delete, :confirm => "You know what you're doing right?  You're about to delete this route..."

@@ -1,0 +1,30 @@
+#flash
+  - flash.each do |name, msg|
+    = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+
+h2
+  | All routes
+  .pull-right
+    = link_to("Create", new_route_path, :class => "btn btn-primary")
+
+table.table
+  tr
+    th
+      | Origin
+    th
+      | Destination
+    th
+      | Price
+    th
+      | Edit
+
+  - @routes.each do |route|
+    tr
+      td
+        = Airport.find(route.origin_airport_id).code
+      td
+        = Airport.find(route.destination_airport_id).code
+      td
+        = number_to_currency(route.cheapest_price / 100)
+      td
+        = link_to("Edit", edit_route_path(route))
