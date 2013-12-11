@@ -1,0 +1,99 @@
+- if !@empty_search
+  - @flights.each do |flight|
+    - flight = format_flight(flight)
+    - departure_airport = Airport.find(flight["departure_airport_id"])
+    - arrival_airport = Airport.find(flight["arrival_airport_id"])
+    - if departure_airport
+      .hero-unit
+        .top-half
+          .price
+            = "$#{rounded_price(flight['price'])}"
+          - if flight["epic"]
+            .epic-word.label.label-warning
+              | EPIC
+          .savings
+            ruby: 
+              str = "Save "
+              if flight["epic"]
+                pure_search_params = {
+                  :pure_search => true,
+                  :departure_airport_id => flight["departure_airport_id"],
+                  :departure_time => flight["departure_time"],
+                  :arrival_airport_id => flight["arrival_airport_id"],
+                  :airline => flight["airline"],
+                  :flight_no => flight["flight_no"]
+                }
+                str += "<strong>$#{(flight['cheapest_price'] - flight['price']) / 100 + 1}</strong>"
+                str += " off the #{link_to 'cheapest flight', offsite_flight_path(pure_search_params), :target => '_blank'}, and "
+              end
+              original_params = {
+                :original => true,
+                :departure_airport_id => flight["departure_airport_id"],
+                :departure_time => flight["departure_time"],
+                :arrival_airport_id => flight["arrival_airport_id"],
+                :airline => flight["airline"],
+                :flight_no => flight["flight_no"]
+              }
+              str += "<strong>$#{(flight['original_price'] / 100 + 1) - rounded_price(flight['price'])}</strong>"
+              str += " off the #{link_to 'original flight', offsite_flight_path(original_params), :target => '_blank'}"
+            = str.html_safe
+          .social-buttons
+            - epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight"
+            - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com"
+            .twitter-button
+              a href="#{link}"
+        .bottom-half
+          table
+            tr
+              td
+                strong Depart
+              td
+                = departure_airport.name
+              td
+                = flight["departure_time"].strftime('%b %d, %Y')
+              td
+                = flight["departure_time"].strftime("%l:%M %p")
+            tr
+              td
+                strong Arrive
+              td
+                = arrival_airport.name
+              td
+                = flight["arrival_time"].strftime('%b %d, %Y')
+              td
+                = flight["arrival_time"].strftime("%l:%M %p")
+          .below-table
+            ruby:
+              book_params = {
+                :original => false,
+                :departure_airport_id => flight["departure_airport_id"],
+                :departure_time => flight["departure_time"],
+                :second_flight_destination => flight["second_flight_destination"],
+                :airline => flight["airline"],
+                :flight_no => flight["flight_no"]
+              }
+            form action="#{offsite_flight_path(book_params)}" target="_blank"
+              button.btn.btn-success.btn-large.book-button data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-# arrival_airport.code}']);" title="Book the flight" type="submit"
+                | Book
+            .flight-no
+              = flight["airline"]
+              = "Flt: #{flight['flight_no']}"
+              a.actual-destination data-content="This ticket has a connecting flight to #{Airport.find(flight['second_flight_destination']).name}. You don't need to get on this flight :)" title="Actual destination"
+                i.glyphicon.glyphicon-info-sign
+
+- else
+  .hero-unit.no-flights
+    h2
+      | Ermahgerd! No flights?
+    div
+      h3
+        | 1. Try adjusting your filters.
+    div
+      h3
+        | 2. Still no luck?
+        a.empty-results-signup href="#"
+          = " Sign up "
+        | for notifications on new routes!
+    - if @returning
+      div
+        | Note: If you already have a shortcut flight going to your destination, you're already going to pay less than you would have if you booked a traditional roundtrip ticket. Even if you buy a normal returning one-way ticket, you'll still win.

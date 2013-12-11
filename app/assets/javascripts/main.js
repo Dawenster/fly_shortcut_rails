@@ -217,6 +217,12 @@ $(document).ready(function() {
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('.selectpicker').selectpicker('refresh');
 
+        $(".book-button").click(function(e) {
+          e.preventDefault();
+          var win=window.open($(this).parent().attr("action"), '_blank');
+          win.focus();
+        });
+
         $('.empty-results-signup').click(function() {
           if ($('.email-signup').attr("style") == "display: none;") {
             $('.email-signup').toggle();
@@ -267,6 +273,12 @@ $(document).ready(function() {
         if (changedFromCity) {
           updateDropdowns(data.destinations, data.destination_name);
         }
+
+        $(".book-button").click(function(e) {
+          e.preventDefault();
+          var win=window.open($(this).parent().attr("action"), '_blank');
+          win.focus();
+        });
 
         $('.infinite-loading').addClass('hide');
         $('.infinite-more').removeClass('hide');
