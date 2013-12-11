@@ -3,6 +3,7 @@ $(document).ready(function() {
     $('#signup-link').toggle();
     $('#close-link').toggle();
     $('.email-signup').toggle();
+    $('#initial-email').focus();
   });
 
   $('#close-link').click(function() {

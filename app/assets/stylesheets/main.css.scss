@@ -149,6 +149,10 @@
     text-align: center;
   }
 
+  .popover-title {
+    font-weight: bold;
+  }
+
   .flash {
     margin: 20px 0px;
     background-color: #FCF8E3;
@@ -259,6 +263,7 @@
     clear: both;
     background-color: #EEEEEE;
     border-radius: 5px;
+    width: 100%;
   }
 
   .top-half {
@@ -280,7 +285,7 @@
   	margin-top: -90px;
   	margin-left: -90px;
   	width: 150px;
-  	height: 150px;
+  	height: 130px;
   	background-image:url("/img/single_cloud.png");
   	text-align: center;
   	line-height: 160px;
@@ -294,7 +299,7 @@
     margin-right: -20px;
   }
 
-  .savings {
+  .flight-title {
   	float: left;
   	margin-left: 20px;
   }
@@ -303,13 +308,47 @@
   	clear: both;
   }
 
-  .bottom-half table td {
-  	padding: 0px 5px;
-  	margin-top: -20px;
+  .flight-detail {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .shortcut-flight {
+    // background-color: #D8D8D8;
+    border-radius: 5px;
+    border: 2px dotted #D8D8D8;
+    padding: 10px;
+    margin-top: 10px;
+    color: grey;
+  }
+
+  .flight-arrow {
+    position: absolute;
+    right: -13px;
+    top: 50px;
+  }
+
+  .right-arrow-normal {
+    font-size: 25px;
+    color: #92D050;
+  }
+
+  .right-arrow-shortcut {
+    color: #EEEEEE;
+  }
+
+  .circle {
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    background-color: #D8D8D8;
   }
 
   .bottom-half .below-table {
-  	display: inline;
+  	display: inline-block;
+    width: 100%;
   }
 
   .btn-success {

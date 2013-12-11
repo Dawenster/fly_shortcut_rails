@@ -3,6 +3,7 @@
     - flight = format_flight(flight)
     - departure_airport = Airport.find(flight["departure_airport_id"])
     - arrival_airport = Airport.find(flight["arrival_airport_id"])
+    - shortcut_airport = Airport.find(flight['second_flight_destination'])
     - if departure_airport
       .hero-unit
         .top-half
@@ -11,57 +12,46 @@
           - if flight["epic"]
             .epic-word.label.label-warning
               | EPIC
-          .savings
-            ruby: 
-              str = "Save "
-              if flight["epic"]
-                pure_search_params = {
-                  :pure_search => true,
-                  :departure_airport_id => flight["departure_airport_id"],
-                  :departure_time => flight["departure_time"],
-                  :arrival_airport_id => flight["arrival_airport_id"],
-                  :airline => flight["airline"],
-                  :flight_no => flight["flight_no"]
-                }
-                str += "<strong>$#{(flight['cheapest_price'] - flight['price']) / 100 + 1}</strong>"
-                str += " off the #{link_to 'cheapest flight', offsite_flight_path(pure_search_params), :target => '_blank'}, and "
-              end
-              original_params = {
-                :original => true,
-                :departure_airport_id => flight["departure_airport_id"],
-                :departure_time => flight["departure_time"],
-                :arrival_airport_id => flight["arrival_airport_id"],
-                :airline => flight["airline"],
-                :flight_no => flight["flight_no"]
-              }
-              str += "<strong>$#{(flight['original_price'] / 100 + 1) - rounded_price(flight['price'])}</strong>"
-              str += " off the #{link_to 'original flight', offsite_flight_path(original_params), :target => '_blank'}"
-            = str.html_safe
+          .flight-title
+            = "<strong>#{departure_airport.name}</strong> to <strong>#{arrival_airport.name}</strong>".html_safe
           .social-buttons
             - epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight"
             - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com"
             .twitter-button
               a href="#{link}"
         .bottom-half
-          table
-            tr
-              td
-                strong Depart
-              td
-                = departure_airport.name
-              td
-                = flight["departure_time"].strftime('%b %d, %Y')
-              td
-                = flight["departure_time"].strftime("%l:%M %p")
-            tr
-              td
-                strong Arrive
-              td
-                = arrival_airport.name
-              td
-                = flight["arrival_time"].strftime('%b %d, %Y')
-              td
-                = flight["arrival_time"].strftime("%l:%M %p")
+          .row
+            .col-sm-4
+              strong
+                | Depart
+              .flight-detail
+                div
+                  = "#{departure_airport.city} (#{departure_airport.code})"
+                div
+                  = "#{flight["departure_time"].strftime('%b %d, %Y')} at #{flight["departure_time"].strftime("%l:%M %p")}"
+                div
+                  = "Flight: #{flight['airline']} #{flight['flight_no']}"
+              i.glyphicon.glyphicon-circle-arrow-right.flight-arrow.right-arrow-normal
+
+            .col-sm-4
+              strong
+                | Arrive
+              .flight-detail
+                div
+                  = "#{arrival_airport.city} (#{arrival_airport.code})"
+                div
+                  = "#{flight["arrival_time"].strftime('%b %d, %Y')} at #{flight["arrival_time"].strftime("%l:%M %p")}"
+              = image_tag("cut-icon.png", :width => "90%", :class => "flight-arrow right-arrow-shortcut circle")
+
+            .col-sm-4
+              strong
+                | Skip this flight
+              .shortcut-flight
+                div
+                  = "#{shortcut_airport.city} (#{shortcut_airport.code})"
+                div
+                  | Don't take this flight :)
+
           .below-table
             ruby:
               book_params = {
@@ -73,13 +63,34 @@
                 :flight_no => flight["flight_no"]
               }
             form action="#{offsite_flight_path(book_params)}" target="_blank"
-              button.btn.btn-success.btn-large.book-button data-content="This will lead you to Travelocity, our affiliate partner. FlyShortcut makes $3 off Travelocity if you purchase from them - we don't make money off you. Have fun, and remember to read about the risks before you fly!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-# arrival_airport.code}']);" title="Book the flight" type="submit"
+              button.btn.btn-success.btn-large.book-button data-content="FlyShortcut earns $3 from Travelocity if you purchase from them - we don't take money from you! Find #{flight['airline']} #{flight['flight_no']} connecting on to #{shortcut_airport.name}. Have fun, and remember to read about the risks before you shortcut!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-# arrival_airport.code}']);" title="Book the flight" type="submit"
                 | Book
             .flight-no
-              = flight["airline"]
-              = "Flt: #{flight['flight_no']}"
-              a.actual-destination data-content="This ticket has a connecting flight to #{Airport.find(flight['second_flight_destination']).name}. You don't need to get on this flight :)" title="Actual destination"
-                i.glyphicon.glyphicon-info-sign
+              ruby: 
+                str = "Save "
+                if flight["epic"]
+                  pure_search_params = {
+                    :pure_search => true,
+                    :departure_airport_id => flight["departure_airport_id"],
+                    :departure_time => flight["departure_time"],
+                    :arrival_airport_id => flight["arrival_airport_id"],
+                    :airline => flight["airline"],
+                    :flight_no => flight["flight_no"]
+                  }
+                  str += "<strong>$#{(flight['cheapest_price'] - flight['price']) / 100 + 1}</strong>"
+                  str += " off the #{link_to 'cheapest flight', offsite_flight_path(pure_search_params), :target => '_blank'}, and "
+                end
+                original_params = {
+                  :original => true,
+                  :departure_airport_id => flight["departure_airport_id"],
+                  :departure_time => flight["departure_time"],
+                  :arrival_airport_id => flight["arrival_airport_id"],
+                  :airline => flight["airline"],
+                  :flight_no => flight["flight_no"]
+                }
+                str += "<strong>$#{(flight['original_price'] / 100 + 1) - rounded_price(flight['price'])}</strong>"
+                str += " off the #{link_to 'original flight', offsite_flight_path(original_params), :target => '_blank'}"
+              = str.html_safe
 
 - else
   .hero-unit.no-flights
