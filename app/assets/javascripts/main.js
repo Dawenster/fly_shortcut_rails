@@ -205,12 +205,7 @@ $(document).ready(function() {
           'placement': "right",
           'trigger': 'hover'
         });
-        // $('.label-warning').popover({
-        //   'title': "Epic flight",
-        //   'content': "This flight is among the cheapest we've ever seen for this route.",
-        //   'placement': "top",
-        //   'trigger': 'hover'
-        // });
+
         if (data.noMoreFlights) {
           noMoreFlights = true;
         }
@@ -223,9 +218,14 @@ $(document).ready(function() {
         $('.selectpicker').selectpicker('refresh');
 
         $('.empty-results-signup').click(function() {
-          $('#signup-link').toggle();
-          $('#close-link').toggle();
-          $('.email-signup').toggle();
+          if ($('.email-signup').attr("style") == "display: none;") {
+            $('.email-signup').toggle();
+            $('#signup-link').toggle();
+            $('#close-link').toggle();
+            $('#initial-email').focus();
+          } else {
+            $('#initial-email').focus();
+          }
         });
 
         $('#second-email-button').click(function(e) {
@@ -283,12 +283,7 @@ $(document).ready(function() {
           'placement': "right",
           'trigger': 'hover'
         });
-        // $('.label-warning').popover({
-        //   'title': "Epic flight",
-        //   'content': "This flight is among the cheapest we've ever seen for this route.",
-        //   'placement': "top",
-        //   'trigger': 'hover'
-        // });
+
         if (data.noMoreFlights) {
           noMoreFlights = true;
         }
