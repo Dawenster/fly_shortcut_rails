@@ -8,20 +8,7 @@ iframe height="0" src="http://www.tkqlhce.com/click-5835159-10415728" width="0"
             .hard-links
             	= render 'layouts/flight_filter'
             .btn-group.segment data-toggle="buttons-radio"
-              div
-                div
-                  label.going-label for="daterange"
-                .input-prepend
-                  .btn-group
-                    button.btn.btn-success.going-button type="button"
-                  input#daterange.date-input-field name="daterange" placeholder="Select departure date range" type="text"
-              .to-field-holder.returning-filters
-                div
-                  label.returning-label for="daterange-return"
-                .input-prepend
-                  .btn-group
-                    button.btn.btn-success.returning-button type="button"
-                  input#daterange-return.date-input-field.opensright name="daterange-return" placeholder="Select returning date range" type="text"
+              = render 'date_pickers'
     .col-md-8.col-md-offset-1.col-xs-12.all-flights
       div
         = render 'layouts/alerts'

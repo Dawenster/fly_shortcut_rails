@@ -70,7 +70,7 @@
   }
 
   .initial-flash {
-    width: 647px;
+    width: 100%;
     color: black;
   }
 
@@ -123,6 +123,14 @@
     text-align: left;
   }
 
+  .date-input-field {
+    height: 29px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding-left: 5px;
+    border: none;
+  }
+
   .btn-info {
     min-width: 70px;
     min-height: 40px;
@@ -142,8 +150,10 @@
   }
 
   .flash {
-    margin: 20px 0px 0px 0px;
+    margin: 20px 0px;
     background-color: #FCF8E3;
+    padding: 10px;
+    border-radius: 5px;
   }
 
   .alert-errors {
@@ -220,6 +230,7 @@
 
   .going-label, .returning-label {
     font-weight: bold;
+    margin-top: 20px;
   }
 
   .segment {
@@ -233,7 +244,7 @@
   }
 
   .segment input {
-    width: 190px;
+    width: 200px;
   }
 
   .segment .input-prepend:first-child input {
@@ -335,37 +346,11 @@
     margin-right: 10px;
   }
 
-  .flash {
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  .inline-flash {
-    float: left;
-    margin-top: 10px;
-    padding: 10px;
-    border-radius: 5px;
-  }
-
-  /*.arrow-up {
-    position: absolute;
-    left: 180px;
-    top: 100px;
-  }
-
-  .arrow-left {
-    position: absolute;
-    left: 360px;
-    top: 110px;
-  }*/
-
   .no-more-flights {
-    /*margin-bottom: 180px;*/
     margin-left: 42%;
   }
 
   .infinite-loading {
-    /*margin-bottom: 180px;*/
     margin-left: 42%;
   }
 
@@ -441,12 +426,8 @@
   footer {
   	background-image:url("/img/bk_header_cloud_trans.png");
   	background-repeat: repeat-x;
-  /*  background-position-y: -180px; */
   	height: 140px;
   	text-align: center;
-  /*	position: fixed;
-    left: 0;
-    bottom: 0; */
     width: 100%;
   }
 

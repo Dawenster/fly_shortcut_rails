@@ -15,7 +15,7 @@ $(document).ready(function() {
   });
 
   $('.contact-us').popover({
-    'placement': "left",
+    'placement': "bottom",
     'trigger': 'hover',
     'title': 'Contact us',
     'content': "We'd love to hear to your comments, suggestions, and travel stories!"

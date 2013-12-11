@@ -8,6 +8,9 @@ $(document).ready(function() {
   var noMoreFlights = false;
   var emptySearch = false;
   var changedFromCity = false;
+
+  $('#signup-link').removeClass("hidden");
+  $('#signup-link').toggle();
   
   $.ajax({
     url: '/flights',
@@ -217,6 +220,7 @@ $(document).ready(function() {
         $('.filter').removeAttr('disabled').removeClass('disabled');
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
+        $('.selectpicker').selectpicker('refresh');
 
         $('.empty-results-signup').click(function() {
           $('#signup-link').toggle();
@@ -292,6 +296,7 @@ $(document).ready(function() {
         $('.filter').removeAttr('disabled').removeClass('disabled');
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
+        $('.selectpicker').selectpicker('refresh');
       })
     }
   }

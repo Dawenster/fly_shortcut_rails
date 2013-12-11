@@ -1,26 +1,20 @@
 <div id="logo">
 	<a href="/"><img src="/img/fs_logo.png"></a>
 </div>
-<%= link_to "About", "/#panel2" %> | <a id="signup-link" class="hide" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" href="#">Close sign up box</a> | <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
-<form class="form-inline">
-	<div class="from-airport">
-  	<!-- <span class="add-on"><p>From:</p></span> -->
+<%= link_to "About", "/#panel2" %> ⋅ <a id="signup-link" class="hidden" href="#" title="Sign up" data-content="We will let you know about new routes and really big epic wins!">Sign up for alerts</a><a id="close-link" href="#">Close sign up box</a> ⋅ <%= mail_to('david@dwakventures.com', "Contact", :cc => 'adrian@dwakventures.com', :encode => "hex", :subject => "From FlyShortcut", :class => 'contact-us', :target => "_blank") %>
+<div class="row" style="text-align: left;">
+	<div class="from-airport col-xs-2">
   	<span><label for="from-dropdown" class="label label-info">From:</label></span>
-  	<%= select_tag "from-dropdown", options_for_select(@from, :selected => @default_from) %>
-	  <!-- <input type="text" class="input-large" id="origin"placeholder="Where you are..."> -->
-	</div>
-	<div class="to-airport">
-  	<!-- <span class="add-on">To:</span> -->
-  	<span><label for="to-dropdown" class="label label-info to-label">To:</label></span>
-  	<%= select_tag "to-dropdown", options_for_select(@to) %>
-  	<!-- <input type="text" class="input-large" id="destination" placeholder="Where you wanna go..."> -->
-	</div>
-  <!-- <div class="date-filter">
-    <span><label for="daterange" class="label label-info dates-label">Going:</label></span>
-    <input type="text" name="daterange" class="date-input-field" id="daterange" placeholder="Click to select">
   </div>
-  <div class="date-filter">
-    <span><label for="daterange-return" class="label label-info dates-label">Returning:</label></span>
-    <input type="text" name="daterange-return" class="date-input-field" id="daterange-return" placeholder="Click to select">
-  </div> -->
-</form>
+  <div class="from-airport col-xs-10">
+  	<%= select_tag "from-dropdown", options_for_select(@from, :selected => @default_from), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%" %>
+  </div>
+  <div class="to-airport">
+    <div class="to-airport col-xs-2">
+      <span><label for="to-dropdown" class="label label-info to-label">To:</label></span>
+    </div>
+    <div class="to-airport col-xs-10">
+      <%= select_tag "to-dropdown", options_for_select(@to), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%" %>
+    </div>
+  </div>
+</div>
