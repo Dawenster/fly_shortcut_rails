@@ -13,7 +13,11 @@
             .epic-word.label.label-warning
               | EPIC
           .flight-title
-            = "<strong>#{departure_airport.name}</strong> to <strong>#{arrival_airport.name}</strong>".html_safe
+            .label.label-info
+              = "#{departure_airport.code}"
+            i.fa.fa-long-arrow-right style="font-size: 20px !important;"
+            .label.label-info
+              = "#{arrival_airport.code}"
           .social-buttons
             - epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight"
             - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com"

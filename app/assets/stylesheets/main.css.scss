@@ -274,10 +274,10 @@
   .epic-word {
     float: left;
     position: absolute;
-    top: -40px;
-    left: -130px;
-    -webkit-transform: rotate(-35deg); 
-    -moz-transform: rotate(-35deg);
+    top: -45px;
+    left: -135px;
+    -webkit-transform: rotate(-45deg); 
+    -moz-transform: rotate(-45deg);
   }
 
   .price {
@@ -301,7 +301,9 @@
 
   .flight-title {
   	float: left;
-  	margin-left: 20px;
+    margin-top: -10px;
+  	margin-left: 10px;
+    font-size: 25px;
   }
 
   .bottom-half {
@@ -316,7 +318,6 @@
   }
 
   .shortcut-flight {
-    // background-color: #D8D8D8;
     border-radius: 5px;
     border: 2px dotted #D8D8D8;
     padding: 10px;
@@ -392,7 +393,7 @@
   }
 
   .infinite-loading {
-    margin-left: 42%;
+    margin-left: 45%;
   }
 
   ul.ui-autocomplete {
