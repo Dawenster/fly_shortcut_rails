@@ -102,9 +102,11 @@ $(document).ready(function() {
 
     if ($('.going-button').text() == "Showing") {
       $('.going-button').text("Click to show");
+      $('.going-button').removeClass("active");
     }
     else {
       $('.returning-button').text("Click to show");
+      $('.returning-button').removeClass("active");
     }
     $(this).text("Showing");
   });
