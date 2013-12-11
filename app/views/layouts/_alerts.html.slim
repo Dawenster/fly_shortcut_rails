@@ -1,0 +1,32 @@
+- unless session[:visited]
+  .alert
+    a.close.learn-more-close data-dismiss="alert" href="#"
+      | &times;
+    .row
+      .col-sm-8
+        h4 First time here?
+        div
+          | We're not your average flight search engine.
+      .col-sm-4
+        a.learn-more-link href="/#panel2"
+          | Learn more
+    .explanation-image
+      = image_tag "panel3image.png", :width => "100%"
+.alert.email-signup
+  a.close href="#"
+    | &times;
+  div
+    h4 100% epic travel hacks and deals. 0% spam.
+  .flash.hide.initial-flash
+    - flash.each do |name, msg|
+      = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+  .initial-email
+    form
+      .row
+        .col-sm-4
+          input#initial-email name="user[email]" placeholder="Email" type="text"
+        .col-sm-4
+          = select_tag "all-airports", options_for_select(@airports), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%"
+        .col-sm-4
+          a.initial-signup-button href="#"
+            | Subscribe

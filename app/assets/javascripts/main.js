@@ -20,6 +20,8 @@ $(document).ready(function() {
     totalPages = data.totalPages;
   })
 
+  $('.selectpicker').selectpicker();
+
   $('.all-flights').append("<div class='infinite-more'></div><div class='infinite-loading hide'><img src='/assets/loading.gif'></div>");
 
   $('.infinite-more').bind('inview', function(event, isInView, visiblePartX, visiblePartY) {
