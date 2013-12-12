@@ -36,12 +36,17 @@
     border: none;
     color: white;
     text-shadow: none;
+    position: relative;
     &:first-child {
       margin-top: 30px;
     }
     a.close {
       opacity: 0.6;
       color: white;
+      position: absolute;
+      top: 5px;
+      right: 10px;
+      z-index: 100;
       &:hover {
         color: #D8D8D8;
       }
@@ -58,7 +63,7 @@
     color: white;
     float: right;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 20px;
     width: 100%;
     height: 34px;
     line-height: 34px;
