@@ -12,7 +12,7 @@
   }
 
   .date-input-field {
-    width: 70% !important;
+    width: 65% !important;
   }
 
   #initial-email {
@@ -21,7 +21,7 @@
 
   .type-filter {
     float: left;
-    margin: 0 10px 70px 0px;
+    margin: 0 10px 70px -15px;
   }
 
   .sort-filter {
@@ -34,6 +34,11 @@
 
   .price {
     margin-left: -35px;
+  }
+
+  .flight-title {
+    margin-top: 40px;
+    margin-bottom: 20px;
   }
 
   .flight-detail {
@@ -101,6 +106,12 @@
 
   .price {
     margin-left: -90px;
+  }
+
+  .flight-title {
+    float: left;
+    margin-left: 10px;
+    margin-top: -10px;
   }
 
   .savings-calc {
@@ -186,6 +197,12 @@
 
   .price {
     margin-left: -90px;
+  }
+
+  .flight-title {
+    float: left;
+    margin-left: 10px;
+    margin-top: -10px;
   }
 
   .savings-calc {

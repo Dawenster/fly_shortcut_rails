@@ -24,9 +24,9 @@ $(document).ready(function() {
   })
 
   if (Modernizr.touch) {
-    $('.selectpicker').selectpicker();
+    $('.selectpicker').selectpicker('mobile');
   } else {
-    $('.selectpicker').selectpicker('mobile')
+    $('.selectpicker').selectpicker();
   }
 
   $('.all-flights').append("<div class='infinite-more'></div><div class='infinite-loading hide'><img src='/assets/loading.gif'></div>");
