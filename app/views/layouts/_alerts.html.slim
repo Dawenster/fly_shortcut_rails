@@ -1,5 +1,5 @@
 - unless session[:visited]
-  .alert
+  .alert.first-time-here
     a.close.learn-more-close data-dismiss="alert" href="#"
       | &times;
     .row
@@ -10,7 +10,7 @@
       .col-sm-4.hidden-xs
         a.learn-more-link href="/#panel2"
           | Learn more
-    .row
+    .row.first-time-here-content
       .col-xs-12.explanation-image
         = image_tag "panel3image.png", :width => "100%"
       .col-xs-12.visible-xs
@@ -24,7 +24,7 @@
   .flash.hide.initial-flash
     - flash.each do |name, msg|
       = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
-  .initial-email
+  .initial-email.initial-email-content
     form
       .row
         .col-sm-4

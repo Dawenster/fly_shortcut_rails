@@ -24,6 +24,16 @@ $(document).ready(function() {
     $('#close-link').toggle();
   });
 
+  if (Modernizr.touch) {
+    $(".first-time-here").click(function() {
+      $(".first-time-here-content").toggle();
+    });
+
+    $(".email-signup").click(function() {
+      $(".initial-email-content").toggle();
+    });
+  }
+
   $('.learn-more-close').click(function() {
     $.ajax({
       url: '/visited'

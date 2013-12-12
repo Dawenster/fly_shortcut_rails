@@ -25,6 +25,8 @@ $(document).ready(function() {
 
   if (Modernizr.touch) {
     $('.selectpicker').selectpicker('mobile');
+    $(".first-time-here-content").toggle();
+    $(".initial-email-content").toggle();
   } else {
     $('.selectpicker').selectpicker();
   }
