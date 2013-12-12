@@ -171,11 +171,6 @@ $(document).ready(function() {
         sort = null;
       }
 
-      if (clicked == "Going") {
-        segment = "Going";
-        dates = $('#daterange').val();
-      }
-
       if (clicked == "Returning") {
         segment = "";
         dates = $('#daterange-return').val();
@@ -218,6 +213,7 @@ $(document).ready(function() {
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('.selectpicker').selectpicker('refresh');
+        clickedFilter(clicked);
 
         $(".book-button").click(function(e) {
           e.preventDefault();
@@ -306,6 +302,7 @@ $(document).ready(function() {
         $('#from-dropdown').removeAttr('disabled').removeClass('disabled');
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('.selectpicker').selectpicker('refresh');
+        clickedFilter(clicked);
       })
     }
   }
@@ -349,5 +346,27 @@ $(document).ready(function() {
       'placement': "bottom",
       'trigger': 'hover'
     });
+  }
+
+  var clickedFilter = function(clicked) {
+    if (clicked == "Epic") {
+      $('.filter-type button:first-child').addClass('active');
+      $('.filter-type button:last-child').removeClass('active');
+    }
+
+    if (clicked == "All") {
+      $('.filter-type button:first-child').removeClass('active');
+      $('.filter-type button:last-child').addClass('active');
+    } 
+
+    if (clicked == "Price") {
+      $('.filter-sort button:first-child').addClass('active');
+      $('.filter-sort button:last-child').removeClass('active');
+    }
+
+    if (clicked == "Time") {
+      $('.filter-sort button:first-child').removeClass('active');
+      $('.filter-sort button:last-child').addClass('active');
+    }
   }
 });
