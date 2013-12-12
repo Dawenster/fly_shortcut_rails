@@ -2,13 +2,13 @@ iframe height="0" src="http://www.tkqlhce.com/click-5835159-10415728" width="0"
 .container
   .row
     .col-md-3.col-xs-12
-      .top-bar
-        .navbar
-          ul.nav
-            .hard-links
-            	= render 'layouts/flight_filter'
-            .btn-group.segment data-toggle="buttons-radio"
-              = render 'date_pickers'
+      .row.header-column
+        .col-xs-12 style="text-align: center;"
+          = render 'layouts/header'
+        .col-md-12.col-sm-5.col-sm-offset-1
+        	= render 'layouts/city_selector'
+        .col-md-12.col-sm-6.btn-group.segment data-toggle="buttons-radio"
+          = render 'date_pickers'
     .col-md-8.col-md-offset-1.col-xs-12.all-flights
       div
         = render 'layouts/alerts'

@@ -145,10 +145,6 @@
     clear: both;
   }
 
-  .hard-links {
-    text-align: center;
-  }
-
   .popover-title {
     font-weight: bold;
   }
@@ -182,10 +178,6 @@
 
   .from-airport {
     margin-top: 25px;
-  }
-
-  .to-airport {
-    margin-top: 15px;
   }
 
   #from-dropdown {
@@ -238,21 +230,18 @@
   }
 
   .segment {
-    margin-left: 5px;
-  }
+    button {
+      font-size: 8pt;
+      width: 90px;
+    }
 
-  .segment button {
-    margin-top: 0;
-    font-size: 8pt;
-    width: 90px;
-  }
+    input {
+      width: 200px;
+    }
 
-  .segment input {
-    width: 200px;
-  }
-
-  .segment .input-prepend:first-child input {
-    margin-right: 10px;
+    .input-prepend:first-child input {
+      margin-right: 10px;
+    }
   }
 
   .hero-unit {
@@ -352,8 +341,8 @@
     width: 100%;
   }
 
-  .btn-success {
-  	margin-top: 20px;
+  .book-button {
+    margin-top: 20px;
   	float: left;
     z-index: 100;
   }

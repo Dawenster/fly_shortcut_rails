@@ -23,7 +23,11 @@ $(document).ready(function() {
     totalPages = data.totalPages;
   })
 
-  $('.selectpicker').selectpicker();
+  if (Modernizr.touch) {
+    $('.selectpicker').selectpicker();
+  } else {
+    $('.selectpicker').selectpicker('mobile')
+  }
 
   $('.all-flights').append("<div class='infinite-more'></div><div class='infinite-loading hide'><img src='/assets/loading.gif'></div>");
 

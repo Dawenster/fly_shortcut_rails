@@ -1,25 +1,60 @@
 /* Extra small screens only */
 
 @media (max-width: 768px) {
-
+  #logo {
+    img {
+      width: 100%;
+    }
+  }
 }
 
 /* Small screens only */
 
 @media (min-width: 768px) and (max-width: 992px) {
+  #logo {
+    img {
+      width: 50%;
+    }
+  }
 
+  .header-column {
+    margin-left: -49px;
+  }
+
+  .from-airport {
+    padding-left: 0 !important;
+  }
+
+  .to-airport {
+    margin-top: 13px;
+    padding-left: 0 !important;
+  }
+
+  .segment {
+    button {
+      margin-top: 28px !important;
+    }
+  }
+
+  .date-input-field {
+    margin-top: 28px;
+  }
 }
 
 /* Medium screens only */
 
 @media (min-width: 992px) and (max-width: 1200px) {
-
+  .bootstrap-select {
+    width: 90% !important;
+  }
 }
 
 /* Large screens only */
 
 @media (min-width: 1200px) {
-
+  .city-holder {
+    margin-left: -40px !important;
+  }
 }
 
 /* Extra small and small screens */
@@ -31,7 +66,30 @@
 /* Medium and large screens */
 
 @media (min-width: 992px) {
-  #dw .navbar {
+  #logo {
+    img {
+      width: 100%;
+    }
+  }
+
+  .header-column {
     position: fixed;
+    width: 320px;
+  }
+
+  .from-airport {
+    padding-left: 0 !important;
+  }
+
+  .to-airport {
+    margin-top: 15px;
+    padding-left: 0 !important;
+  }
+
+  .segment {
+    margin-left: 5px;
+    button {
+      margin-top: 0;
+    }
   }
 }

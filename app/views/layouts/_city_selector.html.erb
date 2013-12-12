@@ -1,0 +1,16 @@
+<div class="row city-holder" style="text-align: left;">
+  <div class="from-airport col-xs-2">
+    <span><label for="from-dropdown" class="label label-info">From</label></span>
+  </div>
+  <div class="from-airport col-xs-10">
+    <%= select_tag "from-dropdown", options_for_select(@from, :selected => @default_from), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%" %>
+  </div>
+  <div class="to-airport">
+    <div class="to-airport col-xs-2">
+      <span><label for="to-dropdown" class="label label-info to-label">To</label></span>
+    </div>
+    <div class="to-airport col-xs-10">
+      <%= select_tag "to-dropdown", options_for_select(@to), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%" %>
+    </div>
+  </div>
+</div>
