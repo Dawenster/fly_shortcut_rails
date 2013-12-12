@@ -6,6 +6,47 @@
       width: 100%;
     }
   }
+
+  .date-group {
+    width: 100%;
+  }
+
+  .date-input-field {
+    width: 70% !important;
+  }
+
+  #initial-email {
+    margin-bottom: 10px;
+  }
+
+  .type-filter {
+    float: left;
+    margin: 0 10px 70px 0px;
+  }
+
+  .sort-filter {
+    float: left;
+  }
+
+  .hero-unit {
+    margin: 60px 0px;
+  }
+
+  .price {
+    margin-left: -35px;
+  }
+
+  .flight-detail {
+    margin-bottom: 10px;
+  }
+
+  .savings-calc {
+    margin-left: 80px;
+  }
+
+  .flight-arrow {
+    left: -17px;
+  }
 }
 
 /* Small screens only */
@@ -38,6 +79,38 @@
 
   .date-input-field {
     margin-top: 28px;
+  }
+
+  .alert {
+    margin-left: 20px;
+  }
+
+  .type-filter {
+    float: left;
+    margin: 20px 10px 60px 30%;
+  }
+
+  .sort-filter {
+    float: left;
+    margin-top: 20px;
+  }
+
+  .hero-unit {
+    margin: 60px 20px 60px 20px;
+  }
+
+  .price {
+    margin-left: -90px;
+  }
+
+  .savings-calc {
+    float: left;
+    margin-top: 28px;
+    margin-left: 10px;
+  }
+
+  .flight-arrow {
+    left: -12px;
   }
 }
 
@@ -91,5 +164,37 @@
     button {
       margin-top: 0;
     }
+  }
+
+  .alert {
+    margin-left: 20px;
+  }
+
+  .type-filter {
+    float: left;
+    margin: 20px 10px 60px 30%;
+  }
+
+  .sort-filter {
+    float: left;
+    margin-top: 20px;
+  }
+
+  .hero-unit {
+    margin: 60px 20px 60px 20px;
+  }
+
+  .price {
+    margin-left: -90px;
+  }
+
+  .savings-calc {
+    float: left;
+    margin-top: 28px;
+    margin-left: 10px;
+  }
+
+  .flight-arrow {
+    left: -12px;
   }
 }

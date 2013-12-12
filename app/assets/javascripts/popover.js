@@ -5,7 +5,7 @@ $(document).ready(function() {
   });
 
   $('.book-button').popover({
-    'placement': "left",
+    'placement': "bottom",
     'trigger': 'hover'
   });
 

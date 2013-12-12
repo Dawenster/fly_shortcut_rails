@@ -35,7 +35,6 @@
                   = "#{flight["departure_time"].strftime('%b %d, %Y')} at #{flight["departure_time"].strftime("%l:%M %p")}"
                 div
                   = "Flight: #{flight['airline']} #{flight['flight_no']}"
-              i.glyphicon.glyphicon-circle-arrow-right.flight-arrow.right-arrow-normal
 
             .col-sm-4
               strong
@@ -45,7 +44,7 @@
                   = "#{arrival_airport.city} (#{arrival_airport.code})"
                 div
                   = "#{flight["arrival_time"].strftime('%b %d, %Y')} at #{flight["arrival_time"].strftime("%l:%M %p")}"
-              = image_tag("cut-icon.png", :width => "90%", :class => "flight-arrow right-arrow-shortcut circle")
+              i.glyphicon.glyphicon-circle-arrow-right.flight-arrow.right-arrow-normal
 
             .col-sm-4
               strong
@@ -55,6 +54,7 @@
                   = "#{shortcut_airport.city} (#{shortcut_airport.code})"
                 div
                   | Don't take this flight :)
+              = image_tag("cut-icon.png", :width => "90%", :class => "flight-arrow right-arrow-shortcut circle")
 
           .below-table
             ruby:
@@ -69,7 +69,7 @@
             form action="#{offsite_flight_path(book_params)}" target="_blank"
               button.btn.btn-success.btn-large.book-button data-content="FlyShortcut earns $3 from Travelocity if you purchase from them - we don't take money from you! Find #{flight['airline']} #{flight['flight_no']} connecting on to #{shortcut_airport.name}. Have fun, and remember to read about the risks before you shortcut!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-# arrival_airport.code}']);" title="Book the flight" type="submit"
                 | Book
-            .flight-no
+            .savings-calc style="margin-top: #{flight["epic"] ? '15px' : '26px'};"
               ruby: 
                 str = "Save "
                 if flight["epic"]

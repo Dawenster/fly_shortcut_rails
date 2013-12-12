@@ -7,16 +7,20 @@
         h4 First time here?
         strong
           | We're not your average flight search engine.
-      .col-sm-4
+      .col-sm-4.hidden-xs
         a.learn-more-link href="/#panel2"
           | Learn more
-    .explanation-image
-      = image_tag "panel3image.png", :width => "100%"
+    .row
+      .col-xs-12.explanation-image
+        = image_tag "panel3image.png", :width => "100%"
+      .col-xs-12.visible-xs
+        a.learn-more-link href="/#panel2"
+          | Learn more
 .alert.email-signup
   a.close href="#"
     | &times;
   div
-    h4 100% epic travel hacks and deals. 0% spam.
+    h4 100% epic travel hacks. 0% spam.
   .flash.hide.initial-flash
     - flash.each do |name, msg|
       = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
