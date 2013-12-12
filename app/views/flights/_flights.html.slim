@@ -70,6 +70,7 @@
               button.btn.btn-success.btn-large.book-button data-content="FlyShortcut earns $3 from Travelocity if you purchase from them - we don't take money from you! Find #{flight['airline']} #{flight['flight_no']} connecting on to #{shortcut_airport.name}. Have fun, and remember to read about the risks before you shortcut!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-# arrival_airport.code}']);" title="Book the flight" type="submit"
                 | Book
             .savings-calc style="margin-top: #{flight["epic"] ? '15px' : '26px'};"
+              .savings-buffer.hidden-xs
               ruby: 
                 str = "Save "
                 if flight["epic"]
