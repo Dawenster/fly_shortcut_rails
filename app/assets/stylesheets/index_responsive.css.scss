@@ -1,0 +1,124 @@
+/* Extra small screens only */
+
+@media (max-width: 768px) {
+  #logo {
+    height: 50px;
+  }
+
+  .panel1 {
+    min-height: 700px;
+    .headline {
+      margin: -10px 5px 0px 5px;
+    }
+
+    h2 {
+      margin-top: 5px !important;
+      font-size: 14px !important;
+    }
+  }
+
+  .panel2 {
+    .headline {
+      .smaller {
+        font-size: 20px;
+      }
+      .larger {
+        font-size: 30px;
+      }
+    }
+  }
+
+  .panel4 {
+    .media-mobile-links {
+      width: 100%;
+      h2 {
+        font-size: 16px !important;
+        margin: 5px 0;
+      }
+    }
+    .mediaBottom-xs {
+      background-color:rgba(53,121,156,0.9);
+      color:white;
+      float:left;
+      width:100%;
+      padding:10px;
+      margin-top:5px;
+      &:hover {
+        background-color:rgba(53,121,156,1);
+      }
+    }
+  }
+
+  .panel5 {
+    .panelCaption {
+      margin-bottom: 20px !important;
+      img {
+        width: 20%;
+      }
+    }
+    .panel5headline {
+      h1 {
+        font-size: 24px;
+        margin: 0;
+      }
+    }
+    .disclaimer2 {
+      margin: 20px 10% !important;
+      p {
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+/* Small screens only */
+
+@media (min-width: 768px) and (max-width: 992px) {
+  .panel1 .headline {
+    margin-top: 50px;
+  }
+
+  .panel4 .mediaBottom2 img {
+    width: 100px;
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+  }
+}
+
+/* Medium screens only */
+
+@media (min-width: 992px) and (max-width: 1200px) {
+
+}
+
+/* Large screens only */
+
+@media (min-width: 1200px) {
+
+}
+
+/* Extra small and small screens */
+
+@media (max-width: 992px) {
+  
+}
+
+/* Medium and large screens */
+
+@media (min-width: 992px) {
+  .panel1 .headline {
+    margin-top: 50px;
+  }
+
+  .panel1Container .highlight {
+    padding: 0 10%;
+  }
+
+  .panel4 .mediaBottom2 img {
+    width: 100px;
+    margin-top: 20px;
+    margin-right: 20px;
+    float: right;
+  }
+}

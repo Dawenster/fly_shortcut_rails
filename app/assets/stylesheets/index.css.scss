@@ -1,32 +1,20 @@
-html, body {
-  height:100%;
-  padding: 0px;
-}
-
-#ak.container {
-  position:relative;
-  height:100%;
-  width: 100%;
-}
-
 .panelTopPadding {
-  height:8px;
-  width:100%;
-  background-color:#fff;
+  height: 8px;
+  width: 100%;
+  background-color: #fff;
 }
 
 .panelBottomPadding {
-  background:#fff;
-  position:relative;
-  height:8px;
-  width:100%;
-  bottom:8px;
-  left:0;
+  background: #fff;
+  position: relative;
+  height: 8px;
+  width: 100%;
+  bottom: 8px;
+  left: 0;
 }
 
 .panel1 {
-  height:100%;
-  min-height:650px;
+  height: 100%;
 }
 
 .panel1Container {
@@ -61,8 +49,8 @@ html, body {
 }
 
 .panel1Container .highlight {
-  width:1000px;
-  margin:30px auto;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .panel1Container .featured {
@@ -158,16 +146,14 @@ html, body {
 
 .panel1Container p.opportunitySample {
   color:white;
-  text-align:left;
+  text-align:center;
   font-style:italic;
 }
 
 .panel1Container div.sampleFare {
-  width:200px;
-  background-color:rgba(255,255,255,0.8);
-  float:left;
-  margin:0 5px;
-  padding:5px 20px 15px 20px;
+  background-color: rgba(255,255,255,0.8);
+  margin: 5px;
+  padding: 5px 20px 15px 20px;
 }
 
 .panel1Container div.sampleBottom {
@@ -186,7 +172,7 @@ html, body {
 }
 
 .panel1Container div.nextPanelC2 p {
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .panel1Container div.nextPanelC3 {
@@ -473,11 +459,12 @@ p.ourPrice {
   height:100%;
   background-image:url('/assets/noise_lines.png');
   text-align:center;
+  min-height:700px;
 }
 
 .panel4 .contentWrapper {
-  width:900px;
-  margin:auto;
+  width: 100%;
+  padding: 0 10%;
 }
 
 .panel4 .panelCaption h2 {
@@ -517,12 +504,16 @@ p.ourPrice {
   text-align:left;
 }
 
-.panel4 .mediaTop img {
-  width:70%;
+.panel4 .mediaTop {
+  h2 {
+    font-size: 24px;
+  }
 }
 
-.panel4 .mediaBottom img {
-  width:40%;
+.panel4 .mediaBottom {
+  h2 {
+    font-size: 24px;
+  }
 }
 
 .panel4 .mediaRight {
@@ -531,12 +522,8 @@ p.ourPrice {
   margin-left:5px;
 }
 
-.panel4 img {
-  width:100%;
-}
-
 .panel4 .mediaBottom2 {
-  width:890px;
+  width: 100%;
   margin:5px auto;
   background-color:rgba(53,121,156,0.9);
   color:white;
@@ -554,15 +541,9 @@ p.ourPrice {
 }
 
 .panel4 .mediaBottom2 h2 {
-  width:750px;
-  float:left;
-}
-
-.panel4 .mediaBottom2 img {
-  width:100px;
-  margin-top:20px;
-  margin-right:20px;
-  float:right;
+  width: 80%;
+  float: left;
+  margin: 10px 0;
 }
 
 .panel4 .nextPanel {
@@ -577,6 +558,7 @@ p.ourPrice {
   background-color:#BAE2E6;
   text-align:center;
   height:100%;
+  min-height: 700px;
 }
 
 .panel5 .panelCaption {

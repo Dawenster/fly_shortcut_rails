@@ -1,0 +1,127 @@
+<div class="panel1 clearfix">
+  <map name="ribbon"><area shape="poly" coords="0,0,200,200,200,0"></map>
+  <img src="/img/ribbon.png" usemap="#ribbon" alt="All routes for at least $20 less!" style="position: absolute; top: 0; right: 0; border: none;" class="hidden-xs">
+  <div class="panel1Container clearfix">
+    <div class="headline">
+      <img src="/img/fs_logo.png" id="logo">
+      <h2 class="light">is a "hidden city ticketing" search engine -</h2>
+      <h2 class="sharp">when the lowest fare isn't low enough</h2>
+      <div class="mediaSnap">
+        <p style="color: white;">Technique featured in:</p>
+        <div>
+          <a href="http://www.nytimes.com/2011/05/08/magazine/mag-08subversion-t.html" target="_blank" class="mediaTop">
+            <img src="/assets/nytlogo2.jpg" class="nyt">
+          </a>
+          <a href="http://www.economist.com/blogs/gulliver/2011/05/hidden_city_ticketing" target="_blank" class="mediaBottom">
+            <img src="/assets/economistlogo.gif" class="economist">
+          </a>
+          <a href="http://travel.usatoday.com/alliance/flights/boardingarea/post/2012/01/View-From-The-Wing---How-to-Use-Hidden-City-and-Throwaway-Ticketing-to-Save-Money-on-Airfare/598252/1" target="_blank" class="mediaBottom2">
+            <img src="/assets/usatlogo.gif" class="usat">
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="highlight clearfix hidden-xs">
+      <p class="opportunitySample">Sample opportunities spotted from Toronto Pearson (YYZ):</p>
+      <div class="sampleRow clearfix"></div>
+
+      <% 
+        first_samples = [
+          {
+            :city => "Edmonton",
+            :lowest => "$306",
+            :hidden => "$255"
+          },
+          {
+            :city => "Halifax",
+            :lowest => "$218",
+            :hidden => "$152"
+          },
+          {
+            :city => "Winnipeg",
+            :lowest => "$243",
+            :hidden => "$152"
+          },
+          {
+            :city => "San Francisco",
+            :lowest => "$320",
+            :hidden => "$300"
+          }
+        ]
+
+        second_samples = [
+          {
+            :city => "Dallas",
+            :lowest => "$362",
+            :hidden => "$237"
+          },
+          {
+            :city => "Detroit",
+            :lowest => "$232",
+            :hidden => "$183"
+          },
+          {
+            :city => "Philadelphia",
+            :lowest => "$237",
+            :hidden => "$164"
+          },
+          {
+            :city => "Houston",
+            :lowest => "$265",
+            :hidden => "$191"
+          }
+        ]
+      %>
+
+      <div class="row" style="margin: 0px !important;">
+        <% first_samples.each do |sample| %>
+          <div class="col-xs-6 col-sm-3" style="padding: 0 !important;">
+            <div class="sampleFare clearfix">
+              <div class="sampleTop"><h3><%= sample[:city] %></h3></div>
+              <div class="sampleBottom">
+                <div class="sampleLeft"><p>Lowest Fare</p><p><%= sample[:lowest] %></p></div>
+                <div class="sampleRight"><p>Hidden City</p><p class="ourPrice"><%= sample[:hidden] %></p></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="row" style="margin: 0px !important;">
+        <% second_samples.each do |sample| %>
+          <div class="col-xs-6 col-sm-3" style="padding: 0 !important;">
+            <div class="sampleFare clearfix">
+              <div class="sampleTop"><h3><%= sample[:city] %></h3></div>
+              <div class="sampleBottom">
+                <div class="sampleLeft"><p>Lowest Fare</p><p><%= sample[:lowest] %></p></div>
+                <div class="sampleRight"><p>Hidden City</p><p class="ourPrice"><%= sample[:hidden] %></p></div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="nextPanel hidden-xs">
+      <div class="nextPanelC1">
+        <form action="/flights"><button class="btn btn-success" data-loading-text="Loading flights..." id="let-me-proceed">Show me the flights!</button></form>
+      </div>
+      <div class="nextPanelC2"><p>or</p></div>
+      <div class="nextPanelC3">
+        <a href="#panel2" class="smoothScroll"><button class="btn btn-info">Learn more</button></a>
+      </div>
+    </div>
+
+    <div class="visible-xs">
+      <div class="row" style="margin: 0;">
+        <div class="col-xs-12" style="margin: 25px 0 10px 0;">
+          <form action="/flights"><button class="btn btn-success btn-sm" data-loading-text="Loading flights..." id="let-me-proceed">Show me the flights!</button></form>
+        </div>
+        <div class="col-xs-12" style="color: white;"><p>or</p></div>
+        <div class="col-xs-12">
+          <a href="#panel2" class="smoothScroll"><button class="btn btn-info btn-sm">Learn more</button></a>
+        </div>
+      </div>
+    </div>
+  </div> 
+</div>
