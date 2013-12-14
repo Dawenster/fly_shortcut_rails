@@ -2,7 +2,21 @@ require 'will_paginate/array'
 
 class FlightsController < ApplicationController
   def index
-    origin_code ||= "YYZ"
+    @from = [
+      "Calgary International, AB (YYC)",
+      "Chicago O'Hare, IL (ORD)",
+      "San Francisco International, CA (SFO)",
+      "Toronto Lester B Pearson, ON (YYZ)",
+      "Vancouver International, BC (YVR)"
+    ]
+    
+    # Seeing if there's a geocode match
+    request_data = request.location.data
+    potential_airport = Airport.find_by_city(request_data["city"])
+    origin_code = @from.include?(potential_airport.name) ? potential_airport.code : nil if potential_airport
+
+    # Else set the default
+    origin_code ||= "SFO"
     origin_airport = Airport.find_by_code(origin_code)
 
     @user = User.new
@@ -16,13 +30,6 @@ class FlightsController < ApplicationController
     results = JSON.parse(RestClient.get "http://fs-#{origin_code.downcase}-api.herokuapp.com/flights", { :params => params_to_send })
     @flights = results["flights"]
 
-    @from = [
-      "Calgary International, AB (YYC)",
-      "Chicago O'Hare, IL (ORD)",
-      "San Francisco International, CA (SFO)",
-      "Toronto Lester B Pearson, ON (YYZ)",
-      "Vancouver International, BC (YVR)"
-    ]
     @default_from = origin_airport.name
     @to = sort_destinations(results["destinations"])
 
