@@ -10,7 +10,7 @@ gem 'thin'
 gem 'activesupport'
 gem 'activerecord'
 gem 'rake'
-gem 'geocoder', ">= 1.1.9"
+gem 'geocoder'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rest-client'
