@@ -41,4 +41,13 @@ module ApplicationHelper
       return false
     end
   end
+
+  def mobile_url(dep_code, arr_code, date)
+    str = "http://iphone.travelocity.com/tvly/b/flights/index.html#flightlist/isOneway=true"
+    str += "&depCity=#{dep_code}&arrCity=#{arr_code}"
+    str += "&departDate=#{date.strftime('%Y-%m-%d')}"
+    str += "&returnDate=2013-12-15&adults=1&childCount=0&cabin=Y&ohsmOnly=Y&showGTCFlights=yes&stops=0&departTime=0&airlines=All+airlines&sortBy=PRICEASC"
+    # str += "&depCityData=#{CGI::escape(departure_airport.name)}&arrCityData=#{CGI::escape(arrival_airport.name)}"
+    return str
+  end
 end

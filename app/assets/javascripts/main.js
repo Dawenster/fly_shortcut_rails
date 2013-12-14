@@ -119,7 +119,25 @@ $(document).ready(function() {
 
   $(".book-button").click(function(e) {
     e.preventDefault();
-    var win=window.open($(this).parent().attr("action"), '_blank');
+    var link = "";
+    if (Modernizr.touch) {
+      link = $(this).attr("data-mobile-url");
+    } else {
+      link = $(this).parent().attr("action");
+    }
+    var win = window.open(link, '_blank');
+    win.focus();
+  });
+
+  $(".savings-calc a").click(function(e) {
+    e.preventDefault();
+    var link = "";
+    if (Modernizr.touch) {
+      link = $(this).parent().attr("data-mobile-url");
+    } else {
+      link = $(this).attr("href");
+    }
+    var win = window.open(link, '_blank');
     win.focus();
   });
     
