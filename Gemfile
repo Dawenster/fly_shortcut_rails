@@ -10,7 +10,7 @@ gem 'thin'
 gem 'activesupport'
 gem 'activerecord'
 gem 'rake'
-gem 'geocoder'
+gem 'geocoder', :git => "https://github.com/alexreisner/geocoder"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rest-client'
