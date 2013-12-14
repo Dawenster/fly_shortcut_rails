@@ -99,22 +99,25 @@ $(document).ready(function() {
     var clicked = null;
     if ($(this).hasClass("going-button")) {
       clicked = "Going";
+      debugger
     }
     else {
       clicked = "Returning";
     }
 
-    updateFlights(clicked);
-
     if ($('.going-button').text() == "Showing") {
       $('.going-button').text("Click to show");
       $('.going-button').removeClass("active");
+      $('.returning-button-button').addClass("active");
     }
     else {
       $('.returning-button').text("Click to show");
       $('.returning-button').removeClass("active");
+      $('.going-button').addClass("active");
     }
     $(this).text("Showing");
+
+    updateFlights(clicked);
   });
 
   $(".book-button").click(function(e) {
@@ -163,7 +166,7 @@ $(document).ready(function() {
       sort = sortButton.text();
     }
     if (segmentButton.hasClass('active')) {
-      segment = "Going"
+      segment = "Going";
       dates = $('#daterange').val();
     }
     else {
