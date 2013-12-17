@@ -6,6 +6,7 @@ class FlightsController < ApplicationController
     geomatch = {
       "Alberta" => "YYC",
       "Illinois" => "ORD",
+      "New York" => "JFK",
       "California" => "SFO",
       "Ontario" => "YYZ",
       "British Columbia" => "YVR"
@@ -34,6 +35,7 @@ class FlightsController < ApplicationController
     @from = [
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
+      "New York John F Kennedy International, NY (JFK)",
       "San Francisco International, CA (SFO)",
       "Toronto Lester B Pearson, ON (YYZ)",
       "Vancouver International, BC (YVR)"
@@ -75,6 +77,7 @@ class FlightsController < ApplicationController
     current_airports = [
       "ORD",
       "SFO",
+      "JFK",
       "YVR",
       "YYC",
       "YYZ"
