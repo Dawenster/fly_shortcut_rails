@@ -33,7 +33,7 @@ ul.selectpicker {
 }
 
 .mobile-device {
-  width: auto !important;
+  width: 100% !important;
 }
 
 .alert {
@@ -256,6 +256,7 @@ ul.selectpicker {
   background-color: #EEEEEE;
   border-radius: 5px;
   width: 100%;
+  position: relative;
 }
 
 .top-half {
@@ -285,9 +286,14 @@ ul.selectpicker {
 }
 
 .social-buttons {
-  float: right;
-  position: relative;
-  margin-right: -20px;
+  position: absolute;
+  right: 15px;
+  top: 10px;
+  font-size: 20px;
+}
+
+i.fa.fa-twitter-square {
+  margin-left: 4px;
 }
 
 .flight-title {
