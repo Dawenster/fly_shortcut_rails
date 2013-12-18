@@ -3,7 +3,11 @@ require 'will_paginate/array'
 class FlightsController < ApplicationController
   def index
     # Geomatch index
-    geomatch = {
+    geomatch_city = {
+      "Los Angeles" => "LAX"
+    }
+
+    geomatch_region = {
       "Alberta" => "YYC",
       "Illinois" => "ORD",
       "New York" => "JFK",
@@ -14,8 +18,10 @@ class FlightsController < ApplicationController
 
     # Seeing if there's a geocode match
     request_data = request.location.data
+    # request_data = Geocoder.search("74.212.154.18")[0].data # Test for Los Angeles
     # request_data = Geocoder.search("99.140.218.14")[0].data # Test for Illinois
-    origin_code = geomatch[request_data["region_name"]]
+    origin_code = geomatch_city[request_data["city"]]
+    origin_code ||= geomatch_region[request_data["region_name"]]
 
     # Else set the default
     origin_code ||= "SFO"
@@ -35,6 +41,7 @@ class FlightsController < ApplicationController
     @from = [
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
+      "Los Angeles International, CA (LAX)",
       "New York John F Kennedy International, NY (JFK)",
       "San Francisco International, CA (SFO)",
       "Toronto Lester B Pearson, ON (YYZ)",
@@ -75,9 +82,10 @@ class FlightsController < ApplicationController
     }
 
     current_airports = [
+      "JFK",
+      "LAX",
       "ORD",
       "SFO",
-      "JFK",
       "YVR",
       "YYC",
       "YYZ"
