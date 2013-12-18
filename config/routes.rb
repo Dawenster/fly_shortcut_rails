@@ -8,6 +8,7 @@ FlyShortcutRails::Application.routes.draw do
   match 'offsite_flight' => 'offsite_flights#redirect', as: :offsite_flight
   match 'ga_test' => 'pages#ga_test', as: :ga_test
   match 'signups' => 'pages#signups', as: :signups
+  get "routes-to-scrape" => "flights#routes_to_scrape", :as => :routes_to_scrape
   resources :users, :only => [:create]
   resources :routes, :except => [:show]
   root :to => 'pages#index'

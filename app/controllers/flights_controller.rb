@@ -1,3 +1,4 @@
+require 'csv'
 require 'will_paginate/array'
 
 class FlightsController < ApplicationController
@@ -114,6 +115,22 @@ class FlightsController < ApplicationController
       respond_to do |format|
         @empty_search = true
         format.json { render :json => { :flights => render_to_string('_flights.html.erb'), :destinations => [], :destination_name => "", :noMoreFlights => true } }
+      end
+    end
+  end
+
+  def routes_to_scrape
+    respond_to do |format|
+      if params[:password] == ENV['POST_PASSWORD']
+        routes = []
+        Dir[Rails.root.join("db/routes/#{params[:code]}/*.csv")].each do |file|
+          CSV.foreach(file) do |route|
+            routes << [route[0], route[1]]
+          end
+        end
+        format.json { render :json => { "routes" => routes.uniq } }
+      else
+        format.json { render :json => { "message" => "Whatcha tryin' to pull?" } }
       end
     end
   end
