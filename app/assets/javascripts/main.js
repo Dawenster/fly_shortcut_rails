@@ -99,7 +99,6 @@ $(document).ready(function() {
     var clicked = null;
     if ($(this).hasClass("going-button")) {
       clicked = "Going";
-      debugger
     }
     else {
       clicked = "Returning";
@@ -108,13 +107,13 @@ $(document).ready(function() {
     if ($('.going-button').text() == "Showing") {
       $('.going-button').text("Click to show");
       $('.going-button').removeClass("active");
-      $('.returning-button-button').addClass("active");
-    }
-    else {
+      $('.returning-button').addClass("active");
+    } else {
       $('.returning-button').text("Click to show");
       $('.returning-button').removeClass("active");
       $('.going-button').addClass("active");
     }
+
     $(this).text("Showing");
 
     updateFlights(clicked);
@@ -241,6 +240,7 @@ $(document).ready(function() {
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('.selectpicker').selectpicker('refresh');
         clickedFilter(clicked);
+        ensureDateButtonActive();
 
         $(".book-button").click(function(e) {
           e.preventDefault();
@@ -330,6 +330,7 @@ $(document).ready(function() {
         $('#to-dropdown').removeAttr('disabled').removeClass('disabled');
         $('.selectpicker').selectpicker('refresh');
         clickedFilter(clicked);
+        ensureDateButtonActive();
       })
     }
   }
@@ -356,6 +357,14 @@ $(document).ready(function() {
     $('.going-button').addClass("active");
     $('.returning-button').text("Click to show");
     $('.returning-button').removeClass("active");
+  }
+
+  var ensureDateButtonActive = function() {
+    if ($('.going-button').text() == "Showing") {
+      $('.going-button').addClass("active");
+    } else {
+      $('.returning-button').addClass("active");
+    }
   }
 
   var enableReturnButton = function() {
