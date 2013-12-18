@@ -10,11 +10,12 @@ class FlightsController < ApplicationController
 
     geomatch_region = {
       "Alberta" => "YYC",
-      "Illinois" => "ORD",
-      "New York" => "JFK",
+      "British Columbia" => "YVR",
       "California" => "SFO",
-      "Ontario" => "YYZ",
-      "British Columbia" => "YVR"
+      "Illinois" => "ORD",
+      "Massachusetts" => "BOS",
+      "New York" => "JFK",
+      "Ontario" => "YYZ"
     }
 
     # Seeing if there's a geocode match
@@ -40,6 +41,7 @@ class FlightsController < ApplicationController
     @flights = results["flights"]
 
     @from = [
+      "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
       "Los Angeles International, CA (LAX)",
@@ -83,6 +85,7 @@ class FlightsController < ApplicationController
     }
 
     current_airports = [
+      "BOS",
       "JFK",
       "LAX",
       "ORD",
