@@ -16,4 +16,6 @@ class Airport < ActiveRecord::Base
 	has_one :flight, 
 					:class_name => Flight, 
 					:foreign_key => 'arrival_city_id'
+
+	has_and_belongs_to_many :users
 end

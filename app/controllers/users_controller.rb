@@ -7,10 +7,10 @@ class UsersController < ApplicationController
       if params[:city] == "(Desired departure airport)"
         render :json => { :email => @user.email, :message => message, :noCity => true }, :status => :created
       else
-        City.where(:name => params[:city], :user_id => @user.id).any? ? city_msg = " You already receive alerts for " : city_msg = " You will now receive alerts for "
-        city = City.create(:name => params[:city], :user_id => @user.id)
-        @user.cities << city
-        render :json => { :email => @user.email, :message => message, :city => city.name, :city_msg => city_msg }, :status => :created
+        airport = Airport.find_by_name(params[:city])
+        @user && @user.airports.include?(airport) ? city_msg = " You already receive alerts for " : city_msg = " You will now #{@user.airports.any? ? 'also ' : ''}receive alerts for "
+        @user.airports << airport
+        render :json => { :email => @user.email, :message => message, :city => airport.name, :city_msg => city_msg }, :status => :created
       end
     else
       render :json => @user.errors.full_messages.join("<BR>"), :status => :unprocessable_entity

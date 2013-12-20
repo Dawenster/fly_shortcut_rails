@@ -1,5 +1,5 @@
 h3
-  | Newsletter signups
+  | Signups by email
   small style="margin-left: 20px;"
     = "Total signups: #{User.count}"
 
@@ -25,3 +25,28 @@ table.table
             = city_name
       td
         = user.created_at.strftime("%b %d, %Y")
+
+h3
+  | Signups by city
+  small style="margin-left: 20px;"
+    = "Total signups: #{User.count}"
+
+table.table
+  tr
+    th
+      | Airport
+    th
+      | User count
+    th
+      | Users
+  - @airports.each do |airport_id, v|
+    - airport = Airport.find(airport_id)
+    tr
+      td
+        = airport.name
+      td
+        = airport.users.uniq.count
+      td
+        - airport.users.uniq.map{ |u| u.email }.each do |email|
+          div
+            = email
