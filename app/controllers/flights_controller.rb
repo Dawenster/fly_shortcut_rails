@@ -11,6 +11,7 @@ class FlightsController < ApplicationController
 
     geomatch_region = {
       "Alberta" => "YYC",
+      "Arizona" => "PHX",
       "British Columbia" => "YVR",
       "California" => "SFO",
       "Florida" => "MIA",
@@ -50,6 +51,7 @@ class FlightsController < ApplicationController
       "Miami International, FL (MIA)",
       "New York John F Kennedy International, NY (JFK)",
       "New York La Guardia, NY (LGA)",
+      "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "San Francisco International, CA (SFO)",
       "Toronto Lester B Pearson, ON (YYZ)",
       "Vancouver International, BC (YVR)"
@@ -95,6 +97,7 @@ class FlightsController < ApplicationController
       "LGA",
       "MIA",
       "ORD",
+      "PHX",
       "SFO",
       "YVR",
       "YYC",
