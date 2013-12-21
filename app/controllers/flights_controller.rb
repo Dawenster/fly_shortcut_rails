@@ -18,6 +18,7 @@ class FlightsController < ApplicationController
       "Georgia" => "ATL",
       "Illinois" => "ORD",
       "Massachusetts" => "BOS",
+      "New Jersey" => "EWR",
       "New York" => "JFK",
       "Ontario" => "YYZ",
       "Texas" => "IAH",
@@ -56,6 +57,7 @@ class FlightsController < ApplicationController
       "Miami International, FL (MIA)",
       "New York John F Kennedy International, NY (JFK)",
       "New York La Guardia, NY (LGA)",
+      "New York Newark Liberty International, NJ (EWR)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "San Francisco International, CA (SFO)",
       "Seattle/Tacoma Sea/Tac, WA (SEA)",
@@ -99,6 +101,7 @@ class FlightsController < ApplicationController
     current_airports = [
       "ATL",
       "BOS",
+      "EWR",
       "IAH",
       "JFK",
       "LAX",
