@@ -19,6 +19,7 @@ class FlightsController < ApplicationController
       "Massachusetts" => "BOS",
       "New York" => "JFK",
       "Ontario" => "YYZ",
+      "Texas" => "IAH",
       "Washington" => "SEA"
     }
 
@@ -48,6 +49,7 @@ class FlightsController < ApplicationController
       "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
+      "Houston George Bush Intercntl, TX (IAH)",
       "Los Angeles International, CA (LAX)",
       "Miami International, FL (MIA)",
       "New York John F Kennedy International, NY (JFK)",
@@ -94,6 +96,7 @@ class FlightsController < ApplicationController
 
     current_airports = [
       "BOS",
+      "IAH",
       "JFK",
       "LAX",
       "LGA",
