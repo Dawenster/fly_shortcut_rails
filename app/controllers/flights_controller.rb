@@ -18,7 +18,8 @@ class FlightsController < ApplicationController
       "Illinois" => "ORD",
       "Massachusetts" => "BOS",
       "New York" => "JFK",
-      "Ontario" => "YYZ"
+      "Ontario" => "YYZ",
+      "Washington" => "SEA"
     }
 
     # Seeing if there's a geocode match
@@ -53,6 +54,7 @@ class FlightsController < ApplicationController
       "New York La Guardia, NY (LGA)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "San Francisco International, CA (SFO)",
+      "Seattle/Tacoma Sea/Tac, WA (SEA)",
       "Toronto Lester B Pearson, ON (YYZ)",
       "Vancouver International, BC (YVR)"
     ]
@@ -98,6 +100,7 @@ class FlightsController < ApplicationController
       "MIA",
       "ORD",
       "PHX",
+      "SEA",
       "SFO",
       "YVR",
       "YYC",
