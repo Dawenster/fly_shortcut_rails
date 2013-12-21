@@ -15,6 +15,7 @@ class FlightsController < ApplicationController
       "British Columbia" => "YVR",
       "California" => "SFO",
       "Florida" => "MIA",
+      "Georgia" => "ATL",
       "Illinois" => "ORD",
       "Massachusetts" => "BOS",
       "New York" => "JFK",
@@ -46,6 +47,7 @@ class FlightsController < ApplicationController
     @flights = results["flights"]
 
     @from = [
+      "Atlanta Hartsfield-Jackson ATL, GA (ATL)",
       "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
@@ -95,6 +97,7 @@ class FlightsController < ApplicationController
     }
 
     current_airports = [
+      "ATL",
       "BOS",
       "IAH",
       "JFK",
