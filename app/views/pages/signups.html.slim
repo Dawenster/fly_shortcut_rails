@@ -1,32 +1,4 @@
 h3
-  | Signups by email
-  small style="margin-left: 20px;"
-    = "Total signups: #{User.count}"
-
-table.table
-  tr
-    th
-      | Email
-    th
-      | City count
-    th
-      | Cities
-    th
-      | Date signed up
-  - @users.each do |user|
-    tr
-      td
-        = user.email
-      td
-        = user.cities.map{ |c| c.name }.uniq.count
-      td
-        - user.cities.map{ |c| c.name }.uniq.each do |city_name|
-          div
-            = city_name
-      td
-        = user.created_at.strftime("%b %d, %Y")
-
-h3
   | Signups by city
   small style="margin-left: 20px;"
     = "Total signups: #{User.count}"
@@ -50,3 +22,31 @@ table.table
         - airport.users.uniq.map{ |u| u.email }.each do |email|
           div
             = email
+
+h3
+  | Signups by email
+  small style="margin-left: 20px;"
+    = "Total signups: #{User.count}"
+
+table.table
+  tr
+    th
+      | Email
+    th
+      | Airport count
+    th
+      | Airports
+    th
+      | Date signed up
+  - @users.each do |user|
+    tr
+      td
+        = user.email
+      td
+        = user.airports.map{ |c| c.name }.count
+      td
+        - user.airports.map{ |c| c.name }.each do |airport_name|
+          div
+            = airport_name
+      td
+        = user.created_at.strftime("%b %d, %Y")

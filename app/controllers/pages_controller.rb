@@ -45,6 +45,6 @@ class PagesController < ApplicationController
 
   def signups
     @airports = Airport.joins(:users => :airports).where("airports_users.user_id is not null").group("airports.id").sort_by{ |a| a.users.uniq.count }.reverse
-    @users = User.all
+    @users = User.order("created_at DESC")
   end
 end
