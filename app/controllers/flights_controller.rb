@@ -30,8 +30,8 @@ class FlightsController < ApplicationController
     request_data = request.location.data if request.location
     # request_data = Geocoder.search("74.212.154.18")[0].data # Test for Los Angeles
     # request_data = Geocoder.search("99.140.218.14")[0].data # Test for Illinois
-    origin_code = geomatch_city[request_data["city"]]
-    origin_code ||= geomatch_region[request_data["region_name"]]
+    origin_code = geomatch_city[request_data["city"]] if request_data
+    origin_code ||= geomatch_region[request_data["region_name"]] if request_data
 
     # Else set the default
     origin_code ||= "SFO"
