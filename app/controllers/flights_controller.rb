@@ -15,6 +15,7 @@ class FlightsController < ApplicationController
       "Arizona" => "PHX",
       "British Columbia" => "YVR",
       "California" => "SFO",
+      "Colorado" => "DEN",
       "Florida" => "MIA",
       "Georgia" => "ATL",
       "Illinois" => "ORD",
@@ -56,6 +57,7 @@ class FlightsController < ApplicationController
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
       "Dallas/Ft Worth International, TX (DFW)",
+      "Denver International, CO (DEN)",
       "Detroit Wayne County, MI (DTW)",
       "Houston George Bush Intercntl, TX (IAH)",
       "Los Angeles International, CA (LAX)",
@@ -106,6 +108,7 @@ class FlightsController < ApplicationController
     current_airports = [
       "ATL",
       "BOS",
+      "DEN",
       "DFW",
       "DTW",
       "EWR",
