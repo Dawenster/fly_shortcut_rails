@@ -5,6 +5,7 @@ class FlightsController < ApplicationController
   def index
     # Geomatch index
     geomatch_city = {
+      "Dallas" => "DFW",
       "Los Angeles" => "LAX",
       "New York City" => "LGA"
     }
@@ -54,6 +55,7 @@ class FlightsController < ApplicationController
       "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
+      "Dallas/Ft Worth International, TX (DFW)",
       "Detroit Wayne County, MI (DTW)",
       "Houston George Bush Intercntl, TX (IAH)",
       "Los Angeles International, CA (LAX)",
@@ -104,6 +106,7 @@ class FlightsController < ApplicationController
     current_airports = [
       "ATL",
       "BOS",
+      "DFW",
       "DTW",
       "EWR",
       "IAH",
