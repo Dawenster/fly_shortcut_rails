@@ -7,7 +7,8 @@ class FlightsController < ApplicationController
     geomatch_city = {
       "Dallas" => "DFW",
       "Los Angeles" => "LAX",
-      "New York City" => "LGA"
+      "New York City" => "LGA",
+      "Oakland" => "OAK"
     }
 
     geomatch_region = {
@@ -67,6 +68,7 @@ class FlightsController < ApplicationController
       "New York John F Kennedy International, NY (JFK)",
       "New York La Guardia, NY (LGA)",
       "New York Newark Liberty International, NJ (EWR)",
+      "Oakland Metropolitan Oak International, CA (OAK)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "San Francisco International, CA (SFO)",
       "Seattle/Tacoma Sea/Tac, WA (SEA)",
@@ -120,6 +122,7 @@ class FlightsController < ApplicationController
       "LAX",
       "LGA",
       "MIA",
+      "OAK",
       "ORD",
       "PHX",
       "SEA",
