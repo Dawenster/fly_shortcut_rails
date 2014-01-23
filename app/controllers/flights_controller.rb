@@ -6,6 +6,7 @@ class FlightsController < ApplicationController
     # Geomatch index
     geomatch_city = {
       "Dallas" => "DFW",
+      "Long Beach" => "LGB",
       "Los Angeles" => "LAX",
       "New York City" => "LGA",
       "Oakland" => "OAK",
@@ -64,6 +65,7 @@ class FlightsController < ApplicationController
       "Detroit Wayne County, MI (DTW)",
       "Houston George Bush Intercntl, TX (IAH)",
       "Las Vegas Mccarran International, NV (LAS)",
+      "Long Beach Municipal, CA (LGB)",
       "Los Angeles International, CA (LAX)",
       "Miami International, FL (MIA)",
       "New York John F Kennedy International, NY (JFK)",
@@ -123,6 +125,7 @@ class FlightsController < ApplicationController
       "LAS",
       "LAX",
       "LGA",
+      "LGB",
       "MIA",
       "OAK",
       "ORD",
