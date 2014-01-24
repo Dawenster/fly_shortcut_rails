@@ -22,6 +22,7 @@ class FlightsController < ApplicationController
       "Florida" => "MIA",
       "Georgia" => "ATL",
       "Illinois" => "ORD",
+      "Maryland" => "BWI",
       "Massachusetts" => "BOS",
       "Michigan" => "DTW",
       "Nevada" => "LAS",
@@ -57,6 +58,7 @@ class FlightsController < ApplicationController
 
     @from = [
       "Atlanta Hartsfield-Jackson ATL, GA (ATL)",
+      "Baltimore Washington Int'l, MD (BWI)",
       "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
       "Chicago O'Hare, IL (ORD)",
@@ -116,6 +118,7 @@ class FlightsController < ApplicationController
     current_airports = [
       "ATL",
       "BOS",
+      "BWI",
       "DEN",
       "DFW",
       "DTW",
