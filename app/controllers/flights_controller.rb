@@ -30,6 +30,7 @@ class FlightsController < ApplicationController
       "New York" => "JFK",
       "Ontario" => "YYZ",
       "Texas" => "IAH",
+      "Virginia" => "IAD",
       "Washington" => "SEA"
     }
 
@@ -79,7 +80,8 @@ class FlightsController < ApplicationController
       "San Jose Norman Y. Mineta International, CA (SJC)",
       "Seattle/Tacoma Sea/Tac, WA (SEA)",
       "Toronto Lester B Pearson, ON (YYZ)",
-      "Vancouver International, BC (YVR)"
+      "Vancouver International, BC (YVR)",
+      "Washington Dulles International, DC (IAD)"
     ]
     @default_from = origin_airport.name
     @to = sort_destinations(results["destinations"])
@@ -123,6 +125,7 @@ class FlightsController < ApplicationController
       "DFW",
       "DTW",
       "EWR",
+      "IAD",
       "IAH",
       "JFK",
       "LAS",
