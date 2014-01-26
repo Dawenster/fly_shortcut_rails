@@ -31,7 +31,8 @@ class FlightsController < ApplicationController
       "Ontario" => "YYZ",
       "Texas" => "IAH",
       "Virginia" => "IAD",
-      "Washington" => "SEA"
+      "Washington" => "SEA",
+      "Washington D.C." => "DCA"
     }
 
     # Seeing if there's a geocode match
@@ -76,6 +77,7 @@ class FlightsController < ApplicationController
       "New York Newark Liberty International, NJ (EWR)",
       "Oakland Metropolitan Oak International, CA (OAK)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
+      "Ronald Reagan Washington Nat'l, DC (DCA)",
       "San Francisco International, CA (SFO)",
       "San Jose Norman Y. Mineta International, CA (SJC)",
       "Seattle/Tacoma Sea/Tac, WA (SEA)",
@@ -121,6 +123,7 @@ class FlightsController < ApplicationController
       "ATL",
       "BOS",
       "BWI",
+      "DCA",
       "DEN",
       "DFW",
       "DTW",
