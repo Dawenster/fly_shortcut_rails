@@ -16,6 +16,7 @@ gem 'jquery-ui-rails'
 gem 'rest-client'
 gem 'simple_form'
 gem 'slim'
+gem 'tumblr_client'
 gem 'newrelic_rpm'
 gem 'will_paginate'
 
