@@ -9,6 +9,7 @@ FlyShortcutRails::Application.routes.draw do
   match 'ga_test' => 'pages#ga_test', as: :ga_test
   match 'signups' => 'pages#signups', as: :signups
   get "routes-to-scrape" => "flights#routes_to_scrape", :as => :routes_to_scrape
+  resources :blogs, :only => [:index, :show]
   resources :users, :only => [:create]
   resources :routes, :except => [:show]
   root :to => 'pages#index'
