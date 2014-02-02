@@ -1,5 +1,7 @@
 - content_for :head do
   meta property="og:image" content="#{find_first_image(@post["body"])}"
+  meta property="og:title" name="title" content="#{@post["title"]}"
+  meta property="og:description" name="description" content="#{truncate_html(strip_tags(@post["body"]), length: 300, omission: '...')}"
 
 #fb-root
 javascript:

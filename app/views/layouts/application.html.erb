@@ -7,12 +7,13 @@
 
   <!-- Facebook meta tags -->
   <meta property="og:url" name="url" content="http://www.flyshortcut.com" />
-  <meta property="og:title" name="title" content="Fly Shortcut - Hidden City Ticketing Search Engine" />
-  <meta property="og:description" name="description" content="When the lowest fare isn't low enough.  Find cheaper flights by dropping the last segment.  That's right: flying from A to B to C can sometimes be cheaper than simply flying from A to B." />
-  <meta property="og:image" content="http://www.flyshortcut.com/img/fs_logo_square.png"/>
 
   <% if content_for?(:head) %>
     <%= yield(:head) %>
+  <% else %>
+    <meta property="og:title" name="title" content="Fly Shortcut - Hidden City Ticketing Search Engine" />
+    <meta property="og:description" name="description" content="When the lowest fare isn't low enough.  Find cheaper flights by dropping the last segment.  That's right: flying from A to B to C can sometimes be cheaper than simply flying from A to B." />
+    <meta property="og:image" content="http://www.flyshortcut.com/img/fs_logo_square.png"/>
   <% end %>
 
   <!-- jQuery -->
