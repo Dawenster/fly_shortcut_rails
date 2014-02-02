@@ -14,8 +14,7 @@ javascript:
       .row.header-column
         .col-xs-12 style="text-align: center;"
           = render 'layouts/header'
-          a.btn.btn-primary href="#{flights_path}" type="button" style="width: 100%; margin-top: 20px;"
-            | Find flights
+          = render 'layouts/left_link_to_flights'
           = render 'layouts/left_email'
     .col-md-8.col-md-offset-1.col-xs-12
       .posts-container
