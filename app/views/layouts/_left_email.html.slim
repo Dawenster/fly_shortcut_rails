@@ -1,0 +1,19 @@
+div style="text-align: left; margin-bottom: 20px;"
+  .alert.email-signup style="margin: 0; margin-top: 20px;"
+    a.close href="#"
+      | &times;
+    div
+      h4 100% epic travel hacks. 0% spam.
+    .flash.hide.initial-flash
+      - flash.each do |name, msg|
+        = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
+    .initial-email.initial-email-content
+      form
+        .row
+          .col-sm-12
+            input#initial-email name="user[email]" placeholder="Email" type="text" style="margin-bottom: 10px;"
+          .col-sm-12
+            = select_tag "all-airports", options_for_select(@airports), :class => "selectpicker", "data-live-search" => "true", "data-width" => "100%"
+          .col-sm-12
+            a.initial-signup-button href="#"
+              | Subscribe

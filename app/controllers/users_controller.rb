@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def create
-    User.find_by_email(params[:email]) ? message = " is already on our list." : message = " successfully added."
-    @user = User.find_or_initialize_by_email(params[:email])
+    email = params[:email].downcase
+    User.find_by_email(email) ? message = " is already on our list." : message = " successfully added."
+    @user = User.find_or_initialize_by_email(email)
 
     if @user.save
       if params[:city] == "(Desired departure airport)"

@@ -1,0 +1,23 @@
+#fb-root
+javascript:
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=651908141502421";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+.container
+  .row
+    .col-md-3.col-xs-12
+      .row.header-column
+        .col-xs-12 style="text-align: center;"
+          = render 'layouts/header'
+          a.btn.btn-primary href="#{flights_path}" type="button" style="width: 100%; margin-top: 20px;"
+            | Find flights
+          = render 'layouts/left_email'
+    .col-md-8.col-md-offset-1.col-xs-12
+      .posts-container
+        - @posts.each do |post|
+          = post["body"].html_safe
