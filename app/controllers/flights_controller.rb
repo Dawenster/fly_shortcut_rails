@@ -5,6 +5,7 @@ class FlightsController < ApplicationController
   def index
     # Geomatch index
     geomatch_city = {
+      "Chicago" => "MDW",
       "Dallas" => "DFW",
       "Long Beach" => "LGB",
       "Los Angeles" => "LAX",
@@ -63,6 +64,7 @@ class FlightsController < ApplicationController
       "Baltimore Washington Int'l, MD (BWI)",
       "Boston Logan International, MA (BOS)",
       "Calgary International, AB (YYC)",
+      "Chicago Midway, IL (MDW)",
       "Chicago O'Hare, IL (ORD)",
       "Dallas/Ft Worth International, TX (DFW)",
       "Denver International, CO (DEN)",
@@ -135,6 +137,7 @@ class FlightsController < ApplicationController
       "LAX",
       "LGA",
       "LGB",
+      "MDW",
       "MIA",
       "OAK",
       "ORD",
