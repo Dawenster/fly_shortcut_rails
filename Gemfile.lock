@@ -147,6 +147,7 @@ GEM
     treetop (1.4.12)
       polyglot
       polyglot (>= 0.3.1)
+    truncate_html (0.9.2)
     tumblr_client (0.8.2)
       faraday (>= 0.8)
       faraday_middleware (>= 0.8)
@@ -184,6 +185,7 @@ DEPENDENCIES
   simple_form
   slim
   thin
+  truncate_html
   tumblr_client
   uglifier (>= 1.0.3)
   will_paginate
