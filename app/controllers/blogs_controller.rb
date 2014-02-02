@@ -11,13 +11,7 @@ class BlogsController < ApplicationController
   def show
     client = Tumblr::Client.new
     @post = client.posts("dawenster.tumblr.com", :tag => params[:slug])["posts"][0]
-    @post["first_image"] = find_first_image(@post["body"])
-    current_tag = find_tag_number(@post["tags"])
-  end
-
-  private
-
-  def find_tag_number(arr)
-    arr.select{ |e| e.to_i > 0 }.first.to_i
+    @user = User.new
+    @airports = Airport.all.map { |airport| airport.name }.unshift("(Desired departure airport)")
   end
 end

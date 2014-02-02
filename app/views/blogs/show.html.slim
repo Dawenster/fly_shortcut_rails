@@ -1,0 +1,29 @@
+#fb-root
+javascript:
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=651908141502421";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+.container
+  .row
+    .col-md-3.col-xs-12
+      .row.header-column
+        .col-xs-12 style="text-align: center;"
+          = render 'layouts/header'
+          = render 'layouts/left_link_to_flights'
+          = render 'layouts/left_email'
+          a.btn.btn-info href="#{blogs_path}" type="button" style="width: 100%;"
+            | More blog posts
+    .col-md-8.col-md-offset-1.col-xs-12
+      .posts-container
+        h1
+          = @post["title"]
+        h3 style="margin-top: -20px; margin-bottom: 20px;"
+          small
+            = format_tumblr_date(@post["date"])
+        p
+          = @post["body"].html_safe
