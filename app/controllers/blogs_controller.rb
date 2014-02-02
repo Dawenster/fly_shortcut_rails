@@ -2,7 +2,7 @@ class BlogsController < ApplicationController
   def index
     page = params[:page].to_i || 0
     client = Tumblr::Client.new
-    tumblr_posts = client.posts("dawenster.tumblr.com", :tag => "new", :offset => page * 20)
+    tumblr_posts = client.posts("dawenster.tumblr.com", :filter => "text", :offset => page * 20)
     @posts = tumblr_posts["posts"]
     @user = User.new
     @airports = Airport.all.map { |airport| airport.name }.unshift("(Desired departure airport)")

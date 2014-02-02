@@ -20,4 +20,10 @@ javascript:
     .col-md-8.col-md-offset-1.col-xs-12
       .posts-container
         - @posts.each do |post|
-          = post["body"].html_safe
+          h3
+            = link_to(post["title"].html_safe, blog_path(post["slug"]))
+          h4
+            small
+              = format_tumblr_date(post["date"])
+          p
+            = truncate_html(post["body"], length: 300, omission: '...')

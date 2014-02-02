@@ -50,4 +50,9 @@ module ApplicationHelper
     # str += "&depCityData=#{CGI::escape(departure_airport.name)}&arrCityData=#{CGI::escape(arrival_airport.name)}"
     return str
   end
+
+  def format_tumblr_date(str)
+    date = DateTime.strptime(str, "%Y-%m-%d %H:%M:%S")
+    return date.strftime("%B %d, %Y")
+  end
 end
