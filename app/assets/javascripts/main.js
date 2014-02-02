@@ -79,6 +79,7 @@ $(document).ready(function() {
     switchDirection();
     disableReturnButton();
     updateFlights($(this).val());
+    _gaq.push("_trackEvent", "search", "from", $(this).val());
   });
 
   $("#to-dropdown").change(function() {  
