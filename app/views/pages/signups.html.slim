@@ -43,9 +43,9 @@ table.table
       td
         = user.email
       td
-        = user.airports.map{ |c| c.name }.count
+        = user.airports.uniq.map{ |c| c.name }.count
       td
-        - user.airports.map{ |c| c.name }.each do |airport_name|
+        - user.airports.uniq.map{ |c| c.name }.each do |airport_name|
           div
             = airport_name
       td

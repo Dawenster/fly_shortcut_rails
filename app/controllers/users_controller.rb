@@ -9,8 +9,12 @@ class UsersController < ApplicationController
         render :json => { :email => @user.email, :message => message, :noCity => true }, :status => :created
       else
         airport = Airport.find_by_name(params[:city])
-        @user && @user.airports.include?(airport) ? city_msg = " You already receive alerts for " : city_msg = " You will now #{@user.airports.any? ? 'also ' : ''}receive alerts for "
-        @user.airports << airport
+        if @user && @user.airports.include?(airport)
+          city_msg = " You already receive alerts for "
+        else
+          city_msg = " You will now #{@user.airports.any? ? 'also ' : ''}receive alerts for "
+          @user.airports << airport
+        end
         render :json => { :email => @user.email, :message => message, :city => airport.name, :city_msg => city_msg }, :status => :created
       end
     else
