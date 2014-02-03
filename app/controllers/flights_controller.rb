@@ -11,6 +11,7 @@ class FlightsController < ApplicationController
       "Los Angeles" => "LAX",
       "New York City" => "LGA",
       "Oakland" => "OAK",
+      "San Diego" => "SAN",
       "San Jose" => "SJC"
     }
 
@@ -80,6 +81,7 @@ class FlightsController < ApplicationController
       "Oakland Metropolitan Oak International, CA (OAK)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "Ronald Reagan Washington Nat'l, DC (DCA)",
+      "San Diego Lindberg Field, CA (SAN)",
       "San Francisco International, CA (SFO)",
       "San Jose Norman Y. Mineta International, CA (SJC)",
       "Seattle/Tacoma Sea/Tac, WA (SEA)",
@@ -142,6 +144,7 @@ class FlightsController < ApplicationController
       "OAK",
       "ORD",
       "PHX",
+      "SAN",
       "SEA",
       "SFO",
       "SJC",
