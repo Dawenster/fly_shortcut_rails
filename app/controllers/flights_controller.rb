@@ -11,6 +11,7 @@ class FlightsController < ApplicationController
       "Los Angeles" => "LAX",
       "New York City" => "LGA",
       "Oakland" => "OAK",
+      "Orlando" => "MCO",
       "San Diego" => "SAN",
       "San Jose" => "SJC"
     }
@@ -79,6 +80,7 @@ class FlightsController < ApplicationController
       "New York La Guardia, NY (LGA)",
       "New York Newark Liberty International, NJ (EWR)",
       "Oakland Metropolitan Oak International, CA (OAK)",
+      "Orlando International, FL (MCO)",
       "Phoenix Sky Harbor Int'l, AZ (PHX)",
       "Ronald Reagan Washington Nat'l, DC (DCA)",
       "San Diego Lindberg Field, CA (SAN)",
@@ -139,6 +141,7 @@ class FlightsController < ApplicationController
       "LAX",
       "LGA",
       "LGB",
+      "MCO",
       "MDW",
       "MIA",
       "OAK",
