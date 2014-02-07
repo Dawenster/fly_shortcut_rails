@@ -1,0 +1,17 @@
+.row
+  - message = "#{@post ? @post['title'] : 'Check out this post on FlyShortcut'}&tw_p=tweetbutton&url=#{request.original_url}"
+  - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=#{message}"
+  .col-xs-6 style="padding-right: 10px;"
+    a.blog-share-button href="https://www.facebook.com/sharer/sharer.php?u=#{request.original_url}" target="_blank"
+      .social-content-holder
+        span
+          i.fa.fa-facebook-square.fa-2x.social-icon
+        span
+          = " Share"
+  .col-xs-6 style="padding-left: 10px;"
+    a.blog-share-button href="#{link}"
+      .social-content-holder
+        span
+          i.fa.fa-twitter.fa-2x.social-icon
+        span
+          = " Tweet"

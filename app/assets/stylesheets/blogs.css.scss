@@ -5,3 +5,18 @@
     margin: 10px 0px;
   }
 }
+
+.blog-share-button {
+  width: 100%;
+  &:hover {
+    color: #5BC5C9;
+  }
+}
+
+.social-content-holder {
+  margin-top: 10px;
+  display: inline-block;
+  .social-icon {
+    vertical-align: middle !important;
+  }
+}
