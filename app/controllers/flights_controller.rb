@@ -7,6 +7,7 @@ class FlightsController < ApplicationController
     geomatch_city = {
       "Chicago" => "MDW",
       "Dallas" => "DFW",
+      "Fort Lauderdale" => "FLL",
       "Long Beach" => "LGB",
       "Los Angeles" => "LAX",
       "New York City" => "LGA",
@@ -74,6 +75,7 @@ class FlightsController < ApplicationController
       "Dallas/Ft Worth International, TX (DFW)",
       "Denver International, CO (DEN)",
       "Detroit Wayne County, MI (DTW)",
+      "Fort Lauderdale International, FL (FLL)",
       "Honolulu International, HI (HNL)",
       "Houston George Bush Intercntl, TX (IAH)",
       "Las Vegas Mccarran International, NV (LAS)",
@@ -139,6 +141,7 @@ class FlightsController < ApplicationController
       "DFW",
       "DTW",
       "EWR",
+      "FLL",
       "HNL",
       "IAD",
       "IAH",
