@@ -19,7 +19,7 @@ javascript:
     .col-md-8.col-md-offset-1.col-xs-12
       .posts-container
         - @posts.each do |post|
-          h3
+          h3 style="font-weight: bold;"
             = link_to(post["title"].html_safe, blog_path(post["slug"]))
           h4
             small

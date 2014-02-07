@@ -25,12 +25,12 @@ javascript:
           a.btn.btn-info href="#{blogs_path}" type="button" style="width: 100%;"
             | More blog posts
           = render 'layouts/left_social_share'
-    .col-md-8.col-md-offset-1.col-xs-12
+    .col-md-8.col-md-offset-1.col-xs-12 style="background-color: white;"
       .posts-container
-        h1
+        h1 style="font-weight: bold;"
           = @post["title"]
         h3 style="margin-top: -20px; margin-bottom: 20px;"
           small
             = format_tumblr_date(@post["date"])
-        p
+        .lead style="font-size: 18px;"
           = @post["body"].html_safe
