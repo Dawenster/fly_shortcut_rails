@@ -89,6 +89,7 @@ $(document).ready(function() {
     } else {
       enableReturnButton();
     }
+    _gaq.push(["_trackEvent", "search", "to", $(this).val()]);
   });
 
   $('.filter').click(function() {
