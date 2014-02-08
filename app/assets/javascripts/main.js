@@ -89,7 +89,7 @@ $(document).ready(function() {
     } else {
       enableReturnButton();
     }
-    _gaq.push(["_trackEvent", "search", "to", $(this).val()]);
+    _gaq.push(["_trackEvent", "search", "to", $('#from-dropdown').val() + " to " + $(this).val()]);
   });
 
   $('.filter').click(function() {
