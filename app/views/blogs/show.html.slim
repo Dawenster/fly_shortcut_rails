@@ -39,3 +39,13 @@ css:
             = format_tumblr_date(@post["date"])
         .lead style="font-size: 18px;"
           = @post["body"].html_safe
+
+javascript:
+  $('.email-signup').toggle();
+  $('#close-link').toggle();
+  window.setTimeout(
+    function(){
+      $('#signup-link').toggle()
+    },1000
+  )
+  
