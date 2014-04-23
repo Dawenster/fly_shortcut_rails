@@ -21,6 +21,8 @@ javascript:
         	= render 'layouts/city_selector'
         .hidden-xs.col-sm-6.col-md-12.btn-group.segment data-toggle="buttons-radio"
           = render 'date_pickers'
+        .col-xs-12
+          = render 'layouts/donate'
     .col-md-8.col-md-offset-1.col-xs-12.all-flights
       div
         = render 'layouts/alerts'
@@ -29,3 +31,5 @@ javascript:
       .loading.hide
         = image_tag "loading.gif"
       = render 'flights'
+
+= render "layouts/donate_modal"
