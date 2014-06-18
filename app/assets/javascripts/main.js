@@ -129,6 +129,7 @@ $(document).ready(function() {
     } else {
       link = $(this).parent().attr("href");
     }
+    debugger
     var win = window.open(link, '_blank');
     win.focus();
   });
