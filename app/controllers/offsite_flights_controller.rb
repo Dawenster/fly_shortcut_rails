@@ -55,6 +55,6 @@ class OffsiteFlightsController < ApplicationController
   end
 
   def pure_search_link(departure_airport_code, arrival_airport_code, date)
-    "http://travel.travelocity.com/flights/InitialSearch.do?Service=TRAVELOCITY&last_pgd_page=ushpnbff.pgd&entryPoint=FD&pkg_type=fh_pkg&flightType=oneway&dateFormat=mm%2Fdd%2Fyyyy&subnav=form-fow&leavingFrom=#{departure_airport_code}&goingTo=#{arrival_airport_code}&dateTypeSelect=exactDates&leavingDate=#{date.strftime('%m %d %Y').gsub(' ', '%2F')}&dateLeavingTime=Anytime&departDateFlexibility=3&returningDate=mm%2Fdd%2Fyyyy&dateReturningTime=Anytime&returnDateFlexibility=3&adults=1&children=0&seniors=0&minorsAge0=%3F&minorsAge1=%3F&minorsAge2=%3F&minorsAge3=%3F&minorsAge4=%3F"
+    "http://www.travelocity.com/Flights-Search?trip=oneway&leg1=from:#{departure_airport_code},to:#{arrival_airport_code},departure:#{date.strftime('%m') + '%2f' + date.strftime('%d') + '%2f' + date.strftime('%Y')}TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search"
   end
 end
