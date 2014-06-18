@@ -122,6 +122,7 @@ $(document).ready(function() {
   });
 
   $(".book-button").click(function(e) {
+    debugger
     e.preventDefault();
     var link = "";
     if (Modernizr.touch) {
@@ -129,7 +130,6 @@ $(document).ready(function() {
     } else {
       link = $(this).parent().attr("href");
     }
-    debugger
     var win = window.open(link, '_blank');
     win.focus();
   });
