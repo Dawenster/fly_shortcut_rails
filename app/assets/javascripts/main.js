@@ -127,7 +127,7 @@ $(document).ready(function() {
     if (Modernizr.touch) {
       link = $(this).attr("data-mobile-url");
     } else {
-      link = $(this).parent().attr("action");
+      link = $(this).parent().attr("href");
     }
     var win = window.open(link, '_blank');
     win.focus();
@@ -250,7 +250,7 @@ $(document).ready(function() {
           if (Modernizr.touch) {
             link = $(this).attr("data-mobile-url");
           } else {
-            link = $(this).parent().attr("action");
+            link = $(this).parent().attr("href");
           }
           var win = window.open(link, '_blank');
           win.focus();
@@ -325,7 +325,7 @@ $(document).ready(function() {
           if (Modernizr.touch) {
             link = $(this).attr("data-mobile-url");
           } else {
-            link = $(this).parent().attr("action");
+            link = $(this).parent().attr("href");
           }
           var win = window.open(link, '_blank');
           win.focus();
