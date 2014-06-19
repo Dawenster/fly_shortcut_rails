@@ -121,18 +121,17 @@ $(document).ready(function() {
     updateFlights(clicked);
   });
 
-  $(".book-button").click(function(e) {
-    debugger
-    e.preventDefault();
-    var link = "";
-    if (Modernizr.touch) {
-      link = $(this).attr("data-mobile-url");
-    } else {
-      link = $(this).parent().attr("href");
-    }
-    var win = window.open(link, '_blank');
-    win.focus();
-  });
+  // $(".book-button").click(function(e) {
+  //   e.preventDefault();
+  //   var link = "";
+  //   if (Modernizr.touch) {
+  //     link = $(this).attr("data-mobile-url");
+  //   } else {
+  //     link = $(this).parent().attr("href");
+  //   }
+  //   var win = window.open(link, '_blank');
+  //   win.focus();
+  // });
 
   $(".savings-calc a").click(function(e) {
     e.preventDefault();
@@ -245,17 +244,17 @@ $(document).ready(function() {
         clickedFilter(clicked);
         ensureDateButtonActive();
 
-        $(".book-button").click(function(e) {
-          e.preventDefault();
-          var link = "";
-          if (Modernizr.touch) {
-            link = $(this).attr("data-mobile-url");
-          } else {
-            link = $(this).parent().attr("href");
-          }
-          var win = window.open(link, '_blank');
-          win.focus();
-        });
+        // $(".book-button").click(function(e) {
+        //   e.preventDefault();
+        //   var link = "";
+        //   if (Modernizr.touch) {
+        //     link = $(this).attr("data-mobile-url");
+        //   } else {
+        //     link = $(this).parent().attr("href");
+        //   }
+        //   var win = window.open(link, '_blank');
+        //   win.focus();
+        // });
 
         $(".savings-calc a").click(function(e) {
           e.preventDefault();
@@ -320,17 +319,17 @@ $(document).ready(function() {
           updateDropdowns(data.destinations, data.destination_name);
         }
 
-        $(".book-button").click(function(e) {
-          e.preventDefault();
-          var link = "";
-          if (Modernizr.touch) {
-            link = $(this).attr("data-mobile-url");
-          } else {
-            link = $(this).parent().attr("href");
-          }
-          var win = window.open(link, '_blank');
-          win.focus();
-        });
+        // $(".book-button").click(function(e) {
+        //   e.preventDefault();
+        //   var link = "";
+        //   if (Modernizr.touch) {
+        //     link = $(this).attr("data-mobile-url");
+        //   } else {
+        //     link = $(this).parent().attr("href");
+        //   }
+        //   var win = window.open(link, '_blank');
+        //   win.focus();
+        // });
 
         $(".savings-calc a").click(function(e) {
           e.preventDefault();
