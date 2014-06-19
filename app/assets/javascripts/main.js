@@ -121,17 +121,18 @@ $(document).ready(function() {
     updateFlights(clicked);
   });
 
-  // $(".book-button").click(function(e) {
-  //   e.preventDefault();
-  //   var link = "";
-  //   if (Modernizr.touch) {
-  //     link = $(this).attr("data-mobile-url");
-  //   } else {
-  //     link = $(this).parent().attr("href");
-  //   }
-  //   var win = window.open(link, '_blank');
-  //   win.focus();
-  // });
+  $(".book-button").click(function(e) {
+    e.preventDefault();
+    // var link = "";
+    // if (Modernizr.touch) {
+    //   link = $(this).attr("data-mobile-url");
+    // } else {
+    //   link = $(this).parent().attr("href");
+    // }
+    // var win = window.open(link, '_blank');
+    // win.focus();
+    window.location = $(this).parent().attr("href");
+  });
 
   $(".savings-calc a").click(function(e) {
     e.preventDefault();
