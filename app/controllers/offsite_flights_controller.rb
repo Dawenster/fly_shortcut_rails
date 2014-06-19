@@ -55,7 +55,6 @@ class OffsiteFlightsController < ApplicationController
   end
 
   def pure_search_link(departure_airport_code, arrival_airport_code, date)
-    "https://www.google.ca/"
-    # "#{request.protocol}www.travelocity.com/Flights-Search?trip=oneway&leg1=from:#{departure_airport_code},to:#{arrival_airport_code},departure:#{date.strftime('%m') + '%2f' + date.strftime('%d') + '%2f' + date.strftime('%Y')}TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search"
+    "https://www.travelocity.com/Flights-Search?trip=oneway&leg1=from:#{departure_airport_code},to:#{arrival_airport_code},departure:#{date.strftime('%m') + '%2f' + date.strftime('%d') + '%2f' + date.strftime('%Y')}TANYT&passengers=children:0,adults:1,seniors:0,infantinlap:Y&options=cabinclass:coach,nopenalty:N,sortby:price&mode=search"
   end
 end
