@@ -42,7 +42,7 @@ class OffsiteFlightsController < ApplicationController
       # link = link(departure_airport_code, arrival_airport_code, shortcut_flight, uid, itin_id, rid)
       link = pure_search_link(departure_airport_code, arrival_airport_code, departure_time)
     end
-    redirect_to "http://fs-forwarder.herokuapp.com/?departure_airport_code=#{departure_airport_code}&arrival_airport_code=#{arrival_airport_code}&date=#{date}"
+    redirect_to "http://fs-forwarder.herokuapp.com/?departure_airport_code=#{departure_airport_code}&arrival_airport_code=#{arrival_airport_code}&departure_time=#{departure_time}"
   end
 
   def search_result(departure_date, departure_airport_code, arrival_airport_code)
