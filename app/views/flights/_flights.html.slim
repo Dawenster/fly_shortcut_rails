@@ -104,7 +104,7 @@
               strong
                 | Skip this flight
               .shortcut-flight
-                button.btn.btn-success.btn-large
+                button.btn.btn-success.btn-large data-toggle="modal" data-target="#payModal"
                   | See flight
                 / div
                 /   = "#{shortcut_airport.city} (#{shortcut_airport.code})"

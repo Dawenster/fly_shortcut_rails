@@ -1,0 +1,47 @@
+script src="https://checkout.stripe.com/v2/checkout.js"
+
+#payModal.modal.fade aria-hidden="true" aria-labelledby="payModalLabel" role="dialog" tabindex="-1"
+  .modal-dialog
+    .modal-content
+
+      .modal-header
+        button.close aria-hidden="true" data-dismiss="modal" type="button"
+          | &times;
+        h2#donateModalLabel.modal-title
+          | Thank you
+
+        h3 style="margin-top: -5px;"
+          small
+            | We hope you saved some money :)
+
+      .modal-body
+        .row.hide-after-payment
+          .col-xs-12.col-sm-6
+            .input-group
+              span.input-group-addon
+                | $
+              input#custom-donation.form-control type="number" placeholder="Beer ~= $5"
+              .input-group-btn
+                button#stripeDonateButton.btn.btn-primary
+                  | Donate
+
+            form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
+
+          .col-xs-12
+            p style="margin: 20px 0; font-style: italic;"
+              | - or -
+            p
+              i.fa.fa-bitcoin style="margin-right: 3px;"
+              span style="font-size: 12px;"
+                | 1zM6QtMeC4jDjz4k1A6qGhVU2Bx5f6Sno
+
+        .row.show-after-payment style="display: none;"
+          .col-xs-12
+            h4
+              .donation-processing-message
+                div style="margin: 20px 0;"
+                  | Processing the donation (and thinking about what beer to drink)...
+                div
+                  = image_tag 'loading.gif'
+
+              .donation-message
