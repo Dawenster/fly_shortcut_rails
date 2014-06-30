@@ -37,16 +37,22 @@ $(document).ready(function() {
         .done(function(data) {
           if (data.success == true) {
             $(".donation-processing-message").toggle();
+            $(".pay-booking-instructions").toggle();
             $(".donation-message").text(data.message);
 
-            setTimeout(function(){
-              $('#donateModal').modal('hide');
-              $(".hide-after-payment").toggle();
-              $(".show-after-payment").toggle();
+            var flightNumber = $("#pay-flight-number").text();
+            var shortcutDestination = $("#payModal").attr("data-shortcut-destination");
 
-              $(".donation-processing-message").toggle();
-              $(".donation-message").text("");
-            }, 3000);
+            $(".shortcut-instructions").text("Find " + flightNumber + " connecting on to " + shortcutDestination + ". Have fun, and remember to read about the risks before you shortcut!")
+
+            // setTimeout(function(){
+            //   $('#donateModal').modal('hide');
+            //   $(".hide-after-payment").toggle();
+            //   $(".show-after-payment").toggle();
+
+            //   $(".donation-processing-message").toggle();
+            //   $(".donation-message").text("");
+            // }, 3000);
 
             
           } else {

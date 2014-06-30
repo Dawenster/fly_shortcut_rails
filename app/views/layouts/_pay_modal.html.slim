@@ -1,6 +1,6 @@
 script src="https://checkout.stripe.com/v2/checkout.js"
 
-#payModal.modal.fade aria-hidden="true" aria-labelledby="payModalLabel" role="dialog" tabindex="-1"
+#payModal.modal.fade aria-hidden="true" aria-labelledby="payModalLabel" role="dialog" tabindex="-1" data-shortcut-destination=""
   .modal-dialog
     .modal-content
       .modal-header
@@ -73,11 +73,20 @@ script src="https://checkout.stripe.com/v2/checkout.js"
 
         .row.show-after-payment style="display: none;"
           .col-xs-12
-            h4
+            h4 style="text-align: center;"
               .donation-processing-message
                 div style="margin: 20px 0;"
-                  | Processing the donation (and thinking about what beer to drink)...
+                  | Processing the payment - please wait...
                 div
                   = image_tag 'loading.gif'
 
               .donation-message
+
+            .pay-booking-instructions style="display: none;"
+              .panel.panel-info style="margin-top: 30px;"
+                .panel-heading
+                  h3.panel-title
+                    | Booking instructions
+
+                .panel-body
+                  .shortcut-instructions
