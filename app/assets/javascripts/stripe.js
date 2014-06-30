@@ -8,7 +8,7 @@ $(document).ready(function() {
     // var amount = $("#custom-donation").val();
     var amountText = $("#pay-shortcut-fee").text();
     var amount = parseFloat(amountText.substring(1));
-    debugger
+
     if (!isNumber(amount)) {
       amount = "5";
     }
