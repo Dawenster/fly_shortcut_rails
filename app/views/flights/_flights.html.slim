@@ -113,6 +113,7 @@
               strong
                 | Skip this flight
               .shortcut-flight
+                = render "art"
                 button.btn.btn-success.btn-large.pay-button data-toggle="modal" data-cheapest-price="#{flight['cheapest_price'] / 100 + 1}" data-shortcut-price="#{rounded_price(flight['price'])}" data-shortcut-airport="#{shortcut_airport.city}" data-shortcut-airport-code="#{shortcut_airport.code}" data-itinerary="#{flight_itinerary}" data-flight-number="#{flight_number_in_words}" data-departure-time="#{departure_time_in_words}" data-arrival-time="#{arrival_time_in_words}" data-ga-airport-tracking="#{departure_airport.code}-#{arrival_airport.code}" data-offsite-link="#{offsite_flight_path(book_params)}" data-offsite-original-link="#{offsite_flight_path(pure_search_params)}"
                   | Book flight
                 / div
