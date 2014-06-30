@@ -3,35 +3,73 @@ script src="https://checkout.stripe.com/v2/checkout.js"
 #payModal.modal.fade aria-hidden="true" aria-labelledby="payModalLabel" role="dialog" tabindex="-1"
   .modal-dialog
     .modal-content
-
       .modal-header
-        button.close aria-hidden="true" data-dismiss="modal" type="button"
-          | &times;
-        h2#donateModalLabel.modal-title
-          | Let's save some money!
+        .row style="text-align: center;"
+          .col-xs-12
+            button.close aria-hidden="true" data-dismiss="modal" type="button"
+              | &times;
+            h2#donateModalLabel.modal-title
+              | SFO → ORD
+
+            h3 style="margin-top: -5px;"
+              small#pay-flight-number
+                | Flight: American Airlines 1240
+            h3 style="margin-top: -15px;"
+              small#pay-flight-departure
+                | Depart: Jun 30, 2014 at 9:15 AM
+            h3 style="margin-top: -15px;"
+              small#pay-flight-arrival
+                | Arrive: Jun 30, 2014 at 11:18 AM
 
       .modal-body
         .row.hide-after-payment
           .col-xs-12.col-sm-6
-            
+            .panel.panel-info
+              .panel-heading
+                h3.panel-title
+                  | How it works
+              .panel-body
+                | FlyShortcut will show you which city to book to for a fee equivalent to 25% of your flight savings. After the payment is made, the destination airport will be displayed. If for some reason you cannot find the flight that we show, please email us immediately and we will try to find it or refund you right away.
 
-            .input-group
-              span.input-group-addon
-                | $
-              input#custom-donation.form-control type="number" placeholder="Beer ~= $5"
-              .input-group-btn
+          .col-xs-12.col-sm-6
+            table.table
+              tbody
+                tr
+                  td.no-border-cell
+                    | Cheapest same-day flight:
+                  td.no-border-cell#pay-cheapest-price
+                    | $200
+                tr
+                  td.no-border-cell
+                    | Shortcut flight:
+                  td.no-border-cell#pay-shortcut-price
+                    | $150
+                tr
+                  td.highlighted-cell
+                    b
+                      | Shortcut savings:
+                  td.highlighted-cell
+                    b#pay-shortcut-savings
+                      | $50
+
+                tr
+                  td.no-border-cell
+                    | Shortcut fee:
+                  td.no-border-cell
+                    | x 25%
+                tr
+                  td.highlighted-cell
+                    b
+                      | Amount to pay
+                  td.highlighted-cell
+                    b#pay-shortcut-fee
+                      | $12.50
+
+            .row style="text-align: center;"
+              .col-xs-12
                 button#stripeDonateButton.btn.btn-primary
-                  | Donate
-
-            form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
-
-          .col-xs-12
-            p style="margin: 20px 0; font-style: italic;"
-              | - or -
-            p
-              i.fa.fa-bitcoin style="margin-right: 3px;"
-              span style="font-size: 12px;"
-                | 1zM6QtMeC4jDjz4k1A6qGhVU2Bx5f6Sno
+                  | Pay to see shortcut destination
+                form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
 
         .row.show-after-payment style="display: none;"
           .col-xs-12

@@ -81,14 +81,21 @@
                 .savings-buffer.hidden-xs
               = str.html_safe
           .row
+            ruby:
+              flight_itinerary = "#{departure_airport.code} → #{arrival_airport.code}"
+              departure_city_in_words = "#{departure_airport.city} (#{departure_airport.code})"
+              departure_time_in_words = "#{flight["departure_time"].strftime('%b %d, %Y')} at #{flight["departure_time"].strftime("%l:%M %p")}"
+              arrival_city_in_words = "#{arrival_airport.city} (#{arrival_airport.code})"
+              arrival_time_in_words = "#{flight["arrival_time"].strftime('%b %d, %Y')} at #{flight["arrival_time"].strftime("%l:%M %p")}"
+              flight_number_in_words = "Flight: #{flight['airline']} #{flight['flight_no']}"
             .col-sm-4
               strong
                 | Depart
               .flight-detail
                 div
-                  = "#{departure_airport.city} (#{departure_airport.code})"
+                  = departure_city_in_words
                 div
-                  = "#{flight["departure_time"].strftime('%b %d, %Y')} at #{flight["departure_time"].strftime("%l:%M %p")}"
+                  = departure_time_in_words
                 div
                   = "Flight: #{flight['airline']} #{flight['flight_no']}"
 
@@ -97,17 +104,17 @@
                 | Arrive
               .flight-detail
                 div
-                  = "#{arrival_airport.city} (#{arrival_airport.code})"
+                  = arrival_city_in_words
                 div
-                  = "#{flight["arrival_time"].strftime('%b %d, %Y')} at #{flight["arrival_time"].strftime("%l:%M %p")}"
+                  = arrival_time_in_words
               i.glyphicon.glyphicon-circle-arrow-right.flight-arrow.right-arrow-normal
 
             .col-sm-4
               strong
                 | Skip this flight
               .shortcut-flight
-                button.btn.btn-success.btn-large.pay-button data-toggle="modal" data-target="#payModal" data-cheapest-price="#{cheapest_price_calc}" data-original-price="#{original_price_calc}" data-shortcut-airport="#{shortcut_airport.city}" data-shortcut-airport-code="#{shortcut_airport.code}"
-                  | See flight
+                button.btn.btn-success.btn-large.pay-button data-toggle="modal" data-cheapest-price="#{flight['cheapest_price'] / 100 + 1}" data-shortcut-price="#{rounded_price(flight['price'])}" data-shortcut-airport="#{shortcut_airport.city}" data-shortcut-airport-code="#{shortcut_airport.code}" data-itinerary="#{flight_itinerary}" data-flight-number="#{flight_number_in_words}" data-departure-time="#{departure_time_in_words}" data-arrival-time="#{arrival_time_in_words}" data-ga-airport-tracking="#{departure_airport.code}-#{arrival_airport.code}"
+                  | Book flight
                 / div
                 /   = "#{shortcut_airport.city} (#{shortcut_airport.code})"
                 / div

@@ -5,7 +5,10 @@ $(document).ready(function() {
       $('donation-form').append($input).submit();
     };
 
-    var amount = $("#custom-donation").val();
+    // var amount = $("#custom-donation").val();
+    var amountText = $("#pay-shortcut-fee").text();
+    var amount = parseFloat(amountText.substring(1));
+    debugger
     if (!isNumber(amount)) {
       amount = "5";
     }
@@ -19,7 +22,7 @@ $(document).ready(function() {
       amount:      amount,
       currency:    'usd',
       name:        'Fly Shortcut',
-      description: 'Donation',
+      description: '25% of Savings',
       image:       'https://s3-us-west-2.amazonaws.com/flyshortcut/flyshortcut_icon.png',
       panelLabel:  'Checkout',
       token: function(token, args) {
