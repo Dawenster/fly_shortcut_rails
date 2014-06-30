@@ -36,7 +36,8 @@ script src="https://checkout.stripe.com/v2/checkout.js"
               tbody
                 tr
                   td.no-border-cell
-                    | Cheapest same-day flight:
+                    a#pay-cheapest-offsite-link href="#" target="_blank"
+                      | Cheapest same-day flight:
                   td.no-border-cell#pay-cheapest-price
                     | $200
                 tr
@@ -71,18 +72,22 @@ script src="https://checkout.stripe.com/v2/checkout.js"
                   | Pay to see shortcut destination
                 form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
 
-        .row.show-after-payment style="display: none;"
+        .row style="text-align: center;"
           .col-xs-12
-            h4 style="text-align: center;"
-              .donation-processing-message
-                div style="margin: 20px 0;"
-                  | Processing the payment - please wait...
-                div
-                  = image_tag 'loading.gif'
-
+            h4
               .donation-message
 
-            .pay-booking-instructions style="display: none;"
+        .row.donation-processing-message style="display: none;"
+          .col-xs-12
+            h4 style="text-align: center;"
+              div style="margin: 20px 0;"
+                | Processing the payment - please wait...
+              div
+                = image_tag 'loading.gif'
+
+        .row.show-after-payment style="display: none;"
+          .col-xs-12
+            .pay-booking-instructions
               .panel.panel-info style="margin-top: 30px;"
                 .panel-heading
                   h3.panel-title
@@ -93,4 +98,7 @@ script src="https://checkout.stripe.com/v2/checkout.js"
                   a#pay-offsite-link href="#" target="_blank"
                     button.btn.btn-success.btn-large
                       | Book
+
+                  button.btn.btn-default.close-pay-modal data-content="Remember to copy down the above information. Once you close this window the information will be erased." style="margin-left: 10px;"
+                    | Close
 

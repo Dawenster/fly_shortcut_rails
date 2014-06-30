@@ -13,13 +13,23 @@ $(document).ready(function() {
     $("#pay-flight-departure").text("Depart: " + $(this).attr("data-departure-time"));
     $("#pay-flight-arrival").text("Arrive: " + $(this).attr("data-arrival-time"));
     $("#pay-cheapest-price").text("$" + cheapestPrice);
+    $("#pay-cheapest-offsite-link").attr("href", $(this).attr("data-offsite-original-link"))
     $("#pay-shortcut-price").text("$" + shortcutPrice);
     $("#pay-shortcut-savings").text("$" + savings);
     $("#pay-shortcut-fee").text("$" + shortcutFee);
     $("#pay-offsite-link").attr("href", $(this).attr("data-offsite-link"));
     $("#payModal").attr("data-shortcut-destination", shortcutDestination);
-    $('#payModal').modal();
+
+    $('#payModal').modal("show");
 
     _gaq.push(['_trackEvent', 'button', 'click', 'Book: ' + $(this).attr("data-ga-airport-tracking")]);
+  });
+
+  $(document).on("click", ".close-pay-modal", function(e) {
+    $('#payModal').modal("hide");
+
+    $(".donation-message").text("");
+    $(".hide-after-payment").toggle();
+    $(".show-after-payment").toggle();
   });
 });

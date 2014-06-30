@@ -9,6 +9,11 @@ $(document).ready(function() {
     'trigger': 'hover'
   });
 
+  $('.close-pay-modal').popover({
+    'placement': "right",
+    'trigger': 'hover'
+  });
+
   $('#signup-link').popover({
     'placement': "top",
     'trigger': 'hover'

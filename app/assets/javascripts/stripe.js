@@ -1,5 +1,7 @@
 $(document).ready(function() {
   $('#stripeDonateButton').click(function(){
+    $(".donation-message").text("");
+
     var token = function(res){
       var $input = $('<input type=hidden name=stripeToken />').val(res.id);
       $('donation-form').append($input).submit();
@@ -27,7 +29,7 @@ $(document).ready(function() {
       panelLabel:  'Checkout',
       token: function(token, args) {
         $(".hide-after-payment").toggle();
-        $(".show-after-payment").toggle();
+        $(".donation-processing-message").toggle();
 
         $.ajax({
           url: "/donate",
@@ -35,15 +37,17 @@ $(document).ready(function() {
           data: { stripeToken: token, amount: amount }
         })
         .done(function(data) {
+          $(".show-after-payment").toggle();
+
           if (data.success == true) {
             $(".donation-processing-message").toggle();
-            $(".pay-booking-instructions").toggle();
+            // $(".pay-booking-instructions").toggle();
             $(".donation-message").text(data.message);
 
             var flightNumber = $("#pay-flight-number").text();
             var shortcutDestination = $("#payModal").attr("data-shortcut-destination");
 
-            $(".shortcut-instructions").text("Find " + flightNumber + " connecting on to " + shortcutDestination + ". Have fun, and remember to read about the risks before you shortcut!")
+            $(".shortcut-instructions").html("Find " + flightNumber + " connecting on to " + shortcutDestination + ". Have fun, and remember to read about the <a href='http://www.flyshortcut.com/#panel3' target='_blank'>risks</a> before you shortcut!");
 
             // setTimeout(function(){
             //   $('#donateModal').modal('hide');
@@ -53,11 +57,10 @@ $(document).ready(function() {
             //   $(".donation-processing-message").toggle();
             //   $(".donation-message").text("");
             // }, 3000);
-
             
           } else {
             $(".donation-processing-message").toggle();
-            $(".donation-message").text(data.message + " - please try again!");
+            $(".donation-message").text(data.message + " Please try again!");
             $(".hide-after-payment").toggle();
           }
         })
