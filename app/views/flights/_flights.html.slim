@@ -64,30 +64,30 @@
             #str += " off the #{link_to 'original flight', offsite_flight_path(original_params), :target => '_blank'}"
             str += " off the original flight"
           .below-table
-            / ruby:
-            /   book_params = {
-            /     :original => false,
-            /     :departure_airport_id => flight["departure_airport_id"],
-            /     :departure_time => flight["departure_time"],
-            /     :second_flight_destination => flight["second_flight_destination"],
-            /     :airline => flight["airline"],
-            /     :flight_no => flight["flight_no"]
-            /   }
-            / a href="#{offsite_flight_path(book_params)}" target="_blank"
-            /   button.btn.btn-success.btn-large.book-button data-content="Find #{flight['airline']} #{flight['flight_no']} connecting on to #{shortcut_airport.name}. Have fun, and remember to read about the risks before you shortcut!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-#{arrival_airport.code}']);" title="Book the flight" type="submit" data-mobile-url="#{mobile_url(departure_airport.code, shortcut_airport.code, flight['departure_time'])}"
-            /     | Book
             .savings-calc style="margin: 5px 0px 15px 0px;" data-mobile-url="#{mobile_url(departure_airport.code, arrival_airport.code, flight['departure_time'])}"
               - if flight["epic"]
                 .savings-buffer.hidden-xs
               = str.html_safe
           .row
             ruby:
+              book_params = {
+                :original => false,
+                :departure_airport_id => flight["departure_airport_id"],
+                :departure_time => flight["departure_time"],
+                :second_flight_destination => flight["second_flight_destination"],
+                :airline => flight["airline"],
+                :flight_no => flight["flight_no"]
+              }
               flight_itinerary = "#{departure_airport.code} → #{arrival_airport.code}"
               departure_city_in_words = "#{departure_airport.city} (#{departure_airport.code})"
               departure_time_in_words = "#{flight["departure_time"].strftime('%b %d, %Y')} at #{flight["departure_time"].strftime("%l:%M %p")}"
               arrival_city_in_words = "#{arrival_airport.city} (#{arrival_airport.code})"
               arrival_time_in_words = "#{flight["arrival_time"].strftime('%b %d, %Y')} at #{flight["arrival_time"].strftime("%l:%M %p")}"
               flight_number_in_words = "Flight: #{flight['airline']} #{flight['flight_no']}"
+            / a href="#{offsite_flight_path(book_params)}" target="_blank"
+            /   button.btn.btn-success.btn-large.book-button data-content="Find #{flight['airline']} #{flight['flight_no']} connecting on to #{shortcut_airport.name}. Have fun, and remember to read about the risks before you shortcut!" onClick="_gaq.push(['_trackEvent', 'button', 'click', 'Book: #{departure_airport.code}-#{arrival_airport.code}']);" title="Book the flight" type="submit" data-mobile-url="#{mobile_url(departure_airport.code, shortcut_airport.code, flight['departure_time'])}"
+            /     | Book
+              
             .col-sm-4
               strong
                 | Depart
@@ -113,7 +113,7 @@
               strong
                 | Skip this flight
               .shortcut-flight
-                button.btn.btn-success.btn-large.pay-button data-toggle="modal" data-cheapest-price="#{flight['cheapest_price'] / 100 + 1}" data-shortcut-price="#{rounded_price(flight['price'])}" data-shortcut-airport="#{shortcut_airport.city}" data-shortcut-airport-code="#{shortcut_airport.code}" data-itinerary="#{flight_itinerary}" data-flight-number="#{flight_number_in_words}" data-departure-time="#{departure_time_in_words}" data-arrival-time="#{arrival_time_in_words}" data-ga-airport-tracking="#{departure_airport.code}-#{arrival_airport.code}"
+                button.btn.btn-success.btn-large.pay-button data-toggle="modal" data-cheapest-price="#{flight['cheapest_price'] / 100 + 1}" data-shortcut-price="#{rounded_price(flight['price'])}" data-shortcut-airport="#{shortcut_airport.city}" data-shortcut-airport-code="#{shortcut_airport.code}" data-itinerary="#{flight_itinerary}" data-flight-number="#{flight_number_in_words}" data-departure-time="#{departure_time_in_words}" data-arrival-time="#{arrival_time_in_words}" data-ga-airport-tracking="#{departure_airport.code}-#{arrival_airport.code}" data-offsite-link="#{offsite_flight_path(book_params)}"
                   | Book flight
                 / div
                 /   = "#{shortcut_airport.city} (#{shortcut_airport.code})"

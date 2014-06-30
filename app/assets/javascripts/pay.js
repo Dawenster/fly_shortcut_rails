@@ -16,6 +16,7 @@ $(document).ready(function() {
     $("#pay-shortcut-price").text("$" + shortcutPrice);
     $("#pay-shortcut-savings").text("$" + savings);
     $("#pay-shortcut-fee").text("$" + shortcutFee);
+    $("#pay-offsite-link").attr("href", $(this).attr("data-offsite-link"));
     $("#payModal").attr("data-shortcut-destination", shortcutDestination);
     $('#payModal').modal();
 
