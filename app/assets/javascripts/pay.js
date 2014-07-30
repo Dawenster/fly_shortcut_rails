@@ -7,6 +7,7 @@ $(document).ready(function() {
     var savings = cheapestPrice - shortcutPrice;
     var shortcutFee = (savings / 4).toFixed(2);
     var shortcutDestination = $(this).attr("data-shortcut-airport") + " (" + $(this).attr("data-shortcut-airport-code") + ")";
+    var stillSave = (savings - shortcutFee).toFixed(2);
 
     $("#donateModalLabel").text($(this).attr("data-itinerary"));
     $("#pay-flight-number").text($(this).attr("data-flight-number"));
@@ -17,6 +18,7 @@ $(document).ready(function() {
     $("#pay-shortcut-price").text("$" + shortcutPrice);
     $("#pay-shortcut-savings").text("$" + savings);
     $("#pay-shortcut-fee").text("$" + shortcutFee);
+    $("#pay-still-save").text("$" + stillSave);
     $("#pay-offsite-link").attr("href", $(this).attr("data-offsite-link"));
     $("#payModal").attr("data-shortcut-destination", shortcutDestination);
 
