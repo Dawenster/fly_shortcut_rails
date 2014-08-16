@@ -64,8 +64,8 @@ GEM
     eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (2.0.2)
-    faraday (0.9.0)
-      multipart-post (>= 1.2, < 3)
+    faraday (0.8.0)
+      multipart-post (~> 1.1)
     faraday_middleware (0.9.1)
       faraday (>= 0.7.4, < 0.10)
     hike (1.2.3)
@@ -84,7 +84,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.25.1)
     multi_json (1.9.2)
-    multipart-post (2.0.0)
+    multipart-post (1.2.0)
     newrelic_rpm (3.8.0.218)
     oauth (0.4.7)
     pg (0.17.1)
@@ -179,6 +179,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   coffee-rails (~> 3.2.1)
+  faraday (= 0.8.0)
   geocoder!
   jquery-rails
   jquery-ui-rails
