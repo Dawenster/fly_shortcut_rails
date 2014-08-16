@@ -6,22 +6,22 @@
     - shortcut_airport = Airport.find(flight['second_flight_destination'])
     - if departure_airport
       .hero-unit
-        .social-buttons
-          javascript:
-            function popupwindow(url, title, w, h) {
-              var left = (screen.width/2)-(w/2);
-              var top = (screen.height/2)-(h/2);
-              return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
-            }
+        / .social-buttons
+        /   javascript:
+        /     function popupwindow(url, title, w, h) {
+        /       var left = (screen.width/2)-(w/2);
+        /       var top = (screen.height/2)-(h/2);
+        /       return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+        /     }
 
-          - epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight"
-          - message = "What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com"
-          - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=#{message}"
-          / .fb-share-button data-href="http://www.flyshortcut.com/flights" data-type="icon" data-width="30px"
-          a href="https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights" target="_blank" onclick="popupwindow('https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights', 'Share this Shortcut', '550', '550'); return false;"
-            i.fa.fa-facebook-square
-          a href="#{link}"
-            i.fa.fa-twitter-square
+        /   - epic = flight["epic"] ? "an%20%23epic%20flight" : "a%20flight"
+        /   - message = "What%3F!%20I%20just%20found%20#{epic}%20from%20%23#{departure_airport.code}%20to%20%23#{arrival_airport.code}%20for%20%24#{rounded_price(flight['price'])}!&tw_p=tweetbutton&url=http%3A%2F%2Fflyshortcut.com"
+        /   - link = "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=#{message}"
+        /   / .fb-share-button data-href="http://www.flyshortcut.com/flights" data-type="icon" data-width="30px"
+        /   a href="https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights" target="_blank" onclick="popupwindow('https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights', 'Share this Shortcut', '550', '550'); return false;"
+        /     i.fa.fa-facebook-square
+        /   a href="#{link}"
+        /     i.fa.fa-twitter-square
         .top-half
           .price
             = "$#{rounded_price(flight['price'])}"

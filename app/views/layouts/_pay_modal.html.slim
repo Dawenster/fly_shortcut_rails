@@ -29,7 +29,8 @@ script src="https://checkout.stripe.com/v2/checkout.js"
                 h3.panel-title
                   | How it works
               .panel-body
-                | FlyShortcut will show you which city to book to for a fee equivalent to 25% of your flight savings. After the payment is made, the destination airport will be displayed. If for some reason you cannot find the flight that we show, please email us immediately and we will try to find it or refund you right away.
+                / | FlyShortcut will show you which city to book to for a fee equivalent to 25% of your flight savings. After the payment is made, the destination airport will be displayed. If for some reason you cannot find the flight that we show, please email us immediately and we will try to find it or refund you right away.
+                | Once you share FlyShortcut on Facebook, we will show you which city to book to to get these savings. You will have one week of unlimited access to this information. If for some reason you cannot find the flight that we show, please email us immediately and we will try to help you find it.
 
           .col-xs-12.col-sm-6
             table.table
@@ -53,32 +54,55 @@ script src="https://checkout.stripe.com/v2/checkout.js"
                     b#pay-shortcut-savings
                       | $50
 
-                tr
-                  td.no-border-cell
-                    | Shortcut fee:
-                  td.no-border-cell
-                    | x 25%
-                tr
-                  td.highlighted-cell
-                    b
-                      | Amount to pay:
-                  td.highlighted-cell
-                    b#pay-shortcut-fee
-                      | $12.50
+                / tr
+                /   td.no-border-cell
+                /     | Shortcut fee:
+                /   td.no-border-cell
+                /     | x 25%
+                / tr
+                /   td.highlighted-cell
+                /     b
+                /       | Amount to pay:
+                /   td.highlighted-cell
+                /     b#pay-shortcut-fee
+                /       | $12.50
 
-                tr
-                  td.super-highlighted-cell
-                    b
-                      | You still save:
-                  td.super-highlighted-cell
-                    b#pay-still-save
-                      | $37.50
+                / tr
+                /   td.super-highlighted-cell
+                /     b
+                /       | You still save:
+                /   td.super-highlighted-cell
+                /     b#pay-still-save
+                /       | $37.50
 
             .row style="text-align: center;"
+              javascript:
+                function popupwindow(url, title, w, h) {
+                  var left = (screen.width/2)-(w/2);
+                  var top = (screen.height/2)-(h/2);
+                  return window.open(url, title, 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+                }
+
               .col-xs-12
-                button#stripeDonateButton.btn.btn-primary
-                  | Pay to see shortcut destination
-                form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
+                h5
+                  | Share to unlock
+              .col-xs-12
+                a#facebook-share-link.social-share-button href="https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights" target="_blank" onclick="popupwindow('https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights', 'Share this Shortcut', '550', '550'); return false;"
+                  button.btn.btn-primary style="margin-right: 10px;"
+                    i.fa.fa-facebook
+                    = "  Facebook"
+                / a#twitter-share-link.social-share-button href=""
+                /   button.btn.btn-primary
+                /     i.fa.fa-twitter
+                /     = "  Twitter"
+              .col-xs-12
+                button.btn.btn-warning.confirm-share style="display: none;"
+                  | Confirm share
+
+              / .col-xs-12
+              /   button#stripeDonateButton.btn.btn-primary
+              /     | Pay to see shortcut destination
+              /   form.donation-form action="#{donate_path}" method="post" data-stripe-pk="#{Rails.configuration.stripe[:publishable_key]}"
 
         .row style="text-align: center;"
           .col-xs-12
@@ -96,7 +120,8 @@ script src="https://checkout.stripe.com/v2/checkout.js"
         .row.show-after-payment style="display: none;"
           .col-xs-12
             .pay-booking-instructions
-              .panel.panel-info style="margin-top: 30px;"
+              / .panel.panel-info style="margin-top: 30px;"
+              .panel.panel-info
                 .panel-heading
                   h3.panel-title
                     | Booking instructions
@@ -107,6 +132,7 @@ script src="https://checkout.stripe.com/v2/checkout.js"
                     button.btn.btn-success.btn-large
                       | Book
 
-                  button.btn.btn-default.close-pay-modal data-content="Remember to copy down the above information. Once you close this window the information will be erased." style="margin-left: 10px;"
+                  / button.btn.btn-default.close-pay-modal data-content="Remember to copy down the above information. Once you close this window the information will be erased." style="margin-left: 10px;"
+                  button.btn.btn-default.close-pay-modal style="margin-left: 10px;"
                     | Close
 
