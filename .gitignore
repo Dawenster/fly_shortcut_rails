@@ -19,3 +19,5 @@
 *.dump
 
 config/initializers/aaa_secrets.rb
+
+db/signups.csv

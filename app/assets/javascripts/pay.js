@@ -1,4 +1,6 @@
-$(document).ready(function() {  
+$(document).ready(function() {
+  $('#systemDownModal').modal("show");
+
   $(document).on("click", ".pay-button", function(e) {
     e.preventDefault();
     
