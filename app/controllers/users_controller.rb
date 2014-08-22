@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 
     if @user.save
       if params[:city] == "(Desired departure airport)"
+        @user.subscribe_to_mailchimp
         render :json => { :email => @user.email, :message => message, :noCity => true }, :status => :created
       else
         airport = Airport.find_by_name(params[:city])
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
           city_msg = " You will now #{@user.airports.any? ? 'also ' : ''}receive alerts for "
           @user.airports << airport
         end
+        @user.subscribe_to_mailchimp
         render :json => { :email => @user.email, :message => message, :city => airport.name, :city_msg => city_msg }, :status => :created
       end
     else
