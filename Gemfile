@@ -11,6 +11,7 @@ gem 'faraday', '0.8.0'
 gem 'geocoder', :git => "https://github.com/alexreisner/geocoder"
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'mailchimp-api', require: 'mailchimp'
 gem 'pg'
 gem 'rake'
 gem 'rest-client'
