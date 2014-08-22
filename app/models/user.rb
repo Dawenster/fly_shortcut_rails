@@ -9,7 +9,6 @@ class User < ActiveRecord::Base
   validates :email, :format => { :with => /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/ }
 
   def subscribe_to_mailchimp
-    binding.pry
     gb = Gibbon::API.new
     gb.lists.subscribe({
       :id => ENV["MAILCHIMP_SUBSCRIBERS_LIST_ID"],
