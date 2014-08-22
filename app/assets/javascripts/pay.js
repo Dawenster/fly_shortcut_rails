@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  // $('#systemDownModal').modal("show");
+  $('#systemDownModal').modal("show");
 
   $(document).on("click", ".pay-button", function(e) {
     e.preventDefault();
