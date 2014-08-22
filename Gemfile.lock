@@ -189,6 +189,7 @@ DEPENDENCIES
   faraday (= 0.8.0)
   geocoder!
   gibbon
+  httparty
   jquery-rails
   jquery-ui-rails
   newrelic_rpm

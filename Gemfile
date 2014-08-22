@@ -10,6 +10,7 @@ gem 'activerecord'
 gem 'faraday', '0.8.0'
 gem 'geocoder', :git => "https://github.com/alexreisner/geocoder"
 gem 'gibbon'
+gem 'httparty'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'pg'
