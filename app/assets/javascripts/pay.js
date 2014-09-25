@@ -1,6 +1,14 @@
 $(document).ready(function() {
   // $('#systemDownModal').modal("show");
 
+  // if already shared, show flight details
+  setTimeout(function(){
+    if ($.cookie('shared')) {
+      $(".hide-after-payment").toggle();
+      $(".show-after-payment").toggle();
+    }
+  }, 1000);
+
   $(document).on("click", ".pay-button", function(e) {
     e.preventDefault();
     
@@ -52,8 +60,8 @@ $(document).ready(function() {
     $('#payModal').modal("hide");
 
     $(".donation-message").text("");
-    $(".hide-after-payment").toggle();
-    $(".show-after-payment").toggle();
+    // $(".hide-after-payment").toggle();
+    // $(".show-after-payment").toggle();
   });
 
   $(document).on("click", ".social-share-button", function(e) {
@@ -80,6 +88,8 @@ $(document).ready(function() {
       if (higherShareCount) {
         setSharedCookie();
         showBookingDetails();
+        $(".hide-after-payment").toggle();
+        $(".show-after-payment").toggle();
       } else {
         $(".social-share-button").toggle();
         $(".confirm-share").toggle();
@@ -99,8 +109,5 @@ $(document).ready(function() {
     var flightNumber = $("#pay-flight-number").text();
     var shortcutDestination = $("#payModal").attr("data-shortcut-destination");
     $(".shortcut-instructions").html("Find " + flightNumber + " connecting on to " + shortcutDestination + ". Have fun, and remember to read about the <a href='http://www.flyshortcut.com/#panel3' target='_blank'>risks</a> before you shortcut!");
-
-    $(".hide-after-payment").toggle();
-    $(".show-after-payment").toggle();
   }
 });
