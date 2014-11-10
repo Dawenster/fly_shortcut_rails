@@ -3,11 +3,15 @@ $(document).ready(function() {
 
   // if already shared, show flight details
   setTimeout(function(){
-    if ($.cookie('shared')) {
+    if (canShow()) {
       $(".hide-after-payment").toggle();
       $(".show-after-payment").toggle();
     }
   }, 1000);
+
+  var canShow = function() {
+    return $.cookie('shared') || parseInt($.cookie('showCount')) < 4 || !$.cookie('showCount')
+  }
 
   $(document).on("click", ".pay-button", function(e) {
     e.preventDefault();
@@ -45,7 +49,19 @@ $(document).ready(function() {
     // $("#facebook-share-link").attr("onclick", "popupwindow('https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights'" + itinerary + ", 'Share this Shortcut', '550', '550'); return false;");
     // $("#twitter-share-link").attr("href", "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=" + twitterMessage);
 
-    if ($.cookie('shared')) {
+    var currentShowCount = $.cookie('showCount');
+    if (currentShowCount) {
+      var newCount = parseInt(currentShowCount) + 1;
+      $.cookie('showCount', newCount);
+      if (newCount == 4) {
+        $(".hide-after-payment").toggle();
+        $(".show-after-payment").toggle();
+      }
+    } else {
+      $.cookie('showCount', 1);
+    }
+
+    if (canShow()) {
       showBookingDetails();
       _gaq.push(['_trackEvent', 'button', 'shared-click', 'Book: ' + $(this).attr("data-ga-airport-tracking")]);
     } else {
