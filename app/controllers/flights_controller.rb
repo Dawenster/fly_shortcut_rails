@@ -2,6 +2,8 @@ require 'csv'
 require 'will_paginate/array'
 
 class FlightsController < ApplicationController
+  http_basic_authenticate_with :name => ENV['ALLOWED_USER_NAME'], :password => ENV['ALLOWED_USER_PASSWORD'], :only => [:index]
+
   def index
     # Geomatch index
     geomatch_city = {
