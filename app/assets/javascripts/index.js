@@ -1,9 +1,27 @@
 $(document).ready(function() {
-  $('#let-me-proceed').click(function(){
-    $('#let-me-proceed').button('loading');
-  });
-
-  $('#let-me-proceed2').click(function(){
-    $('#let-me-proceed2').button('loading');
+  $('.let-me-proceed').click(function(e){
+    e.preventDefault();
+    var text = "Sorry for the inconvenience..."
+    swal({
+      title: "We're taking a break :)",
+      text: text,
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Sign up for alerts",
+      cancelButtonText: "How come?!",
+      closeOnConfirm: false,
+      closeOnCancel: false,
+      allowOutsideClick: true
+    }, 
+    function(isConfirm){
+      var url = ""
+      if (isConfirm) {
+        url = "/blog";
+      } else {
+        url = "http://www.bloomberg.com/news/2014-11-18/united-orbitz-sue-travel-site-over-hidden-city-ticketing-1-.html";
+      }
+      window.location = url;
+    });
   });
 });
