@@ -200,6 +200,7 @@ DEPENDENCIES
   rest-client
   sass-rails (~> 3.2.3)
   simple_form
+  simple_oauth (= 0.2.0)
   slim
   stripe!
   thin
