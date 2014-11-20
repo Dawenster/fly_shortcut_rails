@@ -10,7 +10,8 @@ $(document).ready(function() {
   }, 1000);
 
   var canShow = function() {
-    return $.cookie('shared') || parseInt($.cookie('showCount')) < 4 || !$.cookie('showCount')
+    // return $.cookie('shared') || parseInt($.cookie('showCount')) < 4 || !$.cookie('showCount')
+    return true;
   }
 
   $(document).on("click", ".pay-button", function(e) {
@@ -49,17 +50,17 @@ $(document).ready(function() {
     // $("#facebook-share-link").attr("onclick", "popupwindow('https://www.facebook.com/sharer/sharer.php?u=http://www.flyshortcut.com/flights'" + itinerary + ", 'Share this Shortcut', '550', '550'); return false;");
     // $("#twitter-share-link").attr("href", "https://twitter.com/intent/tweet?hashtags=flyshortcut%2Ctravel&text=" + twitterMessage);
 
-    var currentShowCount = $.cookie('showCount');
-    if (currentShowCount) {
-      var newCount = parseInt(currentShowCount) + 1;
-      $.cookie('showCount', newCount);
-      if (newCount == 4) {
-        $(".hide-after-payment").toggle();
-        $(".show-after-payment").toggle();
-      }
-    } else {
-      $.cookie('showCount', 1);
-    }
+    // var currentShowCount = $.cookie('showCount');
+    // if (currentShowCount) {
+    //   var newCount = parseInt(currentShowCount) + 1;
+    //   $.cookie('showCount', newCount);
+    //   if (newCount == 4) {
+    //     $(".hide-after-payment").toggle();
+    //     $(".show-after-payment").toggle();
+    //   }
+    // } else {
+    //   $.cookie('showCount', 1);
+    // }
 
     if (canShow()) {
       showBookingDetails();
