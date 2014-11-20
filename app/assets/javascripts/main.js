@@ -12,16 +12,18 @@ $(document).ready(function() {
   $('#signup-link').removeClass("hidden");
   $('#signup-link').toggle();
   
-  $.ajax({
-    url: '/flights',
-    method: 'get',
-    dataType: 'json'
-  })
-  .done(function(data) {
-    from = data.from;
-    to = data.to;
-    totalPages = data.totalPages;
-  })
+  if ($("#flight-page").length > 0) {
+    $.ajax({
+      url: '/flights',
+      method: 'get',
+      dataType: 'json'
+    })
+    .done(function(data) {
+      from = data.from;
+      to = data.to;
+      totalPages = data.totalPages;
+    })
+  }
 
   if (Modernizr.touch) {
     $('.selectpicker').selectpicker('mobile');
