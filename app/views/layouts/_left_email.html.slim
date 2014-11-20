@@ -4,7 +4,7 @@ div style="text-align: left; margin-bottom: 10px;"
       | &times;
     div
       h4 style="margin-top: 10px;"
-        | What city would you like to see next?
+        | Sign up for alerts
     .flash.hide.initial-flash
       - flash.each do |name, msg|
         = content_tag :div, msg, :id => "flash_#{name}", class: "alert alert-#{name}"
